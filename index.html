@@ -477,7 +477,7 @@ textarea.fc{resize:vertical;min-height:80px}
 </head>
 <body>
 
-<!-- TRUST BAR -->
+<!-- ══ TRUST BAR ══ -->
 <div class="trust-bar" id="trust-bar">
   <div class="trust-track" id="trust-track">
     <span id="trust-content-1">منتجات مضمونة ✅ &nbsp;|&nbsp; توصيل سريع 🚀 &nbsp;|&nbsp; الدفع عند الاستلام 💵 &nbsp;|&nbsp; جودة عالية ⭐ &nbsp;|&nbsp; رضا تام أو استرداد 💯 &nbsp;|&nbsp; خدمة متميزة 24/7 🎯 &nbsp;|&nbsp;&nbsp;&nbsp;</span>
@@ -485,7 +485,7 @@ textarea.fc{resize:vertical;min-height:80px}
   </div>
 </div>
 
-<!-- HEADER -->
+<!-- ══ HEADER ══ -->
 <header class="hdr" id="main-hdr">
   <div class="hdr-in">
     <button class="ham-btn" id="ham-btn" onclick="toggleNav()" aria-label="القائمة"><span></span><span></span><span></span></button>
@@ -508,7 +508,7 @@ textarea.fc{resize:vertical;min-height:80px}
   </div>
 </header>
 
-<!-- MOBILE NAV -->
+<!-- ══ MOBILE NAV ══ -->
 <div class="mob-nav-ov" id="mob-nav-ov" onclick="closeNav()"></div>
 <div class="mob-nav" id="mob-nav">
   <div class="mob-nav-head">
@@ -527,9 +527,10 @@ textarea.fc{resize:vertical;min-height:80px}
   </div>
 </div>
 
+<!-- ══ APP ══ -->
 <div id="app"></div>
 
-<!-- FOOTER -->
+<!-- ══ FOOTER ══ -->
 <footer class="site-footer" id="site-footer">
   <div class="footer-in">
     <div class="footer-brand">
@@ -567,10 +568,10 @@ textarea.fc{resize:vertical;min-height:80px}
 
 <div id="toast"></div>
 
-<!-- CART BANNER -->
+<!-- ══ CART BANNER ══ -->
 <div id="cart-banner">
   <div class="cb-inner">
-    <span style="font-size:1.5rem;flex-shrink:0">✅</span>
+    <span style="font-size:1.6rem;flex-shrink:0">✅</span>
     <div class="cb-text">
       <div class="cb-title" id="cb-title"></div>
       <div class="cb-sub" id="cb-sub"></div>
@@ -579,18 +580,18 @@ textarea.fc{resize:vertical;min-height:80px}
   </div>
 </div>
 
-<!-- SCROLL NOTIF -->
+<!-- ══ SCROLL NOTIF ══ -->
 <div class="scroll-notif" id="scroll-notif">
   <div class="scroll-notif-h">Stop! 👀</div>
   <div class="scroll-notif-s">لسه في منتجات أكثر تقدر تشوفها!</div>
 </div>
 
-<!-- WA FAB -->
+<!-- ══ WA FAB ══ -->
 <a class="wa-fab" href="https://wa.me/96181877323" target="_blank" id="wa-fab" style="display:none">
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
-<!-- DENIED -->
+<!-- ══ DENIED ══ -->
 <div class="denied-ov" id="denied-ov">
   <div class="denied-card">
     <div class="denied-ico">🚫</div>
@@ -603,19 +604,23 @@ textarea.fc{resize:vertical;min-height:80px}
 <div id="onboard-root"></div>
 
 <script>
-const TG_TOKEN='8797731150:AAEifNOyBfLGB7oEIM3eAJlVb7FaV0MeXtY';
-const TG_CHAT_ID='8645626632';
-const WA_NUMBER='96181877323';
-const STORE_EMAIL='dash.lebanon.123@gmail.com';
-const ADMIN_SECRET='admin 0508500499';
-const ADMIN_U='admin123';
-const ADMIN_P='admin123';
-const LBP_RATE=90000;
-const WHISH_NUMBER='81686245';
-const CANCEL_FEE=4;
+// ═══════════════════════════════════════════════════════
+//  CONFIG
+// ═══════════════════════════════════════════════════════
+const TG_TOKEN = '8797731150:AAEifNOyBfLGB7oEIM3eAJlVb7FaV0MeXtY';
+const TG_CHAT_ID = '8645626632';
+const WA_NUMBER = '96181877323';
+const STORE_EMAIL = 'dash.lebanon.123@gmail.com';
+const ADMIN_SECRET = 'admin 0508500499';
+const ADMIN_U = 'admin123';
+const ADMIN_P = 'admin123';
+const LBP_RATE = 90000;
 
-const TRANS={
-  ar:{
+// ═══════════════════════════════════════════════════════
+//  TRANSLATIONS
+// ═══════════════════════════════════════════════════════
+const TRANS = {
+  ar: {
     nav_home:'🏠 الرئيسية',nav_products:'📦 المنتجات',nav_offers:'🔥 العروض',nav_contact:'📞 تواصل',
     nav_orders:'📋 طلباتي',cart_lbl:'السلة',
     trust:'منتجات مضمونة ✅ &nbsp;|&nbsp; توصيل سريع 🚀 &nbsp;|&nbsp; الدفع عند الاستلام 💵 &nbsp;|&nbsp; جودة عالية ⭐ &nbsp;|&nbsp; رضا تام أو استرداد 💯 &nbsp;|&nbsp; خدمة متميزة 24/7 🎯',
@@ -653,7 +658,7 @@ const TRANS={
     wa_modal_title:'أكمل بياناتك لإرسال الطلب',wa_modal_sub:'عبّي المعلومات وبعتها تلقائياً على واتساب',wa_send:'💬 إرسال الطلب على واتساب',
     cancel:'إلغاء',order_summary_lbl:'🛍️ ملخص طلبك',fill_all:'⚠️ يرجى ملء جميع الحقول المطلوبة',added_cart:'أُضيف إلى السلة',per_unit:'/ قطعة',
   },
-  fr:{
+  fr: {
     nav_home:'🏠 Accueil',nav_products:'📦 Produits',nav_offers:'🔥 Offres',nav_contact:'📞 Contact',
     nav_orders:'📋 Mes Commandes',cart_lbl:'Panier',
     trust:'Produits garantis ✅ &nbsp;|&nbsp; Livraison rapide 🚀 &nbsp;|&nbsp; Paiement à la livraison 💵 &nbsp;|&nbsp; Haute qualité ⭐ &nbsp;|&nbsp; Satisfait ou remboursé 💯 &nbsp;|&nbsp; Service 24/7 🎯',
@@ -667,7 +672,7 @@ const TRANS={
     full_name:'Nom complet',phone:'Téléphone',phone2:'Deuxième téléphone',city:'Ville',district:'District',
     full_address:'Adresse complète',floor:'Étage',notes:'Notes',optional:'optionnel',req_field:'Ce champ est requis',
     review_order:'Vérifier la commande →',order_summary:'🛍️ Récapitulatif',confirm_btn:'✅ Confirmer la commande',cancel_btn:'❌ Annuler',
-    order_sent_ttl:'Commande envoyée!',thank_you:"Merci d'avoir magasiné chez Dash Lebanon 🙏",
+    order_sent_ttl:'Commande envoyée!',thank_you:'Merci d\'avoir magasiné chez Dash Lebanon 🙏',
     auto_accepted:'Votre commande est acceptée ✅\nNotre équipe vous contactera bientôt',
     back_store:'🏠 Retour à la boutique',track_orders_btn:'📋 Suivre mes commandes',
     cancelled_ttl:'Commande annulée',cancelled_sub:'Votre commande a été annulée.\nNous espérons vous revoir bientôt!',
@@ -691,7 +696,7 @@ const TRANS={
     wa_modal_title:'Complétez vos informations',wa_modal_sub:'Remplissez le formulaire pour envoyer votre commande',wa_send:'💬 Envoyer la commande sur WhatsApp',
     cancel:'Annuler',order_summary_lbl:'🛍️ Récapitulatif',fill_all:'⚠️ Veuillez remplir tous les champs requis',added_cart:'Ajouté au panier',per_unit:'/ pièce',
   },
-  en:{
+  en: {
     nav_home:'🏠 Home',nav_products:'📦 Products',nav_offers:'🔥 Offers',nav_contact:'📞 Contact',
     nav_orders:'📋 My Orders',cart_lbl:'Cart',
     trust:'Guaranteed products ✅ &nbsp;|&nbsp; Fast delivery 🚀 &nbsp;|&nbsp; Cash on delivery 💵 &nbsp;|&nbsp; High quality ⭐ &nbsp;|&nbsp; Full satisfaction 💯 &nbsp;|&nbsp; 24/7 service 🎯',
@@ -732,6 +737,9 @@ const TRANS={
 };
 function t(key){return(TRANS[S.lang]||TRANS.ar)[key]||TRANS.ar[key]||key}
 
+// ═══════════════════════════════════════════════════════
+//  FAKE COMMENTS
+// ═══════════════════════════════════════════════════════
 const FAKE_COMMENTS=[
   {name:'ريتا خوري',avatar:'👩',rating:5,product:'رأس الدوش',date:'منذ يومين',text:'والله ما توقعت يكون هيك منيح! الضغط تاعتو عالي كتير وركّبتو بخمس دقايق. تسلم Dash Lebanon 🙏',verified:true},
   {name:'جو أبي حيدر',avatar:'👨',rating:5,product:'المكنسة اللاسلكية',date:'منذ 3 أيام',text:'المكنسة شغالتها تحفة! جربتها عالسيارة والبيت وكتفت. بطاريتها دامت أكثر مما توقعت. حلو كتير 🔥',verified:true},
@@ -743,6 +751,9 @@ const FAKE_COMMENTS=[
   {name:'طوني معلوف',avatar:'🧑',rating:4,product:'محول طاقة السيارة',date:'منذ أسبوع',text:'كتير منيح للسفر الطويل، شحّن اللابتوب والتلفون مع بعض. ما كنت متوقع هيك جودة بهالسعر! ممنون كتير',verified:true},
 ];
 
+// ═══════════════════════════════════════════════════════
+//  PRODUCT DATA
+// ═══════════════════════════════════════════════════════
 const DEMO=[
   {id:1,name:'المكنسة اللاسلكية 3 في 1',description:'مكنسة محمولة قوية متعددة الوظائف: شفط غبار، منفاخ هواء، ومضخة لتفريغ الهواء. لاسلكية بالكامل ومثالية للسيارة والمنزل.',image:'https://cdn.corenexis.com/files/c/1186979720.jpg',price:7.99,oldPrice:10.99,deliveryPrice:3,note:'شحن USB سريع مع ملحقات تنظيف متعددة',offer:{qty:2,price:12.99,label:'اشتري 2 بـ 12.99$ بدل 15.98$'}},
   {id:2,name:'رأس دوش التوربو المتطور',description:'رأس دوش بضغط عالٍ وتصميم عصري، يحتوي على زر توقف وميزة تدليك الرأس. يوفر استهلاك المياه مع ضمان تجربة استحمام مريحة.',image:'https://cdn.corenexis.com/files/c/7223327720.jpg',price:6.99,oldPrice:9.99,deliveryPrice:3,note:'سهل التركيب ويناسب جميع خراطيم الدوش',offer:{qty:2,price:9.99,label:'اشتري 2 بـ 9.99$ بدل 13.98$'}},
@@ -757,7 +768,9 @@ const DEMO=[
   {id:11,name:'مصحح أصابع القدم السيليكوني الذكي',description:'الحل الأمثل لراحة قدميك! مباعد أصابع من السيليكون الناعم لتصحيح استقامة الأصابع وتخفيف الآلام.',image:'https://cdn.corenexis.com/files/c/6313123720.png',price:4.99,oldPrice:7.00,deliveryPrice:3,note:'مادة طبية ناعمة وسهلة التنظيف من Dash Lebanon',offer:{qty:2,price:6.99,label:'عرض خاص: قطعتين بـ 6.99$ فقط!'}}
 ];
 
-// STORAGE
+// ═══════════════════════════════════════════════════════
+//  STORAGE
+// ═══════════════════════════════════════════════════════
 function getP(){try{const v=localStorage.getItem('dl_p');return v?JSON.parse(v):DEMO}catch{return DEMO}}
 function setP(a){localStorage.setItem('dl_p',JSON.stringify(a))}
 function getA(){try{const v=localStorage.getItem('dl_a');return v?JSON.parse(v):{u:ADMIN_U,p:ADMIN_P}}catch{return{u:ADMIN_U,p:ADMIN_P}}}
@@ -768,7 +781,9 @@ function updateOrderStatus(num,status){const arr=getOrders();const i=arr.findInd
 function loadCart(){try{const v=localStorage.getItem('dl_cart');return v?JSON.parse(v):[]}catch{return[]}}
 function saveCart(){localStorage.setItem('dl_cart',JSON.stringify(S.cart))}
 
-// STATE
+// ═══════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════
 const S={
   page:'home',data:null,cart:loadCart(),order:null,tab:'products',
   logged:false,dqty:1,buyMode:'normal',onum:null,search:'',offersOnly:false,
@@ -776,7 +791,9 @@ const S={
   dark:localStorage.getItem('dl_dark')==='1',
 };
 
-// PRICE
+// ═══════════════════════════════════════════════════════
+//  PRICE FORMATTING
+// ═══════════════════════════════════════════════════════
 const fmt=n=>{const x=parseFloat(n);if(isNaN(x))return'0 $';return parseFloat(x.toFixed(2))+' $'};
 const fmtLBPNum=n=>Math.round(parseFloat(n)*LBP_RATE).toLocaleString('en');
 const cCount=()=>S.cart.reduce((s,i)=>s+i.qty,0);
@@ -797,7 +814,9 @@ function cQty(uid,q){if(q<1){cRm(uid);return}const i=S.cart.find(i=>i._uid===uid
 function onum(){return'DL-'+Date.now().toString().slice(-6)}
 function canCancel(date){return(Date.now()-new Date(date).getTime())<86400000}
 
-// DARK / LANG
+// ═══════════════════════════════════════════════════════
+//  DARK MODE & LANG
+// ═══════════════════════════════════════════════════════
 function applyDark(){
   document.documentElement.setAttribute('data-dark',S.dark?'1':'0');
   const btn=document.getElementById('dm-btn');
@@ -820,7 +839,9 @@ function applyLang(){
   const cl=document.getElementById('cart-btn-lbl');if(cl)cl.textContent=t('cart_lbl');
 }
 
-// UTILS
+// ═══════════════════════════════════════════════════════
+//  UTILS
+// ═══════════════════════════════════════════════════════
 function esc(s){if(s==null)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
 let tt;
 function toast(m){const e=document.getElementById('toast');clearTimeout(tt);e.textContent=m;e.classList.add('show');tt=setTimeout(()=>e.classList.remove('show'),2800)}
@@ -832,6 +853,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='F12'||(e.ctrlKey&&['u','s'].includes(e.key.toLowerCase()))||(e.ctrlKey&&e.shiftKey&&['i','j','c','k'].includes(e.key.toLowerCase()))){e.preventDefault();showDenied()}
 });
 
+// ── CART BANNER ──
 let cbTimer;
 function showCartBanner(name,qty){
   document.getElementById('cb-title').textContent=`✅ ${t('added_cart')}: ${qty} × ${name}`;
@@ -861,61 +883,21 @@ function updateUI(){
 function toggleNav(){document.getElementById('mob-nav').classList.toggle('open');document.getElementById('mob-nav-ov').classList.toggle('open');document.getElementById('ham-btn').classList.toggle('open')}
 function closeNav(){document.getElementById('mob-nav').classList.remove('open');document.getElementById('mob-nav-ov').classList.remove('open');document.getElementById('ham-btn').classList.remove('open')}
 
-// TELEGRAM
+// ═══════════════════════════════════════════════════════
+//  TELEGRAM
+// ═══════════════════════════════════════════════════════
 async function tgSend(text){
   try{const r=await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TG_CHAT_ID,text,parse_mode:'Markdown'})});return!!(await r.json()).ok}
   catch(e){console.error('TG:',e);return false}
 }
-
 async function trackVisit(){
-  if(sessionStorage.getItem('visit_tracked'))return;
-  sessionStorage.setItem('visit_tracked','1');
-  const now=new Date();
-  const ds=now.toLocaleDateString('ar-LB',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  const ts=now.toLocaleTimeString('ar-LB',{hour:'2-digit',minute:'2-digit'});
-  const ua=navigator.userAgent;
-  function getDeviceName(ua){
-    const iphone=ua.match(/iPhone OS ([\d_]+)/);
-    if(iphone){const v=iphone[1].replace(/_/g,'.');return`📱 iPhone (iOS ${v})`}
-    const ipad=ua.match(/iPad.*OS ([\d_]+)/);
-    if(ipad){const v=ipad[1].replace(/_/g,'.');return`📱 iPad (iOS ${v})`}
-    const samModel=ua.match(/SM-([A-Z0-9]+)/i);
-    const sam=ua.match(/Samsung/i);
-    if(sam||samModel){const model=samModel?`SM-${samModel[1]}`:'Samsung';return`📱 Samsung ${model}`}
-    const hw=ua.match(/HUAWEI ([A-Z0-9\-]+)/i)||ua.match(/HW-([A-Z0-9]+)/i);
-    if(hw)return`📱 Huawei ${hw[1]}`;
-    const xi=ua.match(/Redmi ([A-Z0-9 ]+)/i)||ua.match(/POCO ([A-Z0-9]+)/i)||ua.match(/MI ([A-Z0-9 ]+)/i);
-    if(xi)return`📱 Xiaomi ${xi[1].trim()}`;
-    const op=ua.match(/OnePlus([A-Z0-9 ]+)/i);
-    if(op)return`📱 OnePlus ${op[1].trim()}`;
-    const rm=ua.match(/Realme ([A-Z0-9 ]+)/i)||ua.match(/RMX([0-9]+)/i);
-    if(rm)return`📱 Realme ${rm[0]}`;
-    const oppo=ua.match(/OPPO ([A-Z0-9]+)/i)||ua.match(/CPH([0-9]+)/i);
-    if(oppo)return`📱 OPPO ${oppo[0]}`;
-    const nokia=ua.match(/Nokia([A-Z0-9\. ]+)/i);
-    if(nokia)return`📱 Nokia ${nokia[1].trim()}`;
-    const lg=ua.match(/LG-([A-Z0-9]+)/i)||ua.match(/LG ([A-Z0-9]+)/i);
-    if(lg)return`📱 LG ${lg[1]}`;
-    const sony=ua.match(/Sony([A-Z0-9 ]+)/i)||ua.match(/Xperia ([A-Z0-9 ]+)/i);
-    if(sony)return`📱 Sony Xperia ${sony[1].trim()}`;
-    const android=ua.match(/Android ([\d.]+)/);
-    if(android){const model=ua.match(/;\s([^;()]+)\sBuild\//);const m=model?model[1].trim():'Android Device';return`📱 ${m} (Android ${android[1]})`}
-    const win=ua.match(/Windows NT ([\d.]+)/);
-    if(win){const versions={'10.0':'10/11','6.3':'8.1','6.2':'8','6.1':'7'};const wv=versions[win[1]]||win[1];return`💻 Windows ${wv}`}
-    const mac=ua.match(/Mac OS X ([\d_]+)/);
-    if(mac){const v=mac[1].replace(/_/g,'.');return`💻 macOS ${v}`}
-    if(/Linux/.test(ua))return`💻 Linux`;
-    return`❓ Unknown`;
-  }
-  const deviceName=getDeviceName(ua);
-  const browser=(()=>{if(/Edg/.test(ua))return'Edge';if(/OPR|Opera/.test(ua))return'Opera';if(/Firefox/.test(ua))return'Firefox';if(/Chrome/.test(ua))return'Chrome';if(/Safari/.test(ua))return'Safari';return'Other';})();
-  const ref=document.referrer||'مباشر / Direct';
-  const lang=navigator.language||'—';
-  const screen_=`${screen.width}×${screen.height}`;
-  const msg=`━━━━━━━━━━━━━━━━━━━━━━━\n👁️ *زيارة جديدة — Dash Lebanon*\n━━━━━━━━━━━━━━━━━━━━━━━\n📅 ${ds}\n🕐 ${ts}\n📲 *الجهاز:* ${deviceName}\n🌐 المتصفح: ${browser}\n📐 الشاشة: ${screen_}\n🗣️ اللغة: ${lang}\n🔗 المصدر: ${ref.substring(0,80)}\n━━━━━━━━━━━━━━━━━━━━━━━`;
+  if(sessionStorage.getItem('visit_tracked'))return;sessionStorage.setItem('visit_tracked','1');
+  const now=new Date();const ds=now.toLocaleDateString('ar-LB',{weekday:'long',year:'numeric',month:'long',day:'numeric'});const ts=now.toLocaleTimeString('ar-LB',{hour:'2-digit',minute:'2-digit'});
+  const ua=navigator.userAgent;const isMob=/Mobile|Android|iPhone|iPad/.test(ua);const device=isMob?'📱 Mobile':'💻 Desktop';
+  const ref=document.referrer||'مباشر / Direct';const lang=navigator.language||'غير معروف';
+  const msg=`━━━━━━━━━━━━━━━━━━━━━━━\n👁️ *زيارة جديدة — Dash Lebanon*\n━━━━━━━━━━━━━━━━━━━━━━━\n📅 ${ds}\n🕐 ${ts}\n${device}\n🌐 لغة المتصفح: ${lang}\n🔗 المصدر: ${ref.substring(0,80)}\n━━━━━━━━━━━━━━━━━━━━━━━`;
   tgSend(msg);
 }
-
 async function trackCartAdd(productName,qty,price){
   const now=new Date();const ts=now.toLocaleTimeString('ar-LB',{hour:'2-digit',minute:'2-digit'});
   const msg=`🛒 *إضافة للسلة — Dash Lebanon*\n━━━━━━━━━━━━━━━━━━━━━━━\n📦 المنتج: *${productName}*\n🔢 الكمية: ${qty}\n💵 السعر: ${fmt(price)} (${fmtLBPNum(price)} ل.ل)\n🕐 ${ts}\n━━━━━━━━━━━━━━━━━━━━━━━`;
@@ -933,14 +915,14 @@ async function sendOrder(info,num){
   const t_=`━━━━━━━━━━━━━━━━━━━━━━━\n🛒 *طلب جديد — Dash Lebanon*\n━━━━━━━━━━━━━━━━━━━━━━━\n📋 *رقم الطلب:* \`${num}\`\n📅 ${ds} — 🕐 ${ts}\n\n━━━━━━━━━━━━━━━━━━━━━━━\n👤 *معلومات الزبون*\n━━━━━━━━━━━━━━━━━━━━━━━\n🙍 الاسم: *${info.name}*\n📱 الهاتف: *${info.phone}*${info.phone2?`\n📱 هاتف 2: *${info.phone2}*`:''}\n\n━━━━━━━━━━━━━━━━━━━━━━━\n📍 *عنوان التوصيل*\n━━━━━━━━━━━━━━━━━━━━━━━\n🏙️ *${info.city}* — 🗺️ *${info.district}*\n🏠 *${info.address}*${info.floor?`\n🏢 الطابق: *${info.floor}*`:''}${info.notes?`\n📝 *${info.notes}*`:''}\n\n━━━━━━━━━━━━━━━━━━━━━━━\n🛍️ *تفاصيل الطلب* (${totalQty} قطعة)\n━━━━━━━━━━━━━━━━━━━━━━━\n\n${items}\n\n━━━━━━━━━━━━━━━━━━━━━━━\n💰 *الفاتورة*\n━━━━━━━━━━━━━━━━━━━━━━━\n🧾 مجموع المنتجات: *${fmt(cSub())}* (${fmtLBPNum(cSub())} ل.ل)\n🚚 رسوم التوصيل: *${fmt(cDlv())}*\n━━━━━━━━━━━━━━━━━━━━━━━\n💵 *الإجمالي: ${fmt(cTot())}*\n💵 *بالليرة: ${fmtLBPNum(cTot())} ل.ل*\n━━━━━━━━━━━━━━━━━━━━━━━\n✅ الحالة: *مقبول*`;
   return await tgSend(t_);
 }
-
-async function sendCancel(info,num,reason,transferAmt,hasProof){
-  const now=new Date();const ds=now.toLocaleDateString('ar-LB',{weekday:'long',year:'numeric',month:'long',day:'numeric'});const ts=now.toLocaleTimeString('ar-LB',{hour:'2-digit',minute:'2-digit'});
-  const msg=`━━━━━━━━━━━━━━━━━━━━━━━\n❌ *إلغاء طلب — Dash Lebanon*\n━━━━━━━━━━━━━━━━━━━━━━━\n📋 *رقم الطلب:* \`${num}\`\n👤 *${info.name}* | 📱 *${info.phone}*\n📅 ${ds} — 🕐 ${ts}\n\n💜 *رسوم الإلغاء عبر Whish Money*\n💵 المبلغ المُحوَّل: *${transferAmt||'لم يذكر'} $*\n📸 إشعار تحويل: *${hasProof?'✅ أرسل':'❌ لم يرسل'}*\n📝 *سبب الإلغاء:* ${reason||'لم يذكر سبباً'}\n━━━━━━━━━━━━━━━━━━━━━━━`;
+async function sendCancel(info,num,reason){
+  const msg=`━━━━━━━━━━━━━━━━━━━━━━━\n❌ *إلغاء طلب — Dash Lebanon*\n━━━━━━━━━━━━━━━━━━━━━━━\n📋 *رقم الطلب:* \`${num}\`\n👤 *${info.name}* | 📱 *${info.phone}*\n📝 *سبب:* ${reason||'لم يذكر سبباً'}\n━━━━━━━━━━━━━━━━━━━━━━━`;
   return await tgSend(msg);
 }
 
-// ONBOARDING
+// ═══════════════════════════════════════════════════════
+//  ONBOARDING
+// ═══════════════════════════════════════════════════════
 function showOnboarding(){
   if(localStorage.getItem('dl_onboarded'))return;
   const root=document.getElementById('onboard-root');
@@ -989,7 +971,9 @@ function submitOnboard(){
 }
 function skipOnboard(){localStorage.setItem('dl_onboarded','1');document.getElementById('onboard-root').innerHTML=''}
 
-// WA ORDER MODAL
+// ═══════════════════════════════════════════════════════
+//  WA ORDER MODAL
+// ═══════════════════════════════════════════════════════
 function openWaOrder(){
   const r=document.getElementById('mroot');
   const cartSummary=S.cart.map(i=>`<div class="wa-sum-row"><span>${esc(i.name)}${i.isOffer?' 🎁':''} × ${i.qty}</span><span>${fmt(parseFloat(i.price)*i.qty)}</span></div>`).join('');
@@ -1025,7 +1009,9 @@ function sendWaWithInfo(){
   document.getElementById('mroot').innerHTML='';
 }
 
-// RENDER ROUTER
+// ═══════════════════════════════════════════════════════
+//  RENDER ROUTER
+// ═══════════════════════════════════════════════════════
 function render(){
   const a=document.getElementById('app');
   switch(S.page){
@@ -1044,14 +1030,18 @@ function render(){
   }
 }
 
-// HOME
+// ═══════════════════════════════════════════════════════
+//  HOME - SEARCH FIX: only update grid, never lose focus
+// ═══════════════════════════════════════════════════════
 function buildGrid(){
   let all=getP();
   if(S.offersOnly)all=all.filter(p=>p.offer);
   const q=S.search.trim().toLowerCase();
   const ps=q?all.filter(p=>p.name.toLowerCase().includes(q)||(p.description||'').toLowerCase().includes(q)):all;
+
   if(!all.length)return`<div style="grid-column:span 2"><div class="empty"><div class="empty-ico">🛍️</div><div class="empty-ttl">${t('no_products')}</div></div></div>`;
   if(!ps.length)return`<div class="no-results"><div class="no-results-ico">🔍</div><div class="no-results-ttl">${t('no_results_for')} "${esc(S.search)}"</div><div class="no-results-sub">${t('try_diff')}</div></div>`;
+
   return ps.map(p=>{
     const disc=discountPct(p.oldPrice,p.price);
     return`<div class="pcard" onclick="S.offersOnly=false;go('product',${p.id})">
@@ -1086,6 +1076,7 @@ function pHome(){
     </div>
   </div>`;
   const commentsSec=renderComments();
+
   return`<div class="main pi">
     ${offersBanner}
     <div class="hometop">
@@ -1106,6 +1097,7 @@ function pHome(){
   </div>`;
 }
 
+// ── CRITICAL FIX: update only the grid without touching the search input ──
 let searchTimer;
 function doSearch(v){
   S.search=v;
@@ -1114,14 +1106,20 @@ function doSearch(v){
   if(v.trim()===ADMIN_SECRET){S.search='';go('alogin');return}
   clearTimeout(searchTimer);
   searchTimer=setTimeout(()=>{
-    if(S.page==='home'){const grid=document.getElementById('pgrid-container');if(grid)grid.innerHTML=buildGrid()}
+    if(S.page==='home'){
+      const grid=document.getElementById('pgrid-container');
+      if(grid)grid.innerHTML=buildGrid();
+    }
   },150);
 }
 function clearSearch(){
   S.search='';
-  const inp=document.getElementById('search-field');if(inp){inp.value='';inp.focus()}
-  const clrBtn=document.getElementById('search-clr-btn');if(clrBtn)clrBtn.classList.remove('visible');
-  const grid=document.getElementById('pgrid-container');if(grid)grid.innerHTML=buildGrid();
+  const inp=document.getElementById('search-field');
+  if(inp){inp.value='';inp.focus()}
+  const clrBtn=document.getElementById('search-clr-btn');
+  if(clrBtn)clrBtn.classList.remove('visible');
+  const grid=document.getElementById('pgrid-container');
+  if(grid)grid.innerHTML=buildGrid();
 }
 
 function renderComments(){
@@ -1139,7 +1137,9 @@ function renderComments(){
   return`<div class="comments-sec"><div class="comments-ttl">${t('comments_ttl')}</div><div class="comments-grid">${cards}</div></div>`;
 }
 
-// PRODUCT PAGE
+// ═══════════════════════════════════════════════════════
+//  PRODUCT PAGE
+// ═══════════════════════════════════════════════════════
 function pProduct(){
   const p=getP().find(p=>p.id===S.data);if(!p){go('home');return''}
   const others=getP().filter(x=>x.id!==p.id);const disc=discountPct(p.oldPrice,p.price);
@@ -1151,7 +1151,7 @@ function pProduct(){
       <div class="offer-opts">
         <div class="buy-opt${S.buyMode==='normal'?' active':''}" id="opt-normal" onclick="selOpt('normal')">
           <span class="buy-opt-icon">🛒</span><div class="buy-opt-lbl">${t('buy_normal')}</div>
-          <div class="buy-opt-price">${fmt(p.price)} <span style="font-size:0.68rem;font-weight:400">${t('per_piece')}</span></div>
+          <div class="buy-opt-price">${fmt(p.price)} <span style="font-size:0.7rem;font-weight:400">${t('per_piece')}</span></div>
         </div>
         <div class="buy-opt${S.buyMode==='offer'?' active':''}" id="opt-offer" onclick="selOpt('offer')">
           <span class="buy-opt-badge">🔥 ${t('buy_offer_lbl')}</span>
@@ -1228,7 +1228,9 @@ function doAdd(pid){
   updateCartBadge();
 }
 
-// CART
+// ═══════════════════════════════════════════════════════
+//  CART
+// ═══════════════════════════════════════════════════════
 function pCart(){
   if(!S.cart.length)return`<div class="main pi">
     <button class="back-btn" onclick="go('home')">${t('continue_shopping')}</button>
@@ -1256,7 +1258,7 @@ function pCart(){
     <div class="scard">
       <div class="srow"><span class="slbl">${t('cart_subtotal')}</span><span>${fmt(cSub())} <small style="color:var(--muted)">(${fmtLBPNum(cSub())} ل.ل)</small></span></div>
       <div class="srow"><span class="slbl">${t('cart_delivery')}</span><span>${fmt(cDlv())}</span></div>
-      <div class="srow"><span class="stot">${t('cart_total_lbl')}</span><span class="stot">${fmt(cTot())} <small style="color:var(--muted);font-size:0.73rem">(${fmtLBPNum(cTot())} ل.ل)</small></span></div>
+      <div class="srow"><span class="stot">${t('cart_total_lbl')}</span><span class="stot">${fmt(cTot())} <small style="color:var(--muted);font-size:0.75rem">(${fmtLBPNum(cTot())} ل.ل)</small></span></div>
     </div>
     <div style="margin-bottom:8px"><button class="btn btn-wa" onclick="openWaOrder()">${t('wa_order')}</button></div>
   </div>
@@ -1266,7 +1268,9 @@ function doQty(uid,q){cQty(uid,q);render();updateUI()}
 function doQtyInp(uid,v){cQty(uid,Math.max(1,parseInt(v)||1));render();updateUI()}
 function doRm(uid){cRm(uid);render();updateUI()}
 
-// CHECKOUT
+// ═══════════════════════════════════════════════════════
+//  CHECKOUT
+// ═══════════════════════════════════════════════════════
 function pCheckout(){
   const o=S.order||{};
   return`<div class="main pi" style="padding-bottom:110px">
@@ -1299,7 +1303,9 @@ function subCO(){
   S.order=info;go('review');
 }
 
-// REVIEW
+// ═══════════════════════════════════════════════════════
+//  REVIEW
+// ═══════════════════════════════════════════════════════
 function pReview(){
   const o=S.order;
   const items=S.cart.map(i=>`<div class="rrow"><span class="rlbl">${esc(i.name)}${i.isOffer?' 🎁':''} × ${i.qty}</span><span class="rval">${fmt(parseFloat(i.price)*i.qty)}</span></div>`).join('');
@@ -1309,7 +1315,7 @@ function pReview(){
     <div class="rcard"><div class="rlbl2">${t('order_summary')}</div>${items}<div class="rdiv"></div>
       <div class="rrow"><span class="rlbl">${t('cart_subtotal')}</span><span class="rval">${fmt(cSub())} (${fmtLBPNum(cSub())} ل.ل)</span></div>
       <div class="rrow"><span class="rlbl">🚚 Delivery</span><span class="rval">${fmt(cDlv())}</span></div>
-      <div class="rtrow"><span class="rtlbl">💵 ${t('cart_total_lbl')}</span><span class="rtamt">${fmt(cTot())} <span style="font-size:0.73rem;color:var(--muted)">(${fmtLBPNum(cTot())} ل.ل)</span></span></div>
+      <div class="rtrow"><span class="rtlbl">💵 ${t('cart_total_lbl')}</span><span class="rtamt">${fmt(cTot())} <span style="font-size:0.75rem;color:var(--muted)">(${fmtLBPNum(cTot())} ل.ل)</span></span></div>
     </div>
     <div class="rcard"><div class="rlbl2">${t('customer_info')}</div>
       <div class="rrow"><span class="rlbl">${t('full_name')}</span><span class="rval">${esc(o.name)}</span></div>
@@ -1325,61 +1331,21 @@ function pReview(){
     </div>
   </div>
   <div class="sticky"><div class="sticky2">
-    <button class="btn btn-c" style="flex:0 0 auto;width:auto;padding:13px 14px;font-size:0.82rem" onclick="openCnl()">${t('cancel_btn')}</button>
+    <button class="btn btn-c" style="flex:0 0 auto;width:auto;padding:14px 16px" onclick="openCnl()">${t('cancel_btn')}</button>
     <button class="btn btn-g" id="cfbtn" onclick="doConfirm()" style="flex:1">${t('confirm_btn')}</button>
   </div></div>
   <div id="cnl-modal" style="display:none">
     <div class="mov" onclick="closeCnl()"><div class="msh" onclick="event.stopPropagation()">
-      <div class="mhan"></div>
-      <div class="mttl">↩️ إلغاء الطلب</div>
-      ${cancelFeeHTML()}
+      <div class="mhan"></div><div class="mttl">❌ إلغاء الطلب</div>
+      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:14px;line-height:1.7">هل أنت متأكد؟</p>
       <div class="fg"><label class="fl">سبب الإلغاء <span class="opt">(اختياري)</span></label><textarea id="cnl-rsn" class="fc" placeholder="مثال: غيّرت رأيي..."></textarea></div>
-      <div class="fg"><label class="fl">المبلغ المُحوَّل ($) <span class="req">*</span></label><input id="cnl-amt" class="fc" type="number" dir="ltr" placeholder="4" min="0" step="0.5"></div>
-      <div class="fg" style="margin-bottom:18px"><label class="fl">هل أرسلت إشعار التحويل على واتساب؟</label>
-        <div style="display:flex;gap:10px;margin-top:6px">
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.86rem;font-weight:600;color:var(--primary)"><input type="radio" name="cnl_proof" value="yes" id="cp_yes"> ✅ نعم أرسلته</label>
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.86rem;font-weight:600;color:var(--muted)"><input type="radio" name="cnl_proof" value="no" id="cp_no"> لم أرسل بعد</label>
-        </div>
-      </div>
-      <div style="display:flex;gap:9px;margin-top:4px">
-        <button class="btn btn-x" id="cnl-cfbtn" onclick="doCancel()" style="flex:1">تأكيد الإلغاء</button>
-        <button class="btn btn-o" onclick="closeCnl()" style="flex:0 0 auto;width:auto;padding:13px 14px">رجوع</button>
+      <div style="display:flex;gap:10px;margin-top:6px">
+        <button class="btn btn-x" id="cnl-cfbtn" onclick="doCancel()">تأكيد الإلغاء</button>
+        <button class="btn btn-o" onclick="closeCnl()">رجوع</button>
       </div>
     </div></div>
   </div>`;
 }
-
-function cancelFeeHTML(){
-  return`<div class="cancel-fee-box">
-    <div class="cancel-fee-title">💜 رسوم الإلغاء</div>
-    <div class="cancel-fee-amount">${CANCEL_FEE} $</div>
-    <div class="cancel-fee-sub">يُطلب منك تحويل رسوم إلغاء رمزية قدرها <strong>${CANCEL_FEE}$</strong> عبر Whish Money<br>كتأكيد جدي لطلب الإلغاء.</div>
-    <div class="cancel-steps">
-      <div class="cancel-steps-title">📋 خطوات الإلغاء</div>
-      <div class="cancel-step">
-        <div class="cancel-step-num">1</div>
-        <span>افتح تطبيق <strong>Whish Money</strong> على هاتفك</span>
-      </div>
-      <div class="cancel-step">
-        <div class="cancel-step-num">2</div>
-        <span>حوّل مبلغ <strong>${CANCEL_FEE}$</strong> إلى الرقم التالي:</span>
-      </div>
-      <div class="cancel-whish">
-        <div class="cancel-whish-lbl">💜 Whish Money</div>
-        <div class="cancel-whish-num">${WHISH_NUMBER}</div>
-      </div>
-      <div class="cancel-step">
-        <div class="cancel-step-num">3</div>
-        <span>أرسل <strong>صورة إشعار التحويل</strong> على واتساب: <a href="https://wa.me/${WA_NUMBER}" target="_blank" style="color:var(--success);font-weight:700">+961 ${WA_NUMBER.slice(3)}</a></span>
-      </div>
-      <div class="cancel-step">
-        <div class="cancel-step-num">4</div>
-        <span>أكمل النموذج أدناه وأرسل طلب الإلغاء</span>
-      </div>
-    </div>
-  </div>`;
-}
-
 function openCnl(){document.getElementById('cnl-modal').style.display='block'}
 function closeCnl(){document.getElementById('cnl-modal').style.display='none'}
 async function doConfirm(){
@@ -1390,21 +1356,20 @@ async function doConfirm(){
 }
 async function doCancel(){
   const btn=document.getElementById('cnl-cfbtn');btn.disabled=true;btn.innerHTML='<div class="spin" style="border-top-color:#fff"></div>';
-  const reason=document.getElementById('cnl-rsn').value.trim();
-  const amt=document.getElementById('cnl-amt').value.trim();
-  const proofEl=document.querySelector('input[name="cnl_proof"]:checked');
-  const hasProof=proofEl?proofEl.value==='yes':false;
-  const num=S.onum||('DL-X-'+Date.now().toString().slice(-6));
-  await sendCancel(S.order,num,reason,amt,hasProof);
-  if(S.onum)updateOrderStatus(S.onum,'cancelled');
+  const reason=document.getElementById('cnl-rsn').value.trim();const num=S.onum||('DL-X-'+Date.now().toString().slice(-6));
+  await sendCancel(S.order,num,reason);if(S.onum)updateOrderStatus(S.onum,'cancelled');
   S.cart=[];saveCart();S.order=null;S.onum=null;go('cancelled');
 }
 
-// SUCCESS & CANCELLED
-function pSuccess(){const n=S.onum||'';return`<div class="main pi"><div class="rswrap"><div class="rsico">🎉</div><div class="rs-ok">${t('order_sent_ttl')}</div>${n?`<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 22px;margin-bottom:14px;font-size:0.84rem;color:#166534">رقم طلبك: <strong>${n}</strong></div>`:''}<div class="rs-sub">${t('thank_you')}<br><br>${t('auto_accepted').replace('\n','<br>')}</div><br><div style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:250px;margin:0 auto"><button class="btn btn-r" onclick="S.onum=null;go('home')">${t('back_store')}</button><button class="btn btn-out" onclick="go('orders')">${t('track_orders_btn')}</button></div></div></div>`}
+// ═══════════════════════════════════════════════════════
+//  SUCCESS & CANCELLED
+// ═══════════════════════════════════════════════════════
+function pSuccess(){const n=S.onum||'';return`<div class="main pi"><div class="rswrap"><div class="rsico">🎉</div><div class="rs-ok">${t('order_sent_ttl')}</div>${n?`<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 22px;margin-bottom:14px;font-size:0.86rem;color:#166534">رقم طلبك: <strong>${n}</strong></div>`:''}<div class="rs-sub">${t('thank_you')}<br><br>${t('auto_accepted').replace('\n','<br>')}</div><br><div style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:250px;margin:0 auto"><button class="btn btn-r" onclick="S.onum=null;go('home')">${t('back_store')}</button><button class="btn btn-out" onclick="go('orders')">${t('track_orders_btn')}</button></div></div></div>`}
 function pCancelled(){return`<div class="main pi"><div class="rswrap"><div class="rsico">😔</div><div class="rs-cn">${t('cancelled_ttl')}</div><div class="rs-sub">${t('cancelled_sub').replace('\n','<br>')}</div><br><button class="btn btn-r" style="max-width:230px;margin:0 auto" onclick="go('home')">${t('back_store')}</button></div></div>`}
 
-// ORDERS
+// ═══════════════════════════════════════════════════════
+//  ORDERS
+// ═══════════════════════════════════════════════════════
 function pOrders(){
   const orders=getOrders();
   if(!orders.length)return`<div class="main pi"><button class="back-btn" onclick="go('home')">${t('back')}</button><div class="empty"><div class="empty-ico">📋</div><div class="empty-ttl">${t('no_orders_ttl')}</div><div class="empty-sub">${t('no_orders_sub')}</div><br><button class="btn btn-r" style="width:auto;padding:12px 26px;margin:0 auto" onclick="go('home')">${t('browse')}</button></div></div>`;
@@ -1413,54 +1378,25 @@ function pOrders(){
     const itemsStr=o.items.map(i=>`${i.name}${i.isOffer?' 🎁':''} × ${i.qty}`).join('، ');
     const badge=o.status==='cancelled'?`<span class="ord-badge badge-cancelled">${t('cancelled_lbl')}</span>`:`<span class="ord-badge badge-accepted">${t('accepted_lbl')}</span>`;
     const stillCancel=o.status==='accepted'&&canCancel(o.date);
-    const cancelBtn=stillCancel?`<button class="btn btn-c btn-sm" onclick="openOrdCancel('${esc(o.num)}')">↩️ إلغاء</button>`:'';
+    const cancelBtn=stillCancel?`<button class="btn btn-c btn-sm" onclick="openOrdCancel('${esc(o.num)}')">إلغاء</button>`:'';
     const waBtn=o.status==='accepted'?`<a class="btn btn-wa btn-sm" href="https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('مرحباً، أريد الاستفسار عن طلب رقم '+o.num)}" target="_blank">💬</a>`:'';
     return`<div class="ord-card"><div class="ord-head"><div><div class="ord-num">${esc(o.num)}</div><div class="ord-date">${dateStr}</div></div>${badge}</div><div class="ord-items">${esc(itemsStr)}</div><div class="ord-total"><span class="ord-total-lbl">${t('total_lbl2')}</span><span class="ord-total-amt">${fmt(o.total)} (${fmtLBPNum(o.total)} ل.ل)</span></div>${cancelBtn||waBtn?`<div class="ord-actions">${cancelBtn}${waBtn}</div>`:''}</div>`;
   }).join('');
-  return`<div class="main pi">
-    <button class="back-btn" onclick="go('home')">${t('back')}</button>
-    <div style="font-size:0.78rem;color:var(--muted);margin-bottom:12px">📦 ${orders.length} ${t('order_count')}</div>
-    ${cards}
-    <div id="ord-cnl-modal" style="display:none">
-      <div class="mov" onclick="closeOrdCancel()"><div class="msh" onclick="event.stopPropagation()">
-        <div class="mhan"></div>
-        <div class="mttl">↩️ إلغاء الطلب</div>
-        ${cancelFeeHTML()}
-        <p style="color:var(--muted);font-size:0.82rem;margin-bottom:12px">⏰ الإلغاء متاح خلال 24 ساعة من وقت الطلب.</p>
-        <div class="fg"><label class="fl">سبب الإلغاء <span class="opt">(اختياري)</span></label><textarea id="ord-cnl-rsn" class="fc"></textarea></div>
-        <div class="fg"><label class="fl">المبلغ المُحوَّل ($) <span class="req">*</span></label><input id="ord-cnl-amt" class="fc" type="number" dir="ltr" placeholder="4" min="0" step="0.5"></div>
-        <div class="fg" style="margin-bottom:18px"><label class="fl">هل أرسلت إشعار التحويل على واتساب؟</label>
-          <div style="display:flex;gap:10px;margin-top:6px">
-            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.86rem;font-weight:600;color:var(--primary)"><input type="radio" name="ord_proof" value="yes"> ✅ نعم</label>
-            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.86rem;font-weight:600;color:var(--muted)"><input type="radio" name="ord_proof" value="no"> لم أرسل بعد</label>
-          </div>
-        </div>
-        <div style="display:flex;gap:9px">
-          <button class="btn btn-x" id="ord-cnl-cfbtn" onclick="doOrdCancel()" style="flex:1">تأكيد الإلغاء</button>
-          <button class="btn btn-o" onclick="closeOrdCancel()" style="flex:0 0 auto;width:auto;padding:13px 14px">رجوع</button>
-        </div>
-      </div></div>
-    </div>
-  </div>`;
+  return`<div class="main pi"><button class="back-btn" onclick="go('home')">${t('back')}</button><div style="font-size:0.8rem;color:var(--muted);margin-bottom:13px">📦 ${orders.length} ${t('order_count')}</div>${cards}<div id="ord-cnl-modal" style="display:none"><div class="mov" onclick="closeOrdCancel()"><div class="msh" onclick="event.stopPropagation()"><div class="mhan"></div><div class="mttl">❌ إلغاء الطلب</div><p style="color:var(--muted);font-size:0.9rem;margin-bottom:13px">يمكن الإلغاء خلال 24 ساعة فقط.</p><div class="fg"><label class="fl">سبب الإلغاء <span class="opt">(اختياري)</span></label><textarea id="ord-cnl-rsn" class="fc"></textarea></div><div style="display:flex;gap:10px;margin-top:6px"><button class="btn btn-x" id="ord-cnl-cfbtn" onclick="doOrdCancel()">تأكيد الإلغاء</button><button class="btn btn-o" onclick="closeOrdCancel()">رجوع</button></div></div></div></div></div>`;
 }
-
 let cancelingNum=null;
 function openOrdCancel(num){cancelingNum=num;document.getElementById('ord-cnl-modal').style.display='block'}
 function closeOrdCancel(){document.getElementById('ord-cnl-modal').style.display='none';cancelingNum=null}
 async function doOrdCancel(){
   if(!cancelingNum)return;const btn=document.getElementById('ord-cnl-cfbtn');btn.disabled=true;btn.innerHTML='<div class="spin" style="border-top-color:#fff"></div>';
-  const reason=document.getElementById('ord-cnl-rsn').value.trim();
-  const amt=document.getElementById('ord-cnl-amt').value.trim();
-  const proofEl=document.querySelector('input[name="ord_proof"]:checked');
-  const hasProof=proofEl?proofEl.value==='yes':false;
-  const orders=getOrders();const order=orders.find(o=>o.num===cancelingNum);
+  const reason=document.getElementById('ord-cnl-rsn').value.trim();const orders=getOrders();const order=orders.find(o=>o.num===cancelingNum);
   if(order&&!canCancel(order.date)){closeOrdCancel();toast('❌ انتهت مهلة الإلغاء (24 ساعة)');return}
-  const info=order?order.info:{name:'غير معروف',phone:'—'};
-  await sendCancel(info,cancelingNum,reason,amt,hasProof);
-  updateOrderStatus(cancelingNum,'cancelled');cancelingNum=null;toast('✅ تم إرسال طلب الإلغاء');go('orders');
+  const info=order?order.info:{name:'غير معروف',phone:'—'};await sendCancel(info,cancelingNum,reason);updateOrderStatus(cancelingNum,'cancelled');cancelingNum=null;toast('✅ تم إرسال طلب الإلغاء');go('orders');
 }
 
-// CONTACT
+// ═══════════════════════════════════════════════════════
+//  CONTACT
+// ═══════════════════════════════════════════════════════
 function pContact(){
   return`<div class="main pi">
     <button class="back-btn" onclick="go('home')">${t('back')}</button>
@@ -1472,13 +1408,15 @@ function pContact(){
       <div class="fg"><label class="fl">${t('ask_msg')}</label><textarea id="ask-msg" class="fc" style="min-height:100px"></textarea></div>
       <button class="btn btn-wa" onclick="sendAsk()">${t('ask_send')}</button>
     </div>
-    <div class="fcard" style="text-align:center"><div style="font-size:0.8rem;font-weight:700;color:var(--muted);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px">${t('follow_us')}</div><div style="display:flex;flex-wrap:wrap;gap:7px;justify-content:center"><a href="https://www.instagram.com/dash_lebanon_123" target="_blank" class="soc-btn soc-ig">📸 Instagram</a><a href="https://www.facebook.com/profile.php?id=61567267966194" target="_blank" class="soc-btn soc-fb">👍 Facebook</a><a href="https://www.tiktok.com/@dash.lebanon.123" target="_blank" class="soc-btn soc-tt">🎵 TikTok</a></div></div>
+    <div class="fcard" style="text-align:center"><div style="font-size:0.82rem;font-weight:700;color:var(--muted);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px">${t('follow_us')}</div><div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center"><a href="https://www.instagram.com/dash_lebanon_123" target="_blank" class="soc-btn soc-ig">📸 Instagram</a><a href="https://www.facebook.com/profile.php?id=61567267966194" target="_blank" class="soc-btn soc-fb">👍 Facebook</a><a href="https://www.tiktok.com/@dash.lebanon.123" target="_blank" class="soc-btn soc-tt">🎵 TikTok</a></div></div>
   </div>`;
 }
 function sendAsk(){const name=document.getElementById('ask-name').value.trim();const msg=document.getElementById('ask-msg').value.trim();if(!msg){toast('⚠️ اكتب سؤالك أولاً');return}const text=`مرحباً Dash Lebanon!\n${name?'الاسم: '+name+'\n':''}السؤال: ${msg}`;window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`,'_blank')}
 
-// ADMIN
-function pALogin(){return`<div class="al-wrap"><div class="al-card"><div class="al-logo">Dash <span>Lebanon</span></div><div class="al-sub">لوحة تحكم الأدمن</div><div id="al-err" class="alert a-d" style="display:none">بيانات الدخول غير صحيحة</div><div class="fg"><label class="fl">اسم المستخدم</label><input id="al-u" class="fc" type="text" dir="ltr" placeholder="username"></div><div class="fg" style="margin-bottom:20px"><label class="fl">كلمة المرور</label><input id="al-p" class="fc" type="password" dir="ltr" placeholder="password"></div><button class="btn btn-d" onclick="doLogin()">دخول →</button><button onclick="go('home')" style="background:none;border:none;color:var(--muted);cursor:pointer;font-family:'Cairo',sans-serif;font-size:0.78rem;margin-top:12px;width:100%;text-align:center">← العودة للمتجر</button></div></div>`}
+// ═══════════════════════════════════════════════════════
+//  ADMIN
+// ═══════════════════════════════════════════════════════
+function pALogin(){return`<div class="al-wrap"><div class="al-card"><div class="al-logo">Dash <span>Lebanon</span></div><div class="al-sub">لوحة تحكم الأدمن</div><div id="al-err" class="alert a-d" style="display:none">بيانات الدخول غير صحيحة</div><div class="fg"><label class="fl">اسم المستخدم</label><input id="al-u" class="fc" type="text" dir="ltr" placeholder="username"></div><div class="fg" style="margin-bottom:20px"><label class="fl">كلمة المرور</label><input id="al-p" class="fc" type="password" dir="ltr" placeholder="password"></div><button class="btn btn-d" onclick="doLogin()">دخول →</button><button onclick="go('home')" style="background:none;border:none;color:var(--muted);cursor:pointer;font-family:'Cairo',sans-serif;font-size:0.8rem;margin-top:13px;width:100%;text-align:center">← العودة للمتجر</button></div></div>`}
 function bindALogin(){setTimeout(()=>{const p=document.getElementById('al-p');if(p)p.onkeydown=e=>{if(e.key==='Enter')doLogin()}},50)}
 function doLogin(){const u=document.getElementById('al-u').value.trim();const p=document.getElementById('al-p').value;const a=getA();if(u===a.u&&p===a.p){S.logged=true;S.tab='products';go('admin')}else document.getElementById('al-err').style.display='block'}
 function pAdmin(){
@@ -1492,19 +1430,21 @@ function bindAdmin(){setTimeout(()=>{const i=document.getElementById('ap-img');i
 function aTab(t_){S.tab=t_;render()}
 function aProd(){const ps=getP();if(!ps.length)return`<div class="empty"><div class="empty-ico">📦</div><div class="empty-ttl">لا توجد منتجات</div></div>`;return ps.map(p=>`<div class="a-row"><img src="${esc(p.image)}" onerror="this.src='https://placehold.co/56x56/e5e7eb/9ca3af?text=?'"><div class="a-info"><div class="a-name">${esc(p.name)}</div><div class="a-price">${fmt(p.price)} (${fmtLBPNum(p.price)} ل.ل)${p.oldPrice?` | was: ${fmt(p.oldPrice)}`:''}${p.offer?` | 🎁 ${fmt(p.offer.price)}×${p.offer.qty}`:''}</div><div class="a-meta">دليفري: ${fmt(p.deliveryPrice)}</div></div><div class="a-btns"><button class="btn btn-out btn-sm" onclick="openEdit(${p.id})">✏️</button><button class="btn btn-x btn-sm" onclick="aDel(${p.id})">🗑️</button></div></div>`).join('')}
 function aOrdsAdmin(){const orders=getOrders();if(!orders.length)return`<div class="empty"><div class="empty-ico">📋</div><div class="empty-ttl">لا توجد طلبات</div></div>`;return orders.map(o=>{const d=new Date(o.date);const dateStr=d.toLocaleDateString('ar-LB',{year:'numeric',month:'short',day:'numeric'});const itemsStr=o.items.map(i=>`${i.name}${i.isOffer?' 🎁':''} ×${i.qty}`).join(' | ');const badge=o.status==='cancelled'?`<span class="ord-badge badge-cancelled">❌ ملغى</span>`:`<span class="ord-badge badge-accepted">✅ مقبول</span>`;return`<div class="ord-card"><div class="ord-head"><div><div class="ord-num">${esc(o.num)}</div><div class="ord-date">${dateStr} • ${esc(o.info.name)} • ${esc(o.info.phone)}</div></div>${badge}</div><div class="ord-items">${esc(itemsStr)}</div><div class="ord-total"><span class="ord-total-lbl">${esc(o.info.city)} — ${esc(o.info.district)}</span><span class="ord-total-amt">${fmt(o.total)} (${fmtLBPNum(o.total)} ل.ل)</span></div></div>`}).join('')}
-function aAdd(){return`<div class="fcard"><div style="font-size:0.95rem;font-weight:800;color:var(--primary);margin-bottom:14px">➕ إضافة منتج جديد</div>${pForm()}<div style="display:flex;gap:9px;margin-top:14px"><button class="btn btn-r" onclick="aSaveNew()">💾 إضافة</button><button class="btn btn-o" onclick="aTab('products')">إلغاء</button></div></div>`}
-function aSet(){const a=getA();return`<div class="fcard"><div style="font-size:0.95rem;font-weight:800;color:var(--primary);margin-bottom:14px">⚙️ بيانات الأدمن</div><div id="s-al" style="display:none"></div><div class="fg"><label class="fl">اسم المستخدم</label><input id="s-u" class="fc" type="text" dir="ltr" value="${esc(a.u)}"></div><div class="fg"><label class="fl">كلمة المرور الجديدة</label><input id="s-p" class="fc" type="password" dir="ltr" placeholder="اتركه فارغاً للإبقاء"></div><div class="fg"><label class="fl">تأكيد كلمة المرور</label><input id="s-p2" class="fc" type="password" dir="ltr"></div><button class="btn btn-r" onclick="aSaveSt()">💾 حفظ</button></div>`}
-function pForm(p=null){const px=p?'ep':'ap';return`<div class="fg"><label class="fl">اسم المنتج <span class="req">*</span></label><input id="${px}-name" class="fc" type="text" value="${esc(p?p.name:'')}"></div><div class="fg"><label class="fl">السعر القديم ($)</label><input id="${px}-oldprice" class="fc" type="number" min="0" step="0.5" dir="ltr" placeholder="سعر قديم للشطب" value="${esc(p&&p.oldPrice?p.oldPrice:'')}"></div><div class="fg"><label class="fl">رابط الصورة <span class="req">*</span></label><input id="${px}-img" class="fc" type="url" dir="ltr" value="${esc(p?p.image:'')}" oninput="prv('${px}-img','${px}-prv')"><div class="prvbox" id="${px}-prv" style="${p&&p.image?'display:block':''}"><img src="${esc(p?p.image:'')}" onerror="this.parentElement.style.display='none'"></div></div><div class="fg"><label class="fl">وصف المنتج</label><textarea id="${px}-desc" class="fc">${esc(p?p.description:'')}</textarea></div><div class="frow"><div class="fg"><label class="fl">السعر ($) <span class="req">*</span></label><input id="${px}-price" class="fc" type="number" min="0" step="0.5" dir="ltr" value="${esc(p?p.price:'')}"></div><div class="fg"><label class="fl">سعر الدليفري ($)</label><input id="${px}-dlv" class="fc" type="number" min="0" dir="ltr" placeholder="3" value="${esc(p?p.deliveryPrice:'')}"></div></div><div class="fg"><label class="fl">ملاحظة</label><input id="${px}-note" class="fc" type="text" value="${esc(p?p.note:'')}"></div><div style="background:var(--bg);border-radius:var(--rs);padding:13px;margin-top:4px"><div style="font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:10px">🔥 إعدادات العرض (اختياري)</div><div class="frow"><div class="fg"><label class="fl">كمية العرض</label><input id="${px}-oqty" class="fc" type="number" min="2" dir="ltr" placeholder="2" value="${esc(p&&p.offer?p.offer.qty:'')}"></div><div class="fg"><label class="fl">سعر العرض ($)</label><input id="${px}-oprice" class="fc" type="number" min="0" step="0.5" dir="ltr" value="${esc(p&&p.offer?p.offer.price:'')}"></div></div><div class="fg" style="margin-bottom:0"><label class="fl">نص العرض</label><input id="${px}-olabel" class="fc" type="text" value="${esc(p&&p.offer?p.offer.label:'')}"></div></div>`}
+function aAdd(){return`<div class="fcard"><div style="font-size:0.98rem;font-weight:800;color:var(--primary);margin-bottom:15px">➕ إضافة منتج جديد</div>${pForm()}<div style="display:flex;gap:10px;margin-top:15px"><button class="btn btn-r" onclick="aSaveNew()">💾 إضافة</button><button class="btn btn-o" onclick="aTab('products')">إلغاء</button></div></div>`}
+function aSet(){const a=getA();return`<div class="fcard"><div style="font-size:0.98rem;font-weight:800;color:var(--primary);margin-bottom:15px">⚙️ بيانات الأدمن</div><div id="s-al" style="display:none"></div><div class="fg"><label class="fl">اسم المستخدم</label><input id="s-u" class="fc" type="text" dir="ltr" value="${esc(a.u)}"></div><div class="fg"><label class="fl">كلمة المرور الجديدة</label><input id="s-p" class="fc" type="password" dir="ltr" placeholder="اتركه فارغاً للإبقاء"></div><div class="fg"><label class="fl">تأكيد كلمة المرور</label><input id="s-p2" class="fc" type="password" dir="ltr"></div><button class="btn btn-r" onclick="aSaveSt()">💾 حفظ</button></div>`}
+function pForm(p=null){const px=p?'ep':'ap';return`<div class="fg"><label class="fl">اسم المنتج <span class="req">*</span></label><input id="${px}-name" class="fc" type="text" value="${esc(p?p.name:'')}"></div><div class="fg"><label class="fl">السعر القديم ($)</label><input id="${px}-oldprice" class="fc" type="number" min="0" step="0.5" dir="ltr" placeholder="سعر قديم للشطب" value="${esc(p&&p.oldPrice?p.oldPrice:'')}"></div><div class="fg"><label class="fl">رابط الصورة <span class="req">*</span></label><input id="${px}-img" class="fc" type="url" dir="ltr" value="${esc(p?p.image:'')}" oninput="prv('${px}-img','${px}-prv')"><div class="prvbox" id="${px}-prv" style="${p&&p.image?'display:block':''}"><img src="${esc(p?p.image:'')}" onerror="this.parentElement.style.display='none'"></div></div><div class="fg"><label class="fl">وصف المنتج</label><textarea id="${px}-desc" class="fc">${esc(p?p.description:'')}</textarea></div><div class="frow"><div class="fg"><label class="fl">السعر ($) <span class="req">*</span></label><input id="${px}-price" class="fc" type="number" min="0" step="0.5" dir="ltr" value="${esc(p?p.price:'')}"></div><div class="fg"><label class="fl">سعر الدليفري ($)</label><input id="${px}-dlv" class="fc" type="number" min="0" dir="ltr" placeholder="3" value="${esc(p?p.deliveryPrice:'')}"></div></div><div class="fg"><label class="fl">ملاحظة</label><input id="${px}-note" class="fc" type="text" value="${esc(p?p.note:'')}"></div><div style="background:var(--bg);border-radius:var(--rs);padding:14px;margin-top:4px"><div style="font-size:0.8rem;font-weight:700;color:var(--muted);margin-bottom:11px">🔥 إعدادات العرض (اختياري)</div><div class="frow"><div class="fg"><label class="fl">كمية العرض</label><input id="${px}-oqty" class="fc" type="number" min="2" dir="ltr" placeholder="2" value="${esc(p&&p.offer?p.offer.qty:'')}"></div><div class="fg"><label class="fl">سعر العرض ($)</label><input id="${px}-oprice" class="fc" type="number" min="0" step="0.5" dir="ltr" value="${esc(p&&p.offer?p.offer.price:'')}"></div></div><div class="fg" style="margin-bottom:0"><label class="fl">نص العرض</label><input id="${px}-olabel" class="fc" type="text" value="${esc(p&&p.offer?p.offer.label:'')}"></div></div>`}
 function prv(iid,pid){const url=document.getElementById(iid).value.trim();const box=document.getElementById(pid);if(!box)return;if(url){box.style.display='block';box.querySelector('img').src=url}else box.style.display='none'}
 function rdF(px){const oqty=parseInt(document.getElementById(`${px}-oqty`).value)||0;const oprice=parseFloat(document.getElementById(`${px}-oprice`).value)||0;const olabel=document.getElementById(`${px}-olabel`).value.trim();const offer=(oqty>=2&&oprice>0)?{qty:oqty,price:oprice,label:olabel||`اشتري ${oqty} بـ ${oprice}$`}:null;const oldPriceVal=parseFloat(document.getElementById(`${px}-oldprice`).value)||null;return{name:document.getElementById(`${px}-name`).value.trim(),image:document.getElementById(`${px}-img`).value.trim(),description:document.getElementById(`${px}-desc`).value.trim(),price:parseFloat(document.getElementById(`${px}-price`).value)||0,oldPrice:oldPriceVal,deliveryPrice:parseFloat(document.getElementById(`${px}-dlv`).value)||3,note:document.getElementById(`${px}-note`).value.trim(),offer}}
 function aSaveNew(){const d=rdF('ap');if(!d.name||!d.price){toast('⚠️ الاسم والسعر مطلوبان');return}const ps=getP();ps.push({id:Date.now(),...d});setP(ps);toast('✅ تمت إضافة المنتج');aTab('products')}
 function aDel(id){if(!confirm('هل أنت متأكد من حذف هذا المنتج؟'))return;setP(getP().filter(p=>p.id!==id));toast('🗑️ تم الحذف');render()}
-function openEdit(id){const p=getP().find(p=>p.id===id);if(!p)return;const r=document.getElementById('mroot2')||document.getElementById('mroot');r.innerHTML=`<div class="mov" id="mo" onclick="clsM(event)"><div class="msh" onclick="event.stopPropagation()"><div class="mhan"></div><div class="mttl">✏️ تعديل المنتج</div>${pForm(p)}<div style="display:flex;gap:9px;margin-top:14px"><button class="btn btn-r" onclick="aSaveEd(${id})">💾 حفظ</button><button class="btn btn-o" onclick="clsM()">إلغاء</button></div></div></div>`;setTimeout(()=>{const i=document.getElementById('ep-img');if(i)i.oninput=()=>prv('ep-img','ep-prv')},30)}
+function openEdit(id){const p=getP().find(p=>p.id===id);if(!p)return;const r=document.getElementById('mroot2')||document.getElementById('mroot');r.innerHTML=`<div class="mov" id="mo" onclick="clsM(event)"><div class="msh" onclick="event.stopPropagation()"><div class="mhan"></div><div class="mttl">✏️ تعديل المنتج</div>${pForm(p)}<div style="display:flex;gap:10px;margin-top:16px"><button class="btn btn-r" onclick="aSaveEd(${id})">💾 حفظ</button><button class="btn btn-o" onclick="clsM()">إلغاء</button></div></div></div>`;setTimeout(()=>{const i=document.getElementById('ep-img');if(i)i.oninput=()=>prv('ep-img','ep-prv')},30)}
 function aSaveEd(id){const d=rdF('ep');if(!d.name||!d.price){toast('⚠️ الاسم والسعر مطلوبان');return}const ps=getP(),i=ps.findIndex(p=>p.id===id);if(i<0)return;ps[i]={id,...d};setP(ps);clsM();toast('✅ تم التعديل');render()}
 function clsM(e){if(e&&e.target.id!=='mo')return;const r=document.getElementById('mroot2')||document.getElementById('mroot');if(r)r.innerHTML=''}
 function aSaveSt(){const u=document.getElementById('s-u').value.trim();const p=document.getElementById('s-p').value;const p2=document.getElementById('s-p2').value;const al=document.getElementById('s-al');if(!u){al.className='alert a-d';al.textContent='اسم المستخدم مطلوب';al.style.display='block';return}if(p&&p!==p2){al.className='alert a-d';al.textContent='كلمتا المرور غير متطابقتين';al.style.display='block';return}setA({u,p:p||getA().p});al.className='alert a-s';al.textContent='✅ تم الحفظ';al.style.display='block';setTimeout(()=>al.style.display='none',3000)}
 
-// BOOT
+// ═══════════════════════════════════════════════════════
+//  BOOT
+// ═══════════════════════════════════════════════════════
 S.dqty=1;applyDark();applyLang();render();updateUI();trackVisit();
 setTimeout(()=>showOnboarding(),1200);
 </script>
