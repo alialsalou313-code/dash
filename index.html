@@ -941,11 +941,101 @@ async function tgSend(text){
   catch(e){console.error('TG:',e);return false}
 }
 async function trackVisit(){
-  if(sessionStorage.getItem('visit_tracked'))return;sessionStorage.setItem('visit_tracked','1');
-  const now=new Date();const ds=now.toLocaleDateString('ar-LB',{weekday:'long',year:'numeric',month:'long',day:'numeric'});const ts=now.toLocaleTimeString('ar-LB',{hour:'2-digit',minute:'2-digit'});
-  const ua=navigator.userAgent;const isMob=/Mobile|Android|iPhone|iPad/.test(ua);const device=isMob?'📱 Mobile':'💻 Desktop';
-  const ref=document.referrer||'مباشر / Direct';const lang=navigator.language||'غير معروف';
-  const msg=`━━━━━━━━━━━━━━━━━━━━━━━\n👁️ *زيارة جديدة — Dash Lebanon*\n━━━━━━━━━━━━━━━━━━━━━━━\n📅 ${ds}\n🕐 ${ts}\n${device}\n🌐 لغة المتصفح: ${lang}\n🔗 المصدر: ${ref.substring(0,80)}\n━━━━━━━━━━━━━━━━━━━━━━━`;
+  if(sessionStorage.getItem('visit_tracked'))return;
+  sessionStorage.setItem('visit_tracked','1');
+
+  const now=new Date();
+  const ds=now.toLocaleDateString('ar-LB',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const ts=now.toLocaleTimeString('ar-LB',{hour:'2-digit',minute:'2-digit'});
+
+  const ua=navigator.userAgent;
+
+  // ── استخراج اسم الجهاز الكامل ──
+  function getDeviceName(ua){
+    // iPhone
+    const iphone=ua.match(/iPhone OS ([\d_]+)/);
+    if(iphone){const v=iphone[1].replace(/_/g,'.');return`📱 iPhone (iOS ${v})`}
+    // iPad
+    const ipad=ua.match(/iPad.*OS ([\d_]+)/);
+    if(ipad){const v=ipad[1].replace(/_/g,'.');return`📱 iPad (iOS ${v})`}
+    // Samsung
+    const sam=ua.match(/Samsung|SM-[A-Z0-9]+/i);
+    const samModel=ua.match(/SM-([A-Z0-9]+)/i);
+    if(sam||samModel){
+      const model=samModel?`SM-${samModel[1]}`:'Samsung';
+      return`📱 Samsung ${model}`
+    }
+    // Huawei
+    const hw=ua.match(/HUAWEI ([A-Z0-9\-]+)/i)||ua.match(/HW-([A-Z0-9]+)/i);
+    if(hw)return`📱 Huawei ${hw[1]}`;
+    // Xiaomi / Redmi / POCO
+    const xi=ua.match(/Redmi ([A-Z0-9 ]+)/i)||ua.match(/POCO ([A-Z0-9]+)/i)||ua.match(/MI ([A-Z0-9 ]+)/i);
+    if(xi)return`📱 Xiaomi ${xi[1].trim()}`;
+    // OnePlus
+    const op=ua.match(/OnePlus([A-Z0-9 ]+)/i)||ua.match(/OP-([A-Z0-9]+)/i);
+    if(op)return`📱 OnePlus ${op[1].trim()}`;
+    // Realme
+    const rm=ua.match(/Realme ([A-Z0-9 ]+)/i)||ua.match(/RMX([0-9]+)/i);
+    if(rm)return`📱 Realme ${rm[0]}`;
+    // OPPO
+    const oppo=ua.match(/OPPO ([A-Z0-9]+)/i)||ua.match(/CPH([0-9]+)/i);
+    if(oppo)return`📱 OPPO ${oppo[0]}`;
+    // Nokia
+    const nokia=ua.match(/Nokia([A-Z0-9\. ]+)/i);
+    if(nokia)return`📱 Nokia ${nokia[1].trim()}`;
+    // LG
+    const lg=ua.match(/LG-([A-Z0-9]+)/i)||ua.match(/LG ([A-Z0-9]+)/i);
+    if(lg)return`📱 LG ${lg[1]}`;
+    // Sony
+    const sony=ua.match(/Sony([A-Z0-9 ]+)/i)||ua.match(/Xperia ([A-Z0-9 ]+)/i);
+    if(sony)return`📱 Sony Xperia ${sony[1].trim()}`;
+    // Android generic
+    const android=ua.match(/Android ([\d.]+)/);
+    if(android){
+      const model=ua.match(/;\s([^;()]+)\sBuild\//);
+      const m=model?model[1].trim():'Android Device';
+      return`📱 ${m} (Android ${android[1]})`
+    }
+    // Windows
+    const win=ua.match(/Windows NT ([\d.]+)/);
+    if(win){
+      const versions={'10.0':'10/11','6.3':'8.1','6.2':'8','6.1':'7'};
+      const wv=versions[win[1]]||win[1];
+      return`💻 Windows ${wv}`
+    }
+    // Mac
+    const mac=ua.match(/Mac OS X ([\d_]+)/);
+    if(mac){const v=mac[1].replace(/_/g,'.');return`💻 macOS ${v}`}
+    // Linux
+    if(/Linux/.test(ua))return`💻 Linux`;
+    return`❓ Unknown`;
+  }
+
+  const deviceName=getDeviceName(ua);
+  const browser=(()=>{
+    if(/Edg/.test(ua))return'Edge';
+    if(/OPR|Opera/.test(ua))return'Opera';
+    if(/Firefox/.test(ua))return'Firefox';
+    if(/Chrome/.test(ua))return'Chrome';
+    if(/Safari/.test(ua))return'Safari';
+    return'Other';
+  })();
+  const ref=document.referrer||'مباشر / Direct';
+  const lang=navigator.language||'—';
+  const screen_=`${screen.width}×${screen.height}`;
+
+  const msg=`━━━━━━━━━━━━━━━━━━━━━━━
+👁️ *زيارة جديدة — Dash Lebanon*
+━━━━━━━━━━━━━━━━━━━━━━━
+📅 ${ds}
+🕐 ${ts}
+📲 *الجهاز:* ${deviceName}
+🌐 المتصفح: ${browser}
+📐 الشاشة: ${screen_}
+🗣️ اللغة: ${lang}
+🔗 المصدر: ${ref.substring(0,80)}
+━━━━━━━━━━━━━━━━━━━━━━━`;
+
   tgSend(msg);
 }
 async function trackCartAdd(productName,qty,price){
