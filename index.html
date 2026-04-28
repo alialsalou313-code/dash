@@ -62,25 +62,18 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .trust-track span{color:#fff;font-size:0.78rem;font-weight:600;font-family:'Cairo',sans-serif;opacity:0.95}
 @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-/* ── LANG BUTTONS (header) ── */
+/* ── LANG BUTTONS ── */
 .lang-sw{display:flex;gap:3px}
 .lang-btn{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);font-family:'Cairo',sans-serif;font-size:0.72rem;font-weight:700;padding:4px 8px;border-radius:6px;cursor:pointer;transition:all 0.15s}
 .lang-btn.active,.lang-btn:hover{background:rgba(255,255,255,0.25);color:#fff;border-color:rgba(255,255,255,0.4)}
 .dm-btn{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);font-size:0.9rem;padding:5px 8px;border-radius:6px;cursor:pointer;transition:all 0.15s}
 .dm-btn:hover{background:rgba(255,255,255,0.22)}
-/* hide lang+dark on mobile header */
-@media(max-width:767px){.lang-sw{display:none}.dm-btn{display:none}}
 
 /* ── HEADER ── */
 .hdr{background:var(--primary);position:sticky;top:0;z-index:100;box-shadow:0 2px 28px rgba(0,0,0,0.22)}
-.hdr-in{max-width:1200px;margin:0 auto;padding:11px 14px;display:flex;align-items:center;gap:8px;overflow:hidden}
-.logo{font-size:1.35rem;font-weight:900;color:var(--gold);cursor:pointer;user-select:none;flex-shrink:0;text-decoration:none;letter-spacing:-0.5px}
+.hdr-in{max-width:1200px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:12px}
+.logo{font-size:1.45rem;font-weight:900;color:var(--gold);cursor:pointer;user-select:none;flex-shrink:0;text-decoration:none;letter-spacing:-0.5px}
 .logo span{color:#fff}
-/* mobile: logo centered */
-@media(max-width:767px){
-  .hdr-in{justify-content:space-between}
-  .logo{position:absolute;left:50%;transform:translateX(-50%);font-size:1.2rem}
-}
 .desk-nav{display:none;gap:2px;margin-right:auto;margin-left:auto}
 @media(min-width:768px){.desk-nav{display:flex}}
 .desk-nav button{background:none;border:none;color:rgba(255,255,255,0.75);font-family:'Cairo',sans-serif;font-size:0.88rem;font-weight:600;padding:8px 13px;border-radius:8px;cursor:pointer;transition:all 0.15s;white-space:nowrap}
@@ -88,75 +81,44 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .desk-nav .dn-act{background:rgba(245,124,32,0.2);color:#fed7aa}
 .hdr-right{display:flex;align-items:center;gap:8px;margin-right:auto}
 @media(min-width:768px){.hdr-right{margin-right:0}}
-@media(max-width:767px){.hdr-right{margin-right:0;margin-left:0}}
-.ham-btn{background:rgba(255,255,255,0.1);border:none;cursor:pointer;padding:8px;display:flex;flex-direction:column;gap:5px;flex-shrink:0;border-radius:8px}
+.ham-btn{background:none;border:none;cursor:pointer;padding:6px;display:flex;flex-direction:column;gap:5px;flex-shrink:0}
 @media(min-width:768px){.ham-btn{display:none}}
-.ham-btn span{display:block;width:20px;height:2px;background:#fff;border-radius:2px;transition:all 0.3s}
+.ham-btn span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all 0.3s}
 .ham-btn.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
 .ham-btn.open span:nth-child(2){opacity:0}
 .ham-btn.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
-/* cart btn — mobile: icon only, desktop: icon+text */
-.cart-btn{position:relative;background:var(--accent);border:none;color:#fff;padding:9px 14px;border-radius:50px;cursor:pointer;font-family:'Cairo',sans-serif;font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:6px;transition:all 0.2s;flex-shrink:0;box-shadow:0 3px 12px rgba(245,124,32,0.4)}
+.cart-btn{position:relative;background:var(--accent);border:none;color:#fff;padding:9px 16px;border-radius:50px;cursor:pointer;font-family:'Cairo',sans-serif;font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:6px;transition:all 0.2s;flex-shrink:0;box-shadow:0 3px 12px rgba(245,124,32,0.4)}
 .cart-btn:active{transform:scale(0.94)}
 .cart-btn:hover{box-shadow:0 5px 18px rgba(245,124,32,0.5);background:#e86e10}
-@media(max-width:767px){.cart-btn-lbl-txt{display:none}.cart-btn{padding:10px 14px;border-radius:50%;width:42px;height:42px;justify-content:center}}
-.cbadge{position:absolute;top:-6px;left:-6px;background:var(--gold);color:var(--primary);width:19px;height:19px;border-radius:50%;font-size:0.62rem;font-weight:900;display:flex;align-items:center;justify-content:center;min-width:19px;animation:badgePop 0.3s var(--ease)}
+.cbadge{position:absolute;top:-7px;left:-7px;background:var(--gold);color:var(--primary);width:20px;height:20px;border-radius:50%;font-size:0.65rem;font-weight:900;display:flex;align-items:center;justify-content:center;min-width:20px;animation:badgePop 0.3s var(--ease)}
 @keyframes badgePop{0%{transform:scale(0)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
 
 /* ── MOBILE NAV ── */
 .mob-nav-ov{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:150;opacity:0;pointer-events:none;transition:opacity 0.3s;backdrop-filter:blur(4px)}
 .mob-nav-ov.open{opacity:1;pointer-events:all}
-.mob-nav{position:fixed;top:0;right:-300px;width:300px;height:100dvh;background:var(--primary);z-index:160;transition:right 0.32s var(--ease);display:flex;flex-direction:column;overflow-y:auto}
+.mob-nav{position:fixed;top:0;right:-290px;width:290px;height:100dvh;background:var(--primary);z-index:160;transition:right 0.3s var(--ease);display:flex;flex-direction:column;overflow-y:auto}
 .mob-nav.open{right:0}
-.mob-nav-head{display:flex;align-items:center;justify-content:space-between;padding:20px 18px 14px;border-bottom:1px solid rgba(255,255,255,0.1)}
-.mob-nav-close{background:rgba(255,255,255,0.1);border:none;color:rgba(255,255,255,0.8);font-size:1rem;cursor:pointer;padding:7px 11px;border-radius:8px;transition:background 0.15s}
+.mob-nav-head{display:flex;align-items:center;justify-content:space-between;padding:18px 18px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.mob-nav-close{background:rgba(255,255,255,0.1);border:none;color:rgba(255,255,255,0.8);font-size:1rem;cursor:pointer;padding:6px 10px;border-radius:8px;transition:background 0.15s}
 .mob-nav-close:hover{background:rgba(255,255,255,0.2)}
-.mob-nav-links{flex:1;padding:6px 0}
-.mob-nav-links button{display:flex;align-items:center;width:100%;background:none;border:none;color:rgba(255,255,255,0.85);font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:600;padding:15px 20px;text-align:right;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.05);transition:all 0.15s;gap:12px}
-.mob-nav-links button:hover,.mob-nav-links button:active{background:rgba(255,255,255,0.09);color:#fff;padding-right:26px}
-/* lang + dark in drawer */
-.mob-nav-settings{padding:14px 18px;border-top:1px solid rgba(255,255,255,0.1);border-bottom:1px solid rgba(255,255,255,0.1)}
-.mob-nav-settings-lbl{font-size:0.7rem;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
-.mob-nav-settings-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.mn-lang-btn{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.8);font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;padding:7px 14px;border-radius:8px;cursor:pointer;transition:all 0.15s}
-.mn-lang-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.mn-dm-btn{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.8);font-size:1rem;padding:7px 12px;border-radius:8px;cursor:pointer;transition:all 0.15s;margin-right:auto}
-.mob-nav-foot{padding:16px 16px 24px}
-.mn-wa{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--wa);color:#fff;text-align:center;padding:15px;border-radius:12px;text-decoration:none;font-weight:700;font-size:0.92rem;box-shadow:0 4px 16px rgba(37,211,102,0.35)}
+.mob-nav-links{flex:1;padding:8px 0}
+.mob-nav-links button{display:flex;align-items:center;width:100%;background:none;border:none;color:rgba(255,255,255,0.85);font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:600;padding:14px 20px;text-align:right;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.05);transition:all 0.15s;gap:10px}
+.mob-nav-links button:hover{background:rgba(255,255,255,0.08);color:#fff;padding-right:26px}
+.mob-nav-foot{padding:16px}
+.mn-wa{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--wa);color:#fff;text-align:center;padding:14px;border-radius:12px;text-decoration:none;font-weight:700;font-size:0.9rem;box-shadow:0 4px 16px rgba(37,211,102,0.35)}
 
 /* ── LAYOUT ── */
-.main{max-width:1200px;margin:0 auto;padding:22px 16px 100px;overflow-x:hidden}
-@media(max-width:767px){.main{padding:14px 12px 100px}}
+.main{max-width:1200px;margin:0 auto;padding:22px 16px 100px}
+@media(max-width:767px){.main{padding:16px 12px 100px}}
 
-/* ── MOBILE PREMIUM SEARCH ── */
-@media(max-width:767px){
-  .search-wrap{margin-bottom:14px}
-  .search-inp{padding:13px 46px 13px 42px;font-size:0.93rem;border-radius:14px;border-width:1.5px;background:#fff}
-  .search-ico{right:15px;font-size:1rem}
-  .search-clr{left:12px}
-}
-
-/* ── HERO SEARCH (base) ── */
+/* ── HERO SEARCH AREA ── */
 .search-wrap{margin-bottom:20px;position:relative}
-.search-inp{width:100%;padding:14px 50px 14px 42px;border:2px solid var(--border);border-radius:50px;font-family:'Cairo',sans-serif;font-size:0.95rem;color:var(--text);background:#fff;outline:none;transition:all 0.25s;direction:rtl;box-shadow:0 2px 16px rgba(0,0,0,0.05)}
+.search-inp{width:100%;padding:14px 50px 14px 16px;border:2px solid var(--border);border-radius:50px;font-family:'Cairo',sans-serif;font-size:0.95rem;color:var(--text);background:#fff;outline:none;transition:all 0.25s;direction:rtl;box-shadow:0 2px 16px rgba(0,0,0,0.05)}
 .search-inp:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(26,63,160,0.1),0 4px 20px rgba(0,0,0,0.08)}
 .search-ico{position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:1.1rem;pointer-events:none}
 .search-clr{position:absolute;left:16px;top:50%;transform:translateY(-50%);background:var(--border);border:none;width:24px;height:24px;border-radius:50%;font-size:0.75rem;cursor:pointer;color:var(--muted);display:none;align-items:center;justify-content:center;transition:all 0.15s}
 .search-clr:hover{background:var(--muted);color:#fff}
 .search-clr.visible{display:flex}
-
-/* ── MOBILE CARD PREMIUM ── */
-@media(max-width:599px){
-  .pcard{border-radius:14px}
-  .pcard-body{padding:10px 10px 12px}
-  .pcard-name{font-size:0.84rem;margin-bottom:5px}
-  .pcard-price{font-size:0.93rem}
-  .pcard-lbp{font-size:0.68rem}
-  .pcard-offer-tag{font-size:0.68rem}
-  .pcard-old{font-size:0.7rem}
-  .offer-ribbon{font-size:0.6rem;padding:3px 8px 3px 6px}
-  .discount-chip{font-size:0.58rem;padding:2px 6px}
-}
 
 /* ── SECTION HEADER ── */
 .hometop{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:10px}
@@ -541,7 +503,7 @@ textarea.fc{resize:vertical;min-height:80px}
         <button class="lang-btn" id="lang-en" onclick="setLang('en')">EN</button>
       </div>
       <button class="dm-btn" id="dm-btn" onclick="toggleDark()">🌙</button>
-      <button class="cart-btn" id="main-cart-btn" onclick="go('cart')">🛒 <span id="cart-btn-lbl" class="cart-btn-lbl-txt">السلة</span><span class="cbadge" id="cart-badge" style="display:none">0</span></button>
+      <button class="cart-btn" id="main-cart-btn" onclick="go('cart')">🛒 <span id="cart-btn-lbl">السلة</span><span class="cbadge" id="cart-badge" style="display:none">0</span></button>
     </div>
   </div>
 </header>
@@ -550,7 +512,7 @@ textarea.fc{resize:vertical;min-height:80px}
 <div class="mob-nav-ov" id="mob-nav-ov" onclick="closeNav()"></div>
 <div class="mob-nav" id="mob-nav">
   <div class="mob-nav-head">
-    <div class="logo" style="font-size:1.25rem">Dash <span style="color:#fff">Lebanon</span></div>
+    <div class="logo" style="font-size:1.2rem">Dash <span style="color:#fff">Lebanon</span></div>
     <button class="mob-nav-close" onclick="closeNav()">✕</button>
   </div>
   <nav class="mob-nav-links">
@@ -560,15 +522,6 @@ textarea.fc{resize:vertical;min-height:80px}
     <button onclick="go('contact');closeNav()" id="mn-contact">📞 تواصل معنا</button>
     <button onclick="go('orders');closeNav()" id="mn-orders">📋 طلباتي</button>
   </nav>
-  <div class="mob-nav-settings">
-    <div class="mob-nav-settings-lbl">اللغة / الوضع</div>
-    <div class="mob-nav-settings-row">
-      <button class="mn-lang-btn" id="mn-lang-ar" onclick="setLang('ar')">ع العربية</button>
-      <button class="mn-lang-btn" id="mn-lang-fr" onclick="setLang('fr')">FR</button>
-      <button class="mn-lang-btn" id="mn-lang-en" onclick="setLang('en')">EN</button>
-      <button class="mn-dm-btn" id="mn-dm-btn" onclick="toggleDark()">🌙</button>
-    </div>
-  </div>
   <div class="mob-nav-foot">
     <a class="mn-wa" href="https://wa.me/96181877323" target="_blank">💬 تواصل على واتساب</a>
   </div>
@@ -866,8 +819,8 @@ function canCancel(date){return(Date.now()-new Date(date).getTime())<86400000}
 // ═══════════════════════════════════════════════════════
 function applyDark(){
   document.documentElement.setAttribute('data-dark',S.dark?'1':'0');
-  const btn=document.getElementById('dm-btn');if(btn)btn.textContent=S.dark?'☀️':'🌙';
-  const mBtn=document.getElementById('mn-dm-btn');if(mBtn)mBtn.textContent=S.dark?'☀️':'🌙';
+  const btn=document.getElementById('dm-btn');
+  if(btn)btn.textContent=S.dark?'☀️':'🌙';
 }
 function toggleDark(){S.dark=!S.dark;localStorage.setItem('dl_dark',S.dark?'1':'0');applyDark()}
 function setLang(lang){S.lang=lang;localStorage.setItem('dl_lang',lang);applyLang();render();updateUI()}
@@ -876,10 +829,7 @@ function applyLang(){
   document.documentElement.setAttribute('lang',S.lang);
   document.documentElement.setAttribute('dir',dir);
   document.body.style.direction=dir;
-  // header lang buttons
   ['ar','fr','en'].forEach(l=>{const b=document.getElementById('lang-'+l);if(b)b.classList.toggle('active',l===S.lang)});
-  // drawer lang buttons
-  ['ar','fr','en'].forEach(l=>{const b=document.getElementById('mn-lang-'+l);if(b)b.classList.toggle('active',l===S.lang)});
   const tr=t('trust');
   const t1=document.getElementById('trust-content-1');const t2=document.getElementById('trust-content-2');
   if(t1)t1.innerHTML=tr+' &nbsp;|&nbsp;&nbsp;&nbsp;';
@@ -941,11 +891,101 @@ async function tgSend(text){
   catch(e){console.error('TG:',e);return false}
 }
 async function trackVisit(){
-  if(sessionStorage.getItem('visit_tracked'))return;sessionStorage.setItem('visit_tracked','1');
-  const now=new Date();const ds=now.toLocaleDateString('ar-LB',{weekday:'long',year:'numeric',month:'long',day:'numeric'});const ts=now.toLocaleTimeString('ar-LB',{hour:'2-digit',minute:'2-digit'});
-  const ua=navigator.userAgent;const isMob=/Mobile|Android|iPhone|iPad/.test(ua);const device=isMob?'📱 Mobile':'💻 Desktop';
-  const ref=document.referrer||'مباشر / Direct';const lang=navigator.language||'غير معروف';
-  const msg=`━━━━━━━━━━━━━━━━━━━━━━━\n👁️ *زيارة جديدة — Dash Lebanon*\n━━━━━━━━━━━━━━━━━━━━━━━\n📅 ${ds}\n🕐 ${ts}\n${device}\n🌐 لغة المتصفح: ${lang}\n🔗 المصدر: ${ref.substring(0,80)}\n━━━━━━━━━━━━━━━━━━━━━━━`;
+  if(sessionStorage.getItem('visit_tracked'))return;
+  sessionStorage.setItem('visit_tracked','1');
+
+  const now=new Date();
+  const ds=now.toLocaleDateString('ar-LB',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const ts=now.toLocaleTimeString('ar-LB',{hour:'2-digit',minute:'2-digit'});
+
+  const ua=navigator.userAgent;
+
+  // ── استخراج اسم الجهاز الكامل ──
+  function getDeviceName(ua){
+    // iPhone
+    const iphone=ua.match(/iPhone OS ([\d_]+)/);
+    if(iphone){const v=iphone[1].replace(/_/g,'.');return`📱 iPhone (iOS ${v})`}
+    // iPad
+    const ipad=ua.match(/iPad.*OS ([\d_]+)/);
+    if(ipad){const v=ipad[1].replace(/_/g,'.');return`📱 iPad (iOS ${v})`}
+    // Samsung
+    const sam=ua.match(/Samsung|SM-[A-Z0-9]+/i);
+    const samModel=ua.match(/SM-([A-Z0-9]+)/i);
+    if(sam||samModel){
+      const model=samModel?`SM-${samModel[1]}`:'Samsung';
+      return`📱 Samsung ${model}`
+    }
+    // Huawei
+    const hw=ua.match(/HUAWEI ([A-Z0-9\-]+)/i)||ua.match(/HW-([A-Z0-9]+)/i);
+    if(hw)return`📱 Huawei ${hw[1]}`;
+    // Xiaomi / Redmi / POCO
+    const xi=ua.match(/Redmi ([A-Z0-9 ]+)/i)||ua.match(/POCO ([A-Z0-9]+)/i)||ua.match(/MI ([A-Z0-9 ]+)/i);
+    if(xi)return`📱 Xiaomi ${xi[1].trim()}`;
+    // OnePlus
+    const op=ua.match(/OnePlus([A-Z0-9 ]+)/i)||ua.match(/OP-([A-Z0-9]+)/i);
+    if(op)return`📱 OnePlus ${op[1].trim()}`;
+    // Realme
+    const rm=ua.match(/Realme ([A-Z0-9 ]+)/i)||ua.match(/RMX([0-9]+)/i);
+    if(rm)return`📱 Realme ${rm[0]}`;
+    // OPPO
+    const oppo=ua.match(/OPPO ([A-Z0-9]+)/i)||ua.match(/CPH([0-9]+)/i);
+    if(oppo)return`📱 OPPO ${oppo[0]}`;
+    // Nokia
+    const nokia=ua.match(/Nokia([A-Z0-9\. ]+)/i);
+    if(nokia)return`📱 Nokia ${nokia[1].trim()}`;
+    // LG
+    const lg=ua.match(/LG-([A-Z0-9]+)/i)||ua.match(/LG ([A-Z0-9]+)/i);
+    if(lg)return`📱 LG ${lg[1]}`;
+    // Sony
+    const sony=ua.match(/Sony([A-Z0-9 ]+)/i)||ua.match(/Xperia ([A-Z0-9 ]+)/i);
+    if(sony)return`📱 Sony Xperia ${sony[1].trim()}`;
+    // Android generic
+    const android=ua.match(/Android ([\d.]+)/);
+    if(android){
+      const model=ua.match(/;\s([^;()]+)\sBuild\//);
+      const m=model?model[1].trim():'Android Device';
+      return`📱 ${m} (Android ${android[1]})`
+    }
+    // Windows
+    const win=ua.match(/Windows NT ([\d.]+)/);
+    if(win){
+      const versions={'10.0':'10/11','6.3':'8.1','6.2':'8','6.1':'7'};
+      const wv=versions[win[1]]||win[1];
+      return`💻 Windows ${wv}`
+    }
+    // Mac
+    const mac=ua.match(/Mac OS X ([\d_]+)/);
+    if(mac){const v=mac[1].replace(/_/g,'.');return`💻 macOS ${v}`}
+    // Linux
+    if(/Linux/.test(ua))return`💻 Linux`;
+    return`❓ Unknown`;
+  }
+
+  const deviceName=getDeviceName(ua);
+  const browser=(()=>{
+    if(/Edg/.test(ua))return'Edge';
+    if(/OPR|Opera/.test(ua))return'Opera';
+    if(/Firefox/.test(ua))return'Firefox';
+    if(/Chrome/.test(ua))return'Chrome';
+    if(/Safari/.test(ua))return'Safari';
+    return'Other';
+  })();
+  const ref=document.referrer||'مباشر / Direct';
+  const lang=navigator.language||'—';
+  const screen_=`${screen.width}×${screen.height}`;
+
+  const msg=`━━━━━━━━━━━━━━━━━━━━━━━
+👁️ *زيارة جديدة — Dash Lebanon*
+━━━━━━━━━━━━━━━━━━━━━━━
+📅 ${ds}
+🕐 ${ts}
+📲 *الجهاز:* ${deviceName}
+🌐 المتصفح: ${browser}
+📐 الشاشة: ${screen_}
+🗣️ اللغة: ${lang}
+🔗 المصدر: ${ref.substring(0,80)}
+━━━━━━━━━━━━━━━━━━━━━━━`;
+
   tgSend(msg);
 }
 async function trackCartAdd(productName,qty,price){
