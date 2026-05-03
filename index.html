@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Dash Lebanon | متجرك الإلكتروني</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
 /* ══ LIGHT MODE ══ */
 :root{
@@ -14,7 +14,9 @@
   --border:#e5e7eb;--success:#2e7d32;--card:#ffffff;--wa:#25d366;
   --shadow:0 2px 20px rgba(26,63,160,0.08);
   --shadow-lg:0 8px 40px rgba(26,63,160,0.13);
-  --r:16px;--rs:10px;--ease:cubic-bezier(0.4,0,0.2,1);
+  --r:18px;--rs:12px;--ease:cubic-bezier(0.4,0,0.2,1);
+  --bronze:#cd7f32;--silver:#aaa9ad;--gold-rank:#f5a623;
+  --pts-bg:linear-gradient(135deg,#f5a623,#e07b00);
 }
 /* ══ DARK MODE ══ */
 [data-dark="1"]{
@@ -50,7 +52,10 @@
 [data-dark="1"] .comment-card{background:var(--card)}
 [data-dark="1"] .onboard-card{background:#1e2040}
 [data-dark="1"] .price-lbp{color:#94a3b8}
-[data-dark="1"] .search-wrap::before{background:linear-gradient(135deg,#1e2040,#252a50)}
+[data-dark="1"] .cat-pill{background:#1e2040;border-color:var(--border);color:var(--muted)}
+[data-dark="1"] .cat-pill.active{background:var(--primary);color:#fff}
+[data-dark="1"] .pts-bar{background:rgba(15,16,32,0.5);border-color:rgba(245,166,35,0.3)}
+[data-dark="1"] .wl-btn{background:#1e2040}
 
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
@@ -62,21 +67,19 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .trust-track span{color:#fff;font-size:0.78rem;font-weight:600;font-family:'Cairo',sans-serif;opacity:0.95}
 @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-/* ── LANG BUTTONS (header) ── */
+/* ── LANG BUTTONS ── */
 .lang-sw{display:flex;gap:3px}
 .lang-btn{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);font-family:'Cairo',sans-serif;font-size:0.72rem;font-weight:700;padding:4px 8px;border-radius:6px;cursor:pointer;transition:all 0.15s}
 .lang-btn.active,.lang-btn:hover{background:rgba(255,255,255,0.25);color:#fff;border-color:rgba(255,255,255,0.4)}
 .dm-btn{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);font-size:0.9rem;padding:5px 8px;border-radius:6px;cursor:pointer;transition:all 0.15s}
 .dm-btn:hover{background:rgba(255,255,255,0.22)}
-/* hide lang+dark on mobile header */
 @media(max-width:767px){.lang-sw{display:none}.dm-btn{display:none}}
 
 /* ── HEADER ── */
 .hdr{background:var(--primary);position:sticky;top:0;z-index:100;box-shadow:0 2px 28px rgba(0,0,0,0.22)}
 .hdr-in{max-width:1200px;margin:0 auto;padding:11px 14px;display:flex;align-items:center;gap:8px;overflow:hidden}
-.logo{font-size:1.35rem;font-weight:900;color:var(--gold);cursor:pointer;user-select:none;flex-shrink:0;text-decoration:none;letter-spacing:-0.5px}
+.logo{font-size:1.35rem;font-weight:900;color:var(--gold);cursor:pointer;user-select:none;flex-shrink:0;text-decoration:none;letter-spacing:-0.5px;font-family:'Tajawal',sans-serif}
 .logo span{color:#fff}
-/* mobile: logo centered */
 @media(max-width:767px){
   .hdr-in{justify-content:space-between}
   .logo{position:absolute;left:50%;transform:translateX(-50%);font-size:1.2rem}
@@ -95,7 +98,6 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .ham-btn.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
 .ham-btn.open span:nth-child(2){opacity:0}
 .ham-btn.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
-/* cart btn — mobile: icon only, desktop: icon+text */
 .cart-btn{position:relative;background:var(--accent);border:none;color:#fff;padding:9px 14px;border-radius:50px;cursor:pointer;font-family:'Cairo',sans-serif;font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:6px;transition:all 0.2s;flex-shrink:0;box-shadow:0 3px 12px rgba(245,124,32,0.4)}
 .cart-btn:active{transform:scale(0.94)}
 .cart-btn:hover{box-shadow:0 5px 18px rgba(245,124,32,0.5);background:#e86e10}
@@ -103,24 +105,24 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .cbadge{position:absolute;top:-6px;left:-6px;background:var(--gold);color:var(--primary);width:19px;height:19px;border-radius:50%;font-size:0.62rem;font-weight:900;display:flex;align-items:center;justify-content:center;min-width:19px;animation:badgePop 0.3s var(--ease)}
 @keyframes badgePop{0%{transform:scale(0)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
 
+/* ── POINTS BADGE IN HEADER ── */
+.pts-hdr-badge{background:rgba(245,166,35,0.2);border:1px solid rgba(245,166,35,0.4);color:var(--gold);padding:5px 10px;border-radius:20px;font-size:0.72rem;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:4px;transition:all 0.2s;white-space:nowrap}
+.pts-hdr-badge:hover{background:rgba(245,166,35,0.3)}
+@media(max-width:767px){.pts-hdr-badge{display:none}}
+
 /* ── MOBILE NAV ── */
 .mob-nav-ov{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:150;opacity:0;pointer-events:none;transition:opacity 0.3s;backdrop-filter:blur(4px)}
 .mob-nav-ov.open{opacity:1;pointer-events:all}
 .mob-nav{position:fixed;top:0;right:-300px;width:300px;height:100dvh;background:var(--primary);z-index:160;transition:right 0.32s var(--ease);display:flex;flex-direction:column;overflow-y:auto}
 .mob-nav.open{right:0}
 .mob-nav-head{display:flex;align-items:center;justify-content:space-between;padding:20px 18px 14px;border-bottom:1px solid rgba(255,255,255,0.1)}
-.mob-nav-close{background:rgba(255,255,255,0.1);border:none;color:rgba(255,255,255,0.8);font-size:1rem;cursor:pointer;padding:7px 11px;border-radius:8px;transition:background 0.15s}
-.mob-nav-close:hover{background:rgba(255,255,255,0.2)}
+.mob-nav-close{background:rgba(255,255,255,0.1);border:none;color:rgba(255,255,255,0.8);font-size:1rem;cursor:pointer;padding:7px 11px;border-radius:8px}
+.mob-pts-row{margin:12px 16px;background:rgba(245,166,35,0.15);border:1px solid rgba(245,166,35,0.3);border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between}
+.mob-pts-lbl{color:rgba(255,255,255,0.7);font-size:0.78rem}
+.mob-pts-val{color:var(--gold);font-size:1rem;font-weight:900}
 .mob-nav-links{flex:1;padding:6px 0}
 .mob-nav-links button{display:flex;align-items:center;width:100%;background:none;border:none;color:rgba(255,255,255,0.85);font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:600;padding:15px 20px;text-align:right;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.05);transition:all 0.15s;gap:12px}
 .mob-nav-links button:hover,.mob-nav-links button:active{background:rgba(255,255,255,0.09);color:#fff;padding-right:26px}
-/* lang + dark in drawer */
-.mob-nav-settings{padding:14px 18px;border-top:1px solid rgba(255,255,255,0.1);border-bottom:1px solid rgba(255,255,255,0.1)}
-.mob-nav-settings-lbl{font-size:0.7rem;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
-.mob-nav-settings-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.mn-lang-btn{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.8);font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;padding:7px 14px;border-radius:8px;cursor:pointer;transition:all 0.15s}
-.mn-lang-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.mn-dm-btn{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.8);font-size:1rem;padding:7px 12px;border-radius:8px;cursor:pointer;transition:all 0.15s;margin-right:auto}
 .mob-nav-foot{padding:16px 16px 24px}
 .mn-wa{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--wa);color:#fff;text-align:center;padding:15px;border-radius:12px;text-decoration:none;font-weight:700;font-size:0.92rem;box-shadow:0 4px 16px rgba(37,211,102,0.35)}
 
@@ -128,43 +130,60 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .main{max-width:1200px;margin:0 auto;padding:22px 16px 100px;overflow-x:hidden}
 @media(max-width:767px){.main{padding:14px 12px 100px}}
 
-/* ── MOBILE PREMIUM SEARCH ── */
-@media(max-width:767px){
-  .search-wrap{margin-bottom:14px}
-  .search-inp{padding:13px 46px 13px 42px;font-size:0.93rem;border-radius:14px;border-width:1.5px;background:#fff}
-  .search-ico{right:15px;font-size:1rem}
-  .search-clr{left:12px}
-}
+/* ── POINTS LOYALTY BAR ── */
+.pts-bar{background:linear-gradient(135deg,rgba(245,166,35,0.08),rgba(245,124,32,0.06));border:1px solid rgba(245,166,35,0.2);border-radius:16px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all 0.2s}
+.pts-bar:hover{box-shadow:0 4px 20px rgba(245,166,35,0.15)}
+.pts-bar-ico{font-size:2rem;flex-shrink:0}
+.pts-bar-info{flex:1;min-width:0}
+.pts-bar-title{font-size:0.88rem;font-weight:800;color:var(--text)}
+.pts-bar-sub{font-size:0.75rem;color:var(--muted);margin-top:2px}
+.pts-bar-count{font-size:1.5rem;font-weight:900;color:var(--gold);flex-shrink:0}
+.pts-progress-wrap{margin-top:8px}
+.pts-progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.pts-progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--accent));border-radius:3px;transition:width 0.6s var(--ease)}
+.pts-progress-lbl{display:flex;justify-content:space-between;font-size:0.68rem;color:var(--muted);margin-top:4px}
+.rank-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:0.7rem;font-weight:800}
+.rank-bronze{background:#fff3e0;color:#bf6000;border:1px solid #ffcc80}
+.rank-silver{background:#f5f5f5;color:#757575;border:1px solid #bdbdbd}
+.rank-gold{background:#fff8e1;color:#f57f17;border:1px solid #ffe082}
 
-/* ── HERO SEARCH (base) ── */
-.search-wrap{margin-bottom:20px;position:relative}
+/* ── CATEGORY PILLS ── */
+.cats-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:16px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.cats-row::-webkit-scrollbar{display:none}
+.cat-pill{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border:2px solid var(--border);border-radius:50px;background:var(--card);color:var(--muted);font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:all 0.2s;flex-shrink:0;box-shadow:0 1px 6px rgba(0,0,0,0.05)}
+.cat-pill:hover{border-color:var(--primary);color:var(--primary)}
+.cat-pill.active{background:var(--primary);border-color:var(--primary);color:#fff;box-shadow:0 4px 14px rgba(26,63,160,0.25)}
+.cat-count{background:rgba(255,255,255,0.25);border-radius:10px;padding:1px 6px;font-size:0.68rem}
+.cat-pill:not(.active) .cat-count{background:var(--border);color:var(--muted)}
+
+/* ── SEARCH ── */
+.search-wrap{margin-bottom:14px;position:relative}
 .search-inp{width:100%;padding:14px 50px 14px 42px;border:2px solid var(--border);border-radius:50px;font-family:'Cairo',sans-serif;font-size:0.95rem;color:var(--text);background:#fff;outline:none;transition:all 0.25s;direction:rtl;box-shadow:0 2px 16px rgba(0,0,0,0.05)}
 .search-inp:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(26,63,160,0.1),0 4px 20px rgba(0,0,0,0.08)}
 .search-ico{position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:1.1rem;pointer-events:none}
 .search-clr{position:absolute;left:16px;top:50%;transform:translateY(-50%);background:var(--border);border:none;width:24px;height:24px;border-radius:50%;font-size:0.75rem;cursor:pointer;color:var(--muted);display:none;align-items:center;justify-content:center;transition:all 0.15s}
 .search-clr:hover{background:var(--muted);color:#fff}
 .search-clr.visible{display:flex}
-
-/* ── MOBILE CARD PREMIUM ── */
-@media(max-width:599px){
-  .pcard{border-radius:14px}
-  .pcard-body{padding:10px 10px 12px}
-  .pcard-name{font-size:0.84rem;margin-bottom:5px}
-  .pcard-price{font-size:0.93rem}
-  .pcard-lbp{font-size:0.68rem}
-  .pcard-offer-tag{font-size:0.68rem}
-  .pcard-old{font-size:0.7rem}
-  .offer-ribbon{font-size:0.6rem;padding:3px 8px 3px 6px}
-  .discount-chip{font-size:0.58rem;padding:2px 6px}
+@media(max-width:767px){
+  .search-inp{padding:13px 46px 13px 42px;font-size:0.93rem;border-radius:14px;border-width:1.5px;background:#fff}
+  .search-ico{right:15px;font-size:1rem}
+  .search-clr{left:12px}
 }
 
 /* ── SECTION HEADER ── */
-.hometop{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:10px}
-.sec-ttl{font-size:1.2rem;font-weight:900;color:var(--primary);display:flex;align-items:center;gap:8px}
+.hometop{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:10px}
+.sec-ttl{font-size:1.2rem;font-weight:900;color:var(--primary);display:flex;align-items:center;gap:8px;font-family:'Tajawal',sans-serif}
 .sec-ttl::after{content:'';display:block;width:4px;height:20px;background:var(--accent);border-radius:2px;margin-right:4px}
 .hdr-acts{display:flex;gap:7px}
 .adm-lnk{background:var(--card);border:1.5px solid var(--border);color:var(--muted);cursor:pointer;font-size:0.78rem;font-family:'Cairo',sans-serif;padding:7px 13px;border-radius:50px;transition:all 0.2s;font-weight:600;box-shadow:0 1px 6px rgba(0,0,0,0.05)}
 .adm-lnk:hover{border-color:var(--primary);color:var(--primary);background:#fff;box-shadow:0 3px 12px rgba(26,63,160,0.1)}
+
+/* ── SORT ROW ── */
+.sort-row{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.sort-lbl{font-size:0.78rem;color:var(--muted);font-weight:600;white-space:nowrap}
+.sort-btn{background:var(--card);border:1.5px solid var(--border);color:var(--muted);font-size:0.78rem;font-family:'Cairo',sans-serif;padding:6px 12px;border-radius:20px;cursor:pointer;font-weight:600;transition:all 0.15s}
+.sort-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.results-count{font-size:0.78rem;color:var(--muted);margin-right:auto}
 
 /* ── PRODUCT GRID ── */
 .pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
@@ -179,7 +198,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 @media(hover:hover){.pcard:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}}
 .pcard-img-wrap{position:relative;overflow:hidden;aspect-ratio:1}
 .pcard img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s var(--ease)}
-@media(hover:hover){.pcard:hover img{transform:scale(1.06)}}
+@media(hover:hover){.pcard:hover img{transform:scale(1.07)}}
 .pcard-body{padding:12px 12px 14px}
 .pcard-name{font-size:0.87rem;font-weight:700;color:var(--primary);margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.4}
 .pcard-old{font-size:0.72rem;color:var(--muted);text-decoration:line-through;margin-bottom:2px}
@@ -187,9 +206,23 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .pcard-price small{font-size:0.68rem;font-weight:400;color:var(--muted)}
 .pcard-lbp{font-size:0.7rem;color:var(--muted);margin-top:2px}
 .pcard-offer-tag{font-size:0.71rem;color:var(--success);font-weight:700;margin-top:4px;display:flex;align-items:center;gap:3px}
-
+.pcard-footer{display:flex;align-items:center;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
+.pcard-pts{font-size:0.67rem;color:var(--gold);font-weight:700;display:flex;align-items:center;gap:3px}
+.pcard-wl{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:0.85rem;cursor:pointer;transition:all 0.2s;flex-shrink:0}
+.pcard-wl:hover,.pcard-wl.active{background:#fff0f3;border-color:#f43f5e;transform:scale(1.1)}
+.pcard-wl.active{background:#fff0f3;border-color:#f43f5e}
 .offer-ribbon{position:absolute;top:10px;right:0;background:linear-gradient(135deg,var(--accent),#e05e00);color:#fff;font-size:0.63rem;font-weight:900;padding:4px 10px 4px 8px;border-radius:4px 0 0 4px;pointer-events:none;box-shadow:0 2px 8px rgba(245,124,32,0.4)}
 .discount-chip{position:absolute;top:10px;left:10px;background:#ef4444;color:#fff;font-size:0.6rem;font-weight:900;padding:3px 7px;border-radius:50px;pointer-events:none}
+
+/* mobile card */
+@media(max-width:599px){
+  .pcard{border-radius:14px}
+  .pcard-body{padding:10px 10px 12px}
+  .pcard-name{font-size:0.84rem;margin-bottom:5px}
+  .pcard-price{font-size:0.93rem}
+  .offer-ribbon{font-size:0.6rem;padding:3px 8px 3px 6px}
+  .discount-chip{font-size:0.58rem;padding:2px 6px}
+}
 
 .no-results{text-align:center;padding:50px 20px;grid-column:span 2}
 .no-results-ico{font-size:3.2rem;margin-bottom:12px;display:block}
@@ -200,14 +233,41 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .offers-banner{background:linear-gradient(135deg,var(--accent),#e05e00);border-radius:var(--r);padding:16px 20px;margin-bottom:18px;display:flex;align-items:center;gap:14px;color:#fff;box-shadow:0 6px 24px rgba(245,124,32,0.3)}
 .offers-banner-ico{font-size:2.2rem;animation:bounce 1s infinite alternate}
 @keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-5px)}}
-.offers-banner-h{font-size:1.05rem;font-weight:900}
+.offers-banner-h{font-size:1.05rem;font-weight:900;font-family:'Tajawal',sans-serif}
 .offers-banner-sub{font-size:0.82rem;opacity:0.85;margin-top:2px}
-.clear-filter{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.35);color:#fff;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;padding:6px 13px;border-radius:8px;cursor:pointer;margin-right:auto;flex-shrink:0;transition:all 0.15s}
+.clear-filter{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.35);color:#fff;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;padding:6px 13px;border-radius:8px;cursor:pointer;margin-right:auto;flex-shrink:0}
 .clear-filter:hover{background:rgba(255,255,255,0.3)}
+
+/* ── WISHLIST PAGE ── */
+.wl-empty{text-align:center;padding:60px 20px}
+.wl-empty-ico{font-size:3.5rem;margin-bottom:14px}
+.wl-empty-ttl{font-size:1.1rem;font-weight:800;color:var(--primary);margin-bottom:6px;font-family:'Tajawal',sans-serif}
+
+/* ── POINTS PAGE ── */
+.pts-page-hero{background:linear-gradient(135deg,#f5a623,#e05e00);border-radius:var(--r);padding:28px 22px;text-align:center;color:#fff;margin-bottom:20px;position:relative;overflow:hidden}
+.pts-page-hero::before{content:'⭐';position:absolute;right:-10px;top:-10px;font-size:7rem;opacity:0.08}
+.pts-hero-pts{font-size:3.5rem;font-weight:900;font-family:'Tajawal',sans-serif}
+.pts-hero-lbl{font-size:0.85rem;opacity:0.85;margin-top:4px}
+.pts-hero-rank{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.25);border-radius:20px;padding:6px 16px;font-size:0.85rem;font-weight:800;margin-top:12px}
+.pts-tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.pts-tier{background:var(--card);border-radius:var(--r);padding:16px 12px;text-align:center;box-shadow:var(--shadow);border:2px solid var(--border)}
+.pts-tier.current{border-color:var(--gold);background:linear-gradient(135deg,rgba(245,166,35,0.06),rgba(245,124,32,0.04))}
+.pts-tier-ico{font-size:2rem;margin-bottom:6px}
+.pts-tier-name{font-size:0.82rem;font-weight:800;color:var(--primary);margin-bottom:4px}
+.pts-tier-req{font-size:0.7rem;color:var(--muted)}
+.pts-history{background:var(--card);border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
+.pts-hist-ttl{font-size:0.9rem;font-weight:800;color:var(--primary);margin-bottom:14px;font-family:'Tajawal',sans-serif}
+.pts-hist-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.pts-hist-row:last-child{border-bottom:none}
+.pts-hist-ico{font-size:1.4rem;flex-shrink:0}
+.pts-hist-info{flex:1;min-width:0}
+.pts-hist-name{font-size:0.84rem;font-weight:700;color:var(--text)}
+.pts-hist-date{font-size:0.72rem;color:var(--muted);margin-top:1px}
+.pts-hist-pts{font-size:0.92rem;font-weight:900;color:var(--success)}
 
 /* ── PRODUCT DETAIL ── */
 .det-img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r);margin-bottom:20px;display:block;box-shadow:var(--shadow-lg)}
-.det-name{font-size:1.35rem;font-weight:900;color:var(--primary);margin-bottom:8px;line-height:1.25}
+.det-name{font-size:1.35rem;font-weight:900;color:var(--primary);margin-bottom:8px;line-height:1.25;font-family:'Tajawal',sans-serif}
 .old-price-wrap{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
 .old-price{font-size:0.88rem;color:var(--muted);text-decoration:line-through}
 .old-price-lbp{font-size:0.76rem;color:var(--muted);text-decoration:line-through}
@@ -218,6 +278,10 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .chip{display:flex;align-items:center;gap:9px;padding:12px 15px;border-radius:var(--rs);font-size:0.87rem;font-weight:600;margin-bottom:10px}
 .chip-blue{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
 .chip-yel{background:#fff7ed;color:#9a3412;border:1px solid #fed7aa}
+.chip-grn{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}
+.det-actions{display:flex;gap:10px;margin-bottom:14px}
+.wl-btn{background:var(--card);border:2px solid var(--border);color:var(--muted);padding:14px;border-radius:var(--rs);font-size:1.2rem;cursor:pointer;flex-shrink:0;transition:all 0.2s;display:flex;align-items:center;justify-content:center}
+.wl-btn.active,.wl-btn:hover{background:#fff0f3;border-color:#f43f5e;color:#f43f5e}
 
 /* ── BUY OPTIONS ── */
 .offer-section{margin:18px 0}
@@ -242,6 +306,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .qty-input:focus{border-color:var(--primary)}
 .sub-bar{background:linear-gradient(135deg,var(--primary),#0f2470);color:#fff;border-radius:var(--rs);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:0.88rem}
 .sub-bar strong{font-size:1.08rem;color:var(--gold)}
+.pts-earn-chip{background:rgba(245,166,35,0.12);border:1px solid rgba(245,166,35,0.3);border-radius:8px;padding:8px 13px;font-size:0.8rem;color:var(--gold);font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:6px}
 
 /* ── RELATED ── */
 .rel-sec{margin-top:30px;padding-top:24px;border-top:2px solid var(--border)}
@@ -249,7 +314,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 
 /* ── WHY SECTION ── */
 .why-sec{background:var(--card);border-radius:var(--r);padding:26px 22px;margin:32px 0 0;box-shadow:var(--shadow)}
-.why-ttl{font-size:1.1rem;font-weight:900;color:var(--primary);text-align:center;margin-bottom:22px}
+.why-ttl{font-size:1.1rem;font-weight:900;color:var(--primary);text-align:center;margin-bottom:22px;font-family:'Tajawal',sans-serif}
 .why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 @media(min-width:540px){.why-grid{grid-template-columns:repeat(3,1fr)}}
 @media(min-width:900px){.why-grid{grid-template-columns:repeat(6,1fr)}}
@@ -261,7 +326,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 
 /* ── COMMENTS ── */
 .comments-sec{margin-top:32px}
-.comments-ttl{font-size:1.1rem;font-weight:900;color:var(--primary);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.comments-ttl{font-size:1.1rem;font-weight:900;color:var(--primary);margin-bottom:16px;display:flex;align-items:center;gap:8px;font-family:'Tajawal',sans-serif}
 .comments-grid{display:grid;grid-template-columns:1fr;gap:12px}
 @media(min-width:640px){.comments-grid{grid-template-columns:repeat(2,1fr)}}
 .comment-card{background:var(--card);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.04)}
@@ -279,9 +344,9 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .onboard-card{background:var(--card);border-radius:var(--r) var(--r) 0 0;padding:28px 22px 32px;width:100%;max-width:480px;max-height:92vh;overflow-y:auto;animation:su 0.35s var(--ease)}
 .onboard-emoji{font-size:2.5rem;text-align:center;margin-bottom:6px}
 .onboard-brand{text-align:center;margin-bottom:3px}
-.onboard-logo{font-size:1.3rem;font-weight:900;color:var(--accent)}
+.onboard-logo{font-size:1.3rem;font-weight:900;color:var(--accent);font-family:'Tajawal',sans-serif}
 .onboard-logo span{color:var(--primary)}
-.onboard-title{font-size:1.15rem;font-weight:900;color:var(--primary);text-align:center;margin-bottom:5px}
+.onboard-title{font-size:1.15rem;font-weight:900;color:var(--primary);text-align:center;margin-bottom:5px;font-family:'Tajawal',sans-serif}
 .onboard-sub{color:var(--muted);font-size:0.85rem;text-align:center;margin-bottom:22px}
 .lang-radio-group,.curr-radio-group{display:flex;gap:8px;flex-wrap:wrap}
 .lang-radio label,.curr-radio label{display:flex;align-items:center;gap:6px;padding:9px 14px;border:2px solid var(--border);border-radius:9px;cursor:pointer;font-size:0.84rem;font-weight:600;color:var(--primary);transition:all 0.15s;background:#fff}
@@ -349,6 +414,12 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .srow:last-child{border-bottom:none}
 .slbl{color:var(--muted)}
 .stot{font-size:1.02rem;font-weight:900;color:var(--accent)}
+.pts-cart-earn{background:linear-gradient(135deg,rgba(245,166,35,0.08),rgba(245,124,32,0.06));border:1px solid rgba(245,166,35,0.25);border-radius:12px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.pts-cart-earn-ico{font-size:1.6rem}
+.pts-cart-earn-info{flex:1}
+.pts-cart-earn-h{font-size:0.84rem;font-weight:800;color:var(--text)}
+.pts-cart-earn-s{font-size:0.74rem;color:var(--muted);margin-top:2px}
+.pts-cart-earn-val{font-size:1.2rem;font-weight:900;color:var(--gold)}
 
 /* ── STICKY ── */
 .sticky{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,0.97);backdrop-filter:blur(12px);padding:13px 16px;box-shadow:0 -3px 24px rgba(0,0,0,0.1);z-index:80;max-width:540px;margin:0 auto}
@@ -386,14 +457,17 @@ textarea.fc{resize:vertical;min-height:80px}
 .rswrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;text-align:center;padding:40px 24px}
 .rsico{font-size:5rem;margin-bottom:20px;animation:pop 0.5s var(--ease)}
 @keyframes pop{0%{transform:scale(0)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
-.rs-ok{font-size:1.7rem;font-weight:900;color:var(--success);margin-bottom:12px}
-.rs-cn{font-size:1.7rem;font-weight:900;color:#dc2626;margin-bottom:12px}
+.rs-ok{font-size:1.7rem;font-weight:900;color:var(--success);margin-bottom:12px;font-family:'Tajawal',sans-serif}
+.rs-cn{font-size:1.7rem;font-weight:900;color:#dc2626;margin-bottom:12px;font-family:'Tajawal',sans-serif}
 .rs-sub{color:var(--muted);font-size:0.93rem;line-height:1.75}
+.pts-earned-box{background:linear-gradient(135deg,rgba(245,166,35,0.1),rgba(245,124,32,0.06));border:2px solid rgba(245,166,35,0.3);border-radius:16px;padding:18px 22px;margin:16px 0;text-align:center}
+.pts-earned-num{font-size:2.5rem;font-weight:900;color:var(--gold);font-family:'Tajawal',sans-serif}
+.pts-earned-lbl{font-size:0.84rem;color:var(--muted);margin-top:4px}
 
 /* ── EMPTY ── */
 .empty{text-align:center;padding:60px 20px}
 .empty-ico{font-size:3.2rem;margin-bottom:14px;display:block}
-.empty-ttl{font-size:1.1rem;font-weight:800;color:var(--primary);margin-bottom:6px}
+.empty-ttl{font-size:1.1rem;font-weight:800;color:var(--primary);margin-bottom:6px;font-family:'Tajawal',sans-serif}
 .empty-sub{color:var(--muted);font-size:0.86rem}
 
 /* ── ORDERS ── */
@@ -412,7 +486,7 @@ textarea.fc{resize:vertical;min-height:80px}
 
 /* ── CONTACT ── */
 .contact-hero{background:linear-gradient(135deg,var(--primary),#0f2470);border-radius:var(--r);padding:30px 22px;text-align:center;color:#fff;margin-bottom:18px;box-shadow:var(--shadow-lg)}
-.contact-hero h2{font-size:1.4rem;font-weight:900;margin-bottom:8px}
+.contact-hero h2{font-size:1.4rem;font-weight:900;margin-bottom:8px;font-family:'Tajawal',sans-serif}
 .contact-hero p{color:rgba(255,255,255,0.7);font-size:0.88rem;line-height:1.65}
 .contact-card{background:var(--card);border-radius:var(--r);padding:19px;box-shadow:var(--shadow);margin-bottom:13px}
 .contact-card-head{display:flex;align-items:center;gap:15px;margin-bottom:13px}
@@ -431,7 +505,8 @@ textarea.fc{resize:vertical;min-height:80px}
 .wa-order-sum-title{font-size:0.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px}
 .wa-sum-row{display:flex;justify-content:space-between;font-size:0.84rem;padding:4px 0;color:var(--text)}
 .wa-sum-total{font-size:0.95rem;font-weight:900;color:var(--accent);border-top:1px solid var(--border);padding-top:9px;margin-top:5px;display:flex;justify-content:space-between}
-/* ══ CANCEL FEE BOX ══ */
+
+/* ── CANCEL FEE ── */
 .cancel-fee-box{background:#fff5f5;border:2px solid #fecaca;border-radius:13px;padding:16px;margin-bottom:16px}
 .cancel-fee-title{font-size:0.95rem;font-weight:900;color:#dc2626;margin-bottom:8px;display:flex;align-items:center;gap:7px}
 .cancel-fee-amount{font-size:1.8rem;font-weight:900;color:#dc2626;text-align:center;margin:12px 0 6px;letter-spacing:-1px}
@@ -444,11 +519,12 @@ textarea.fc{resize:vertical;min-height:80px}
 .cancel-whish{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border-radius:10px;padding:12px 14px;margin:10px 0;display:flex;align-items:center;justify-content:space-between;gap:10px}
 .cancel-whish-lbl{font-size:0.78rem;opacity:0.85}
 .cancel-whish-num{font-size:1.1rem;font-weight:900;letter-spacing:1px;direction:ltr}
+
 /* ── FOOTER ── */
 .site-footer{background:var(--primary);color:#fff;padding:38px 18px 26px;margin-top:40px}
 .footer-in{max-width:1200px;margin:0 auto}
 .footer-brand{text-align:center;margin-bottom:30px}
-.footer-logo{font-size:1.55rem;font-weight:900;color:var(--gold)}
+.footer-logo{font-size:1.55rem;font-weight:900;color:var(--gold);font-family:'Tajawal',sans-serif}
 .footer-logo span{color:#fff}
 .footer-tagline{color:rgba(255,255,255,0.5);font-size:0.85rem;margin-top:5px}
 .footer-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-bottom:26px}
@@ -468,7 +544,7 @@ textarea.fc{resize:vertical;min-height:80px}
 /* ── ADMIN ── */
 .al-wrap{min-height:100vh;background:linear-gradient(135deg,#0a1f5e,#1a3fa0);display:flex;align-items:center;justify-content:center;padding:24px}
 .al-card{background:#fff;border-radius:var(--r);padding:38px 26px;width:100%;max-width:360px;box-shadow:0 24px 80px rgba(0,0,0,0.5)}
-.al-logo{text-align:center;font-size:1.5rem;font-weight:900;color:var(--accent);margin-bottom:3px}
+.al-logo{text-align:center;font-size:1.5rem;font-weight:900;color:var(--accent);margin-bottom:3px;font-family:'Tajawal',sans-serif}
 .al-logo span{color:var(--primary)}
 .al-sub{text-align:center;font-size:0.83rem;color:var(--muted);margin-bottom:26px;font-weight:500}
 .ahdr{background:var(--primary);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,0.25)}
@@ -494,23 +570,13 @@ textarea.fc{resize:vertical;min-height:80px}
 .mov{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:200;display:flex;align-items:flex-end;justify-content:center;animation:fi 0.2s;backdrop-filter:blur(4px)}
 .msh{background:var(--card);border-radius:var(--r) var(--r) 0 0;padding:22px 17px;width:100%;max-width:540px;max-height:92vh;overflow-y:auto;animation:su 0.28s var(--ease)}
 .mhan{width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 18px}
-.mttl{font-size:1.05rem;font-weight:800;color:var(--primary);margin-bottom:16px}
+.mttl{font-size:1.05rem;font-weight:800;color:var(--primary);margin-bottom:16px;font-family:'Tajawal',sans-serif}
 @keyframes fi{from{opacity:0}to{opacity:1}}
 @keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
 
-/* ── DENIED ── */
-.denied-ov{position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column}
-.denied-ov.show{display:flex}
-.denied-card{background:#fff;border-radius:20px;padding:38px 30px;max-width:300px;width:90%;text-align:center;animation:pop 0.3s var(--ease)}
-.denied-ico{font-size:3.5rem;margin-bottom:10px}
-.denied-ttl{font-size:1.4rem;font-weight:900;color:#dc2626;margin-bottom:6px}
-.denied-sub{color:var(--muted);font-size:0.88rem}
-
-/* ── TOAST ── */
+/* ── TOAST & MISC ── */
 #toast{position:fixed;bottom:95px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--primary);color:#fff;padding:11px 24px;border-radius:50px;font-size:0.86rem;font-weight:600;z-index:9000;opacity:0;transition:all 0.25s var(--ease);white-space:nowrap;pointer-events:none;box-shadow:0 4px 24px rgba(0,0,0,0.3)}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
-/* ── MISC ── */
 .pi{animation:pgi 0.28s var(--ease)}
 @keyframes pgi{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .prvbox{margin-top:8px;border-radius:10px;overflow:hidden;display:none}
@@ -523,6 +589,12 @@ textarea.fc{resize:vertical;min-height:80px}
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-thumb{background:#ddd;border-radius:2px}
 .hide{display:none!important}
+.denied-ov{position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column}
+.denied-ov.show{display:flex}
+.denied-card{background:#fff;border-radius:20px;padding:38px 30px;max-width:300px;width:90%;text-align:center;animation:pop 0.3s var(--ease)}
+.denied-ico{font-size:3.5rem;margin-bottom:10px}
+.denied-ttl{font-size:1.4rem;font-weight:900;color:#dc2626;margin-bottom:6px}
+.denied-sub{color:var(--muted);font-size:0.88rem}
 </style>
 </head>
 <body>
@@ -544,16 +616,18 @@ textarea.fc{resize:vertical;min-height:80px}
       <button onclick="go('home')" id="dn-home">🏠 الرئيسية</button>
       <button onclick="go('home')" id="dn-products">📦 المنتجات</button>
       <button onclick="goOffers()" class="dn-act" id="dn-offers">🔥 العروض</button>
+      <button onclick="go('wishlist')" id="dn-wl">❤️ المفضلة</button>
       <button onclick="go('contact')" id="dn-contact">📞 تواصل</button>
     </nav>
     <div class="hdr-right">
+      <button class="pts-hdr-badge" id="pts-hdr-badge" onclick="go('points')">⭐ <span id="pts-hdr-val">0</span></button>
       <div class="lang-sw">
         <button class="lang-btn" id="lang-ar" onclick="setLang('ar')">ع</button>
         <button class="lang-btn" id="lang-fr" onclick="setLang('fr')">FR</button>
         <button class="lang-btn" id="lang-en" onclick="setLang('en')">EN</button>
       </div>
       <button class="dm-btn" id="dm-btn" onclick="toggleDark()">🌙</button>
-      <button class="cart-btn" id="main-cart-btn" onclick="go('cart')">🛒 <span id="cart-btn-lbl">السلة</span><span class="cbadge" id="cart-badge" style="display:none">0</span></button>
+      <button class="cart-btn" id="main-cart-btn" onclick="go('cart')">🛒 <span class="cart-btn-lbl-txt" id="cart-btn-lbl">السلة</span><span class="cbadge" id="cart-badge" style="display:none">0</span></button>
     </div>
   </div>
 </header>
@@ -565,10 +639,16 @@ textarea.fc{resize:vertical;min-height:80px}
     <div class="logo" style="font-size:1.2rem">Dash <span style="color:#fff">Lebanon</span></div>
     <button class="mob-nav-close" onclick="closeNav()">✕</button>
   </div>
+  <div class="mob-pts-row" onclick="go('points');closeNav()">
+    <div class="mob-pts-lbl">⭐ نقاطي</div>
+    <div class="mob-pts-val" id="mob-pts-val">0 نقطة</div>
+  </div>
   <nav class="mob-nav-links">
     <button onclick="go('home');closeNav()" id="mn-home">🏠 الرئيسية</button>
     <button onclick="go('home');closeNav()" id="mn-products">📦 كل المنتجات</button>
     <button onclick="goOffers();closeNav()" id="mn-offers">🔥 العروض الخاصة</button>
+    <button onclick="go('wishlist');closeNav()" id="mn-wl">❤️ المفضلة</button>
+    <button onclick="go('points');closeNav()" id="mn-points">⭐ نقاطي ومكافآتي</button>
     <button onclick="go('contact');closeNav()" id="mn-contact">📞 تواصل معنا</button>
     <button onclick="go('orders');closeNav()" id="mn-orders">📋 طلباتي</button>
   </nav>
@@ -591,6 +671,8 @@ textarea.fc{resize:vertical;min-height:80px}
         <div class="footer-h">روابط سريعة</div>
         <button onclick="go('home')">الرئيسية</button>
         <button onclick="goOffers()">العروض 🔥</button>
+        <button onclick="go('wishlist')">المفضلة ❤️</button>
+        <button onclick="go('points')">نقاطي ⭐</button>
         <button onclick="go('contact')">تواصل معنا</button>
         <button onclick="go('orders')">طلباتي</button>
       </div>
@@ -663,11 +745,23 @@ const ADMIN_P='admin123';
 const LBP_RATE=90000;
 const WHISH_NUMBER='81686245';
 const CANCEL_FEE=4;
+const PTS_PER_DOLLAR=10; // 10 نقاط لكل دولار
+
+// ─── CATEGORIES ───
+const CATS=[
+  {id:'all',label:'🏠 الكل',labelFr:'🏠 Tout',labelEn:'🏠 All'},
+  {id:'bathroom',label:'🛁 حمام',labelFr:'🛁 Salle de bain',labelEn:'🛁 Bathroom'},
+  {id:'kitchen',label:'🍽️ مطبخ',labelFr:'🍽️ Cuisine',labelEn:'🍽️ Kitchen'},
+  {id:'home',label:'🏠 منزل',labelFr:'🏠 Maison',labelEn:'🏠 Home'},
+  {id:'car',label:'🚗 سيارة',labelFr:'🚗 Voiture',labelEn:'🚗 Car'},
+  {id:'tech',label:'💡 تقنية',labelFr:'💡 Tech',labelEn:'💡 Tech'},
+  {id:'offers',label:'🔥 عروض',labelFr:'🔥 Offres',labelEn:'🔥 Offers'},
+];
 
 const TRANS={
   ar:{
     nav_home:'🏠 الرئيسية',nav_products:'📦 المنتجات',nav_offers:'🔥 العروض',nav_contact:'📞 تواصل',
-    nav_orders:'📋 طلباتي',cart_lbl:'السلة',
+    nav_orders:'📋 طلباتي',nav_wl:'❤️ المفضلة',nav_points:'⭐ نقاطي',cart_lbl:'السلة',
     trust:'منتجات مضمونة ✅ &nbsp;|&nbsp; توصيل سريع 🚀 &nbsp;|&nbsp; الدفع عند الاستلام 💵 &nbsp;|&nbsp; جودة عالية ⭐ &nbsp;|&nbsp; رضا تام أو استرداد 💯 &nbsp;|&nbsp; خدمة متميزة 24/7 🎯',
     search_ph:'🔍 ابحث عن منتج...',all_products:'🛒 منتجاتنا',offers_lbl:'🔥 العروض',my_orders:'📋 طلباتي',contact_lbl:'📞 تواصل',
     add_cart:'🛒 أضف إلى السلة',delivery_cost:'🚚 تكلفة التوصيل',qty:'الكمية',total_lbl:'الإجمالي',per_piece:'/ قطعة',
@@ -702,82 +796,90 @@ const TRANS={
     wa_open:'💬 فتح واتساب',email_open:'✉️ إرسال إيميل',ask_ttl:'❓ اسأل سؤالك',ask_name:'اسمك',ask_msg:'سؤالك أو رسالتك',ask_send:'💬 إرسال عبر واتساب',follow_us:'تابعنا على السوشيال ميديا',
     wa_modal_title:'أكمل بياناتك لإرسال الطلب',wa_modal_sub:'عبّي المعلومات وبعتها تلقائياً على واتساب',wa_send:'💬 إرسال الطلب على واتساب',
     cancel:'إلغاء',order_summary_lbl:'🛍️ ملخص طلبك',fill_all:'⚠️ يرجى ملء جميع الحقول المطلوبة',added_cart:'أُضيف إلى السلة',per_unit:'/ قطعة',
+    sort_def:'الافتراضي',sort_price_asc:'السعر ↑',sort_price_desc:'السعر ↓',sort_offer:'عروض أولاً',
+    pts_my:'⭐ نقاطي',pts_earn:'ستكسب نقاط',pts_from_order:'من هذا الطلب',pts_your:'نقاطك الحالية',
+    wl_ttl:'❤️ المفضلة',wl_empty:'لا يوجد منتجات في المفضلة بعد',wl_empty_sub:'اضغط ❤️ على أي منتج لإضافته',
+    pts_page_ttl:'⭐ نقاطي ومكافآتي',pts_total:'إجمالي نقاطك',pts_rank:'مستواك',pts_next:'للمستوى التالي',pts_history_ttl:'📋 سجل النقاط',pts_no_history:'لا يوجد سجل بعد',
+    rank_bronze:'برونزي 🥉',rank_silver:'فضي 🥈',rank_gold:'ذهبي 🥇',
   },
   fr:{
     nav_home:'🏠 Accueil',nav_products:'📦 Produits',nav_offers:'🔥 Offres',nav_contact:'📞 Contact',
-    nav_orders:'📋 Mes Commandes',cart_lbl:'Panier',
+    nav_orders:'📋 Mes Commandes',nav_wl:'❤️ Favoris',nav_points:'⭐ Points',cart_lbl:'Panier',
     trust:'Produits garantis ✅ &nbsp;|&nbsp; Livraison rapide 🚀 &nbsp;|&nbsp; Paiement à la livraison 💵 &nbsp;|&nbsp; Haute qualité ⭐ &nbsp;|&nbsp; Satisfait ou remboursé 💯 &nbsp;|&nbsp; Service 24/7 🎯',
-    search_ph:'🔍 Rechercher un produit...',all_products:'🛒 Nos Produits',offers_lbl:'🔥 Offres',my_orders:'📋 Mes Commandes',contact_lbl:'📞 Contact',
+    search_ph:'🔍 Rechercher...',all_products:'🛒 Nos Produits',offers_lbl:'🔥 Offres',my_orders:'📋 Mes Commandes',contact_lbl:'📞 Contact',
     add_cart:'🛒 Ajouter au panier',delivery_cost:'🚚 Frais de livraison',qty:'Quantité',total_lbl:'Total',per_piece:'/ pièce',
     buy_normal:'Achat normal',buy_offer_lbl:'Offre spéciale',save_lbl:'Économisez',related_lbl:'🛍️ Vous pourriez aussi aimer',
-    was:'Était',now:'Maintenant',cart_empty_ttl:'Panier vide',cart_empty_sub:'Ajoutez des produits pour commencer',
-    continue_shopping:'← Continuer les achats',browse:'Voir les produits',
-    cart_subtotal:'Sous-total',cart_delivery:'🚚 Livraison',cart_total_lbl:'Total final',checkout_btn:'Passer la commande',
-    wa_order:'💬 Commander via WhatsApp',customer_info:'👤 Informations client',delivery_address:'📍 Adresse de livraison',
-    full_name:'Nom complet',phone:'Téléphone',phone2:'Deuxième téléphone',city:'Ville',district:'District',
-    full_address:'Adresse complète',floor:'Étage',notes:'Notes',optional:'optionnel',req_field:'Ce champ est requis',
-    review_order:'Vérifier la commande →',order_summary:'🛍️ Récapitulatif',confirm_btn:'✅ Confirmer la commande',cancel_btn:'❌ Annuler',
-    order_sent_ttl:'Commande envoyée!',thank_you:"Merci d'avoir magasiné chez Dash Lebanon 🙏",
-    auto_accepted:'Votre commande est acceptée ✅\nNotre équipe vous contactera bientôt',
-    back_store:'🏠 Retour à la boutique',track_orders_btn:'📋 Suivre mes commandes',
-    cancelled_ttl:'Commande annulée',cancelled_sub:'Votre commande a été annulée.\nNous espérons vous revoir bientôt!',
-    back:'← Retour',sending:'Envoi en cours...',
+    was:'Était',now:'Maintenant',cart_empty_ttl:'Panier vide',cart_empty_sub:'Ajoutez des produits',
+    continue_shopping:'← Continuer',browse:'Voir les produits',
+    cart_subtotal:'Sous-total',cart_delivery:'🚚 Livraison',cart_total_lbl:'Total final',checkout_btn:'Commander',
+    wa_order:'💬 Commander via WhatsApp',customer_info:'👤 Infos client',delivery_address:'📍 Adresse',
+    full_name:'Nom complet',phone:'Téléphone',phone2:'Deuxième tél.',city:'Ville',district:'District',
+    full_address:'Adresse complète',floor:'Étage',notes:'Notes',optional:'optionnel',req_field:'Champ requis',
+    review_order:'Vérifier →',order_summary:'🛍️ Récapitulatif',confirm_btn:'✅ Confirmer',cancel_btn:'❌ Annuler',
+    order_sent_ttl:'Commande envoyée!',thank_you:"Merci d'avoir magasiné 🙏",
+    auto_accepted:'Commande acceptée ✅\nNotre équipe vous contactera',
+    back_store:'🏠 Retour',track_orders_btn:'📋 Mes commandes',
+    cancelled_ttl:'Commande annulée',cancelled_sub:'Votre commande a été annulée.',
+    back:'← Retour',sending:'Envoi...',
     why_title:'⭐ Pourquoi Dash Lebanon?',
-    why_1_h:'Produits garantis',why_1_p:'Chaque produit est garanti de qualité',
-    why_2_h:'Livraison rapide',why_2_p:'Livré à votre porte',
-    why_3_h:'Paiement à la livraison',why_3_p:'Payez à la réception',
-    why_4_h:'Offres exclusives',why_4_p:'Prix imbattables',
-    why_5_h:'Satisfaction totale',why_5_p:'Votre satisfaction est notre but',
-    why_6_h:'Support 24/7',why_6_p:'Service exceptionnel toujours',
-    comments_ttl:'💬 Avis de nos clients',
-    welcome_title:'Bienvenue chez Dash Lebanon! 👋',onboard_sub:'Aidez-nous à améliorer votre expérience',
-    ob_name:'Votre nom',ob_age:'Votre âge',ob_phone:'Votre téléphone',ob_lang:'Langue préférée',ob_currency:'Devise préférée',
-    ob_submit:'Commencer les achats 🛒',ob_skip:'Passer',
-    no_products:'Aucun produit disponible',no_results_for:'Aucun résultat pour',try_diff:'Essayez un autre mot',
-    orders_ttl:'📦 Mes Commandes',no_orders_ttl:'Aucune commande encore',no_orders_sub:'Vos commandes apparaîtront ici',
-    order_count:'commande(s) sauvegardée(s)',total_lbl2:'Total',accepted_lbl:'✅ Acceptée',cancelled_lbl:'❌ Annulée',
-    contact_ttl:'📞 Contactez-nous',contact_hero_sub:'Nous sommes là pour vous aider à tout moment!',
-    wa_open:'💬 Ouvrir WhatsApp',email_open:'✉️ Envoyer un email',ask_ttl:'❓ Posez votre question',ask_name:'Votre nom',ask_msg:'Votre question ou message',ask_send:'💬 Envoyer via WhatsApp',follow_us:'Suivez-nous sur les réseaux sociaux',
-    wa_modal_title:'Complétez vos informations',wa_modal_sub:'Remplissez le formulaire pour envoyer votre commande',wa_send:'💬 Envoyer la commande sur WhatsApp',
-    cancel:'Annuler',order_summary_lbl:'🛍️ Récapitulatif',fill_all:'⚠️ Veuillez remplir tous les champs requis',added_cart:'Ajouté au panier',per_unit:'/ pièce',
+    why_1_h:'Garantis',why_1_p:'Qualité garantie',why_2_h:'Livraison',why_2_p:'À votre porte',
+    why_3_h:'À la livraison',why_3_p:'Payez à la réception',why_4_h:'Offres',why_4_p:'Prix imbattables',
+    why_5_h:'Satisfaction',why_5_p:'Votre bonheur',why_6_h:'Support',why_6_p:'24/7 toujours',
+    comments_ttl:'💬 Avis clients',
+    welcome_title:'Bienvenue! 👋',onboard_sub:'Aidez-nous',ob_name:'Votre nom',ob_age:'Âge',ob_phone:'Téléphone',
+    ob_lang:'Langue',ob_currency:'Devise',ob_submit:'Commencer 🛒',ob_skip:'Passer',
+    no_products:'Aucun produit',no_results_for:'Aucun résultat pour',try_diff:'Essayez autre chose',
+    orders_ttl:'📦 Mes Commandes',no_orders_ttl:'Aucune commande',no_orders_sub:'Vos commandes ici',
+    order_count:'commande(s)',total_lbl2:'Total',accepted_lbl:'✅ Acceptée',cancelled_lbl:'❌ Annulée',
+    contact_ttl:'📞 Contact',contact_hero_sub:'Nous sommes là!',
+    wa_open:'💬 WhatsApp',email_open:'✉️ Email',ask_ttl:'❓ Question',ask_name:'Nom',ask_msg:'Message',ask_send:'💬 Envoyer',follow_us:'Suivez-nous',
+    wa_modal_title:'Complétez vos infos',wa_modal_sub:'Envoyez via WhatsApp',wa_send:'💬 Envoyer',
+    cancel:'Annuler',order_summary_lbl:'🛍️ Récap',fill_all:'⚠️ Remplissez les champs',added_cart:'Ajouté',per_unit:'/ pièce',
+    sort_def:'Défaut',sort_price_asc:'Prix ↑',sort_price_desc:'Prix ↓',sort_offer:'Offres d\'abord',
+    pts_my:'⭐ Mes Points',pts_earn:'Vous gagnerez',pts_from_order:'de cette commande',pts_your:'Vos points actuels',
+    wl_ttl:'❤️ Favoris',wl_empty:'Aucun favori',wl_empty_sub:'Appuyez ❤️ pour ajouter',
+    pts_page_ttl:'⭐ Mes Points',pts_total:'Total points',pts_rank:'Niveau',pts_next:'pour le niveau suivant',pts_history_ttl:'📋 Historique',pts_no_history:'Pas encore',
+    rank_bronze:'Bronze 🥉',rank_silver:'Argent 🥈',rank_gold:'Or 🥇',
   },
   en:{
     nav_home:'🏠 Home',nav_products:'📦 Products',nav_offers:'🔥 Offers',nav_contact:'📞 Contact',
-    nav_orders:'📋 My Orders',cart_lbl:'Cart',
+    nav_orders:'📋 My Orders',nav_wl:'❤️ Wishlist',nav_points:'⭐ Points',cart_lbl:'Cart',
     trust:'Guaranteed products ✅ &nbsp;|&nbsp; Fast delivery 🚀 &nbsp;|&nbsp; Cash on delivery 💵 &nbsp;|&nbsp; High quality ⭐ &nbsp;|&nbsp; Full satisfaction 💯 &nbsp;|&nbsp; 24/7 service 🎯',
-    search_ph:'🔍 Search for a product...',all_products:'🛒 Our Products',offers_lbl:'🔥 Offers',my_orders:'📋 My Orders',contact_lbl:'📞 Contact',
+    search_ph:'🔍 Search...',all_products:'🛒 Our Products',offers_lbl:'🔥 Offers',my_orders:'📋 My Orders',contact_lbl:'📞 Contact',
     add_cart:'🛒 Add to Cart',delivery_cost:'🚚 Delivery cost',qty:'Quantity',total_lbl:'Total',per_piece:'/ piece',
     buy_normal:'Normal purchase',buy_offer_lbl:'Special offer',save_lbl:'Save',related_lbl:'🛍️ You might also like',
     was:'Was',now:'Now',cart_empty_ttl:'Cart is empty',cart_empty_sub:'Add products to start',
-    continue_shopping:'← Continue shopping',browse:'Browse products',
-    cart_subtotal:'Subtotal',cart_delivery:'🚚 Delivery fee',cart_total_lbl:'Grand total',checkout_btn:'Checkout',
+    continue_shopping:'← Continue',browse:'Browse products',
+    cart_subtotal:'Subtotal',cart_delivery:'🚚 Delivery',cart_total_lbl:'Grand total',checkout_btn:'Checkout',
     wa_order:'💬 Order via WhatsApp',customer_info:'👤 Customer Info',delivery_address:'📍 Delivery Address',
-    full_name:'Full name',phone:'Phone number',phone2:'Second phone',city:'City',district:'District',
-    full_address:'Full address',floor:'Floor',notes:'Notes',optional:'optional',req_field:'This field is required',
-    review_order:'Review Order →',order_summary:'🛍️ Order Summary',confirm_btn:'✅ Confirm Order',cancel_btn:'❌ Cancel',
-    order_sent_ttl:'Order Sent!',thank_you:'Thank you for shopping at Dash Lebanon 🙏',
-    auto_accepted:'Your order is accepted automatically ✅\nOur team will contact you soon',
-    back_store:'🏠 Back to Store',track_orders_btn:'📋 Track My Orders',
-    cancelled_ttl:'Order Cancelled',cancelled_sub:'Your order has been cancelled.\nWe hope to see you again soon!',
+    full_name:'Full name',phone:'Phone',phone2:'Second phone',city:'City',district:'District',
+    full_address:'Full address',floor:'Floor',notes:'Notes',optional:'optional',req_field:'Required',
+    review_order:'Review →',order_summary:'🛍️ Order Summary',confirm_btn:'✅ Confirm',cancel_btn:'❌ Cancel',
+    order_sent_ttl:'Order Sent!',thank_you:'Thank you for shopping 🙏',
+    auto_accepted:'Order accepted ✅\nOur team will contact you',
+    back_store:'🏠 Back to Store',track_orders_btn:'📋 My Orders',
+    cancelled_ttl:'Order Cancelled',cancelled_sub:'Your order has been cancelled.',
     back:'← Back',sending:'Sending...',
     why_title:'⭐ Why Dash Lebanon?',
-    why_1_h:'Guaranteed products',why_1_p:'Every product is quality guaranteed',
-    why_2_h:'Fast delivery',why_2_p:'Delivered to your door',
-    why_3_h:'Cash on delivery',why_3_p:'Pay when you receive',
-    why_4_h:'Exclusive offers',why_4_p:'Unbeatable prices',
-    why_5_h:'Full satisfaction',why_5_p:'Your happiness is our goal',
-    why_6_h:'24/7 Support',why_6_p:'Always exceptional service',
+    why_1_h:'Guaranteed',why_1_p:'Quality guaranteed',why_2_h:'Fast delivery',why_2_p:'To your door',
+    why_3_h:'Cash on delivery',why_3_p:'Pay on receipt',why_4_h:'Exclusive offers',why_4_p:'Unbeatable prices',
+    why_5_h:'Satisfaction',why_5_p:'Your happiness',why_6_h:'24/7 Support',why_6_p:'Always there',
     comments_ttl:'💬 Customer Reviews',
-    welcome_title:'Welcome to Dash Lebanon! 👋',onboard_sub:'Help us give you a better experience',
-    ob_name:'Your name',ob_age:'Your age',ob_phone:'Your phone',ob_lang:'Preferred language',ob_currency:'Preferred currency',
+    welcome_title:'Welcome to Dash Lebanon! 👋',onboard_sub:'Help us serve you better',
+    ob_name:'Your name',ob_age:'Age',ob_phone:'Phone',ob_lang:'Language',ob_currency:'Currency',
     ob_submit:'Start Shopping 🛒',ob_skip:'Skip',
-    no_products:'No products available',no_results_for:'No results for',try_diff:'Try a different word',
-    orders_ttl:'📦 My Orders',no_orders_ttl:'No orders yet',no_orders_sub:'Your orders will appear here after confirmation',
-    order_count:'order(s) saved on this device',total_lbl2:'Total',accepted_lbl:'✅ Accepted',cancelled_lbl:'❌ Cancelled',
-    contact_ttl:'📞 Contact Us',contact_hero_sub:'We are here to help you at any time!',
-    wa_open:'💬 Open WhatsApp',email_open:'✉️ Send Email',ask_ttl:'❓ Ask a Question',ask_name:'Your name',ask_msg:'Your question or message',ask_send:'💬 Send via WhatsApp',follow_us:'Follow us on Social Media',
-    wa_modal_title:'Complete Your Info to Place Order',wa_modal_sub:'Fill in the details and send directly via WhatsApp',wa_send:'💬 Send Order on WhatsApp',
-    cancel:'Cancel',order_summary_lbl:'🛍️ Your Order Summary',fill_all:'⚠️ Please fill all required fields',added_cart:'Added to cart',per_unit:'/ piece',
+    no_products:'No products',no_results_for:'No results for',try_diff:'Try something else',
+    orders_ttl:'📦 My Orders',no_orders_ttl:'No orders yet',no_orders_sub:'Your orders will appear here',
+    order_count:'order(s)',total_lbl2:'Total',accepted_lbl:'✅ Accepted',cancelled_lbl:'❌ Cancelled',
+    contact_ttl:'📞 Contact Us',contact_hero_sub:'We are here to help!',
+    wa_open:'💬 Open WhatsApp',email_open:'✉️ Send Email',ask_ttl:'❓ Ask a Question',ask_name:'Name',ask_msg:'Message',ask_send:'💬 Send via WhatsApp',follow_us:'Follow us',
+    wa_modal_title:'Complete Your Info',wa_modal_sub:'Send order via WhatsApp',wa_send:'💬 Send Order',
+    cancel:'Cancel',order_summary_lbl:'🛍️ Summary',fill_all:'⚠️ Please fill required fields',added_cart:'Added to cart',per_unit:'/ piece',
+    sort_def:'Default',sort_price_asc:'Price ↑',sort_price_desc:'Price ↓',sort_offer:'Offers first',
+    pts_my:'⭐ My Points',pts_earn:'You will earn',pts_from_order:'from this order',pts_your:'Your current points',
+    wl_ttl:'❤️ Wishlist',wl_empty:'No items in wishlist',wl_empty_sub:'Press ❤️ on any product to add it',
+    pts_page_ttl:'⭐ My Points & Rewards',pts_total:'Total points',pts_rank:'Your rank',pts_next:'to next level',pts_history_ttl:'📋 Points History',pts_no_history:'No history yet',
+    rank_bronze:'Bronze 🥉',rank_silver:'Silver 🥈',rank_gold:'Gold 🥇',
   }
 };
 function t(key){return(TRANS[S.lang]||TRANS.ar)[key]||TRANS.ar[key]||key}
@@ -794,17 +896,17 @@ const FAKE_COMMENTS=[
 ];
 
 const DEMO=[
-  {id:1,name:'المكنسة اللاسلكية 3 في 1',description:'مكنسة محمولة قوية متعددة الوظائف: شفط غبار، منفاخ هواء، ومضخة لتفريغ الهواء. لاسلكية بالكامل ومثالية للسيارة والمنزل.',image:'https://cdn.corenexis.com/files/c/1186979720.jpg',price:7.99,oldPrice:10.99,deliveryPrice:3,note:'شحن USB سريع مع ملحقات تنظيف متعددة',offer:{qty:2,price:12.99,label:'اشتري 2 بـ 12.99$ بدل 15.98$'}},
-  {id:2,name:'رأس دوش التوربو المتطور',description:'رأس دوش بضغط عالٍ وتصميم عصري، يحتوي على زر توقف وميزة تدليك الرأس. يوفر استهلاك المياه مع ضمان تجربة استحمام مريحة.',image:'https://cdn.corenexis.com/files/c/7223327720.jpg',price:6.99,oldPrice:9.99,deliveryPrice:3,note:'سهل التركيب ويناسب جميع خراطيم الدوش',offer:{qty:2,price:9.99,label:'اشتري 2 بـ 9.99$ بدل 13.98$'}},
-  {id:3,name:'وصلة صنبور مرنة 1080 درجة',description:'وصلة صنبور ذكية قابلة للدوران في جميع الاتجاهات لتسهيل غسل الوجه والمغسلة. تدعم وضعين لتدفق المياه.',image:'https://cdn.corenexis.com/files/c/9947163720.jpg',price:4.99,oldPrice:8.99,deliveryPrice:3,note:'مصنوعة من مواد مقاومة للصدأ وتدوم طويلاً',offer:{qty:2,price:7.99,label:'اشتري 2 بـ 7.99$ بدل 9.98$'}},
-  {id:4,name:'مطحنة التوابل والقهوة الكهربائية',description:'مطحنة قوية من الستانلس ستيل، مثالية لطحن الحبوب والتوابل والقهوة بسرعة فائقة وبضغطة زر واحدة.',image:'https://cdn.corenexis.com/files/c/5641244720.jpg',price:8.99,oldPrice:12.99,deliveryPrice:3,note:'شفرات حادة وتصميم سهل التنظيف',offer:{qty:2,price:15.99,label:'اشتري 2 بـ 15.99$ بدل 17.98$'}},
-  {id:5,name:'أقراص تنظيف الغسالة العميق',description:'أقراص فوارة تزيل الأوساخ المترسبة والبكتيريا والروائح الكريهة من داخل حوض الغسالة لتضمن غسيلاً أنظف.',image:'https://cdn.corenexis.com/files/c/2817323720.jpg',price:4.99,oldPrice:6.00,deliveryPrice:3,note:'العلبة تحتوي على 12 قرصاً',offer:{qty:2,price:7.99,label:'اشتري 2 بـ 7.99$ بدل 9.98$'}},
-  {id:6,name:'منظف الزجاج المغناطيسي المزدوج',description:'الحل المثالي لتنظيف النوافذ من الداخل والخارج في وقت واحد! تصميم مغناطيسي قوي يؤمن لك السلامة والسرعة.',image:'https://cdn.corenexis.com/files/c/1362116720.jpg',price:7.99,oldPrice:11.99,deliveryPrice:3,note:'مزود بحبل أمان لمنع السقوط',offer:{qty:2,price:14.99,label:'اشتري 2 بـ 14.99$ بدل 15.98$'}},
-  {id:7,name:'منظم الثلاجة القابل للتوسيع',description:'استغل كل سنتيمتر في ثلاجتك مع هذا المنظم القابل للتوسيع.',image:'https://cdn.corenexis.com/files/c/3772812720.png',price:2.49,oldPrice:4.00,deliveryPrice:3,note:'لا تفوت فرصة تحويل ثلاجتك إلى مساحة مرتبة!',offer:{qty:5,price:9.99,label:'عرض خاص: 5 قطع بـ 9.99$ فقط!'}},
-  {id:8,name:'محول الطاقة الذكي للسيارة (4 في 1)',description:'حوّل سيارتك لمحطة طاقة! مخرج 220V و3 منافذ شحن سريع QC3.0.',image:'https://cdn.corenexis.com/files/c/1344431720.jpg',price:15.99,oldPrice:25.99,deliveryPrice:3,note:'الطاقة معك وين ما رحت من Dash Lebanon',offer:{qty:2,price:28.99,label:'عرض خاص: 2 قطع بـ 28.99$ فقط!'}},
-  {id:9,name:'DASH Multi-Angle Cutter ✂️',description:'مقص فولاذي حاد مخصص لقص الزوايا بدقة متناهية من 45° إلى 135°.',image:'https://cdn.corenexis.com/files/c/4679843720.jpg',price:11.99,oldPrice:20.99,deliveryPrice:3,note:'دقة في القص وإتقان في العمل من Dash Lebanon',offer:{qty:2,price:22.99,label:'عرض خاص: 2 قطع بـ 22.99$ فقط!'}},
-  {id:10,name:'مستشعر السيفون الذكي اللاسلكي',description:'حوّل حمامك إلى حمام ذكي وفندقي! جهاز استشعار بالأشعة تحت الحمراء.',image:'https://cdn.corenexis.com/files/c/1244941720.jpg',price:9.99,oldPrice:19.99,deliveryPrice:3,note:'بطارية تدوم طويلاً وشحن عن طريق USB',offer:{qty:2,price:18.99,label:'عرض خاص: 2 قطع بـ 18.99$ فقط!'}},
-  {id:11,name:'مصحح أصابع القدم السيليكوني الذكي',description:'الحل الأمثل لراحة قدميك! مباعد أصابع من السيليكون الناعم لتصحيح استقامة الأصابع وتخفيف الآلام.',image:'https://cdn.corenexis.com/files/c/6313123720.png',price:4.99,oldPrice:7.00,deliveryPrice:3,note:'مادة طبية ناعمة وسهلة التنظيف من Dash Lebanon',offer:{qty:2,price:6.99,label:'عرض خاص: قطعتين بـ 6.99$ فقط!'}}
+  {id:1,cat:'home',name:'المكنسة اللاسلكية 3 في 1',description:'مكنسة محمولة قوية متعددة الوظائف: شفط غبار، منفاخ هواء، ومضخة لتفريغ الهواء. لاسلكية بالكامل ومثالية للسيارة والمنزل.',image:'https://cdn.corenexis.com/files/c/1186979720.jpg',price:7.99,oldPrice:10.99,deliveryPrice:3,note:'شحن USB سريع مع ملحقات تنظيف متعددة',offer:{qty:2,price:12.99,label:'اشتري 2 بـ 12.99$ بدل 15.98$'}},
+  {id:2,cat:'bathroom',name:'رأس دوش التوربو المتطور',description:'رأس دوش بضغط عالٍ وتصميم عصري، يحتوي على زر توقف وميزة تدليك الرأس. يوفر استهلاك المياه مع ضمان تجربة استحمام مريحة.',image:'https://cdn.corenexis.com/files/c/7223327720.jpg',price:6.99,oldPrice:9.99,deliveryPrice:3,note:'سهل التركيب ويناسب جميع خراطيم الدوش',offer:{qty:2,price:9.99,label:'اشتري 2 بـ 9.99$ بدل 13.98$'}},
+  {id:3,cat:'bathroom',name:'وصلة صنبور مرنة 1080 درجة',description:'وصلة صنبور ذكية قابلة للدوران في جميع الاتجاهات لتسهيل غسل الوجه والمغسلة. تدعم وضعين لتدفق المياه.',image:'https://cdn.corenexis.com/files/c/9947163720.jpg',price:4.99,oldPrice:8.99,deliveryPrice:3,note:'مصنوعة من مواد مقاومة للصدأ وتدوم طويلاً',offer:{qty:2,price:7.99,label:'اشتري 2 بـ 7.99$ بدل 9.98$'}},
+  {id:4,cat:'kitchen',name:'مطحنة التوابل والقهوة الكهربائية',description:'مطحنة قوية من الستانلس ستيل، مثالية لطحن الحبوب والتوابل والقهوة بسرعة فائقة وبضغطة زر واحدة.',image:'https://cdn.corenexis.com/files/c/5641244720.jpg',price:8.99,oldPrice:12.99,deliveryPrice:3,note:'شفرات حادة وتصميم سهل التنظيف',offer:{qty:2,price:15.99,label:'اشتري 2 بـ 15.99$ بدل 17.98$'}},
+  {id:5,cat:'home',name:'أقراص تنظيف الغسالة العميق',description:'أقراص فوارة تزيل الأوساخ المترسبة والبكتيريا والروائح الكريهة من داخل حوض الغسالة لتضمن غسيلاً أنظف.',image:'https://cdn.corenexis.com/files/c/2817323720.jpg',price:4.99,oldPrice:6.00,deliveryPrice:3,note:'العلبة تحتوي على 12 قرصاً',offer:{qty:2,price:7.99,label:'اشتري 2 بـ 7.99$ بدل 9.98$'}},
+  {id:6,cat:'home',name:'منظف الزجاج المغناطيسي المزدوج',description:'الحل المثالي لتنظيف النوافذ من الداخل والخارج في وقت واحد! تصميم مغناطيسي قوي يؤمن لك السلامة والسرعة.',image:'https://cdn.corenexis.com/files/c/1362116720.jpg',price:7.99,oldPrice:11.99,deliveryPrice:3,note:'مزود بحبل أمان لمنع السقوط',offer:{qty:2,price:14.99,label:'اشتري 2 بـ 14.99$ بدل 15.98$'}},
+  {id:7,cat:'kitchen',name:'منظم الثلاجة القابل للتوسيع',description:'استغل كل سنتيمتر في ثلاجتك مع هذا المنظم القابل للتوسيع.',image:'https://cdn.corenexis.com/files/c/3772812720.png',price:2.49,oldPrice:4.00,deliveryPrice:3,note:'لا تفوت فرصة تحويل ثلاجتك إلى مساحة مرتبة!',offer:{qty:5,price:9.99,label:'عرض خاص: 5 قطع بـ 9.99$ فقط!'}},
+  {id:8,cat:'car',name:'محول الطاقة الذكي للسيارة (4 في 1)',description:'حوّل سيارتك لمحطة طاقة! مخرج 220V و3 منافذ شحن سريع QC3.0.',image:'https://cdn.corenexis.com/files/c/1344431720.jpg',price:15.99,oldPrice:25.99,deliveryPrice:3,note:'الطاقة معك وين ما رحت من Dash Lebanon',offer:{qty:2,price:28.99,label:'عرض خاص: 2 قطع بـ 28.99$ فقط!'}},
+  {id:9,cat:'home',name:'DASH Multi-Angle Cutter ✂️',description:'مقص فولاذي حاد مخصص لقص الزوايا بدقة متناهية من 45° إلى 135°.',image:'https://cdn.corenexis.com/files/c/4679843720.jpg',price:11.99,oldPrice:20.99,deliveryPrice:3,note:'دقة في القص وإتقان في العمل من Dash Lebanon',offer:{qty:2,price:22.99,label:'عرض خاص: 2 قطع بـ 22.99$ فقط!'}},
+  {id:10,cat:'bathroom',name:'مستشعر السيفون الذكي اللاسلكي',description:'حوّل حمامك إلى حمام ذكي وفندقي! جهاز استشعار بالأشعة تحت الحمراء.',image:'https://cdn.corenexis.com/files/c/1244941720.jpg',price:9.99,oldPrice:19.99,deliveryPrice:3,note:'بطارية تدوم طويلاً وشحن عن طريق USB',offer:{qty:2,price:18.99,label:'عرض خاص: 2 قطع بـ 18.99$ فقط!'}},
+  {id:11,cat:'home',name:'مصحح أصابع القدم السيليكوني الذكي',description:'الحل الأمثل لراحة قدميك! مباعد أصابع من السيليكون الناعم لتصحيح استقامة الأصابع وتخفيف الآلام.',image:'https://cdn.corenexis.com/files/c/6313123720.png',price:4.99,oldPrice:7.00,deliveryPrice:3,note:'مادة طبية ناعمة وسهلة التنظيف من Dash Lebanon',offer:{qty:2,price:6.99,label:'عرض خاص: قطعتين بـ 6.99$ فقط!'}},
 ];
 
 // STORAGE
@@ -817,6 +919,19 @@ function saveOrderLocal(o){const arr=getOrders();arr.unshift(o);localStorage.set
 function updateOrderStatus(num,status){const arr=getOrders();const i=arr.findIndex(o=>o.num===num);if(i>=0){arr[i].status=status;localStorage.setItem('dl_orders',JSON.stringify(arr))}}
 function loadCart(){try{const v=localStorage.getItem('dl_cart');return v?JSON.parse(v):[]}catch{return[]}}
 function saveCart(){localStorage.setItem('dl_cart',JSON.stringify(S.cart))}
+// WISHLIST
+function getWishlist(){try{const v=localStorage.getItem('dl_wl');return v?JSON.parse(v):[]}catch{return[]}}
+function saveWishlist(wl){localStorage.setItem('dl_wl',JSON.stringify(wl))}
+function isWished(id){return getWishlist().includes(id)}
+function toggleWish(id,e){if(e)e.stopPropagation();const wl=getWishlist();const idx=wl.indexOf(id);if(idx>=0)wl.splice(idx,1);else wl.push(id);saveWishlist(wl);updateWlBtns(id);updateUI();toast(idx>=0?'💔 أُزيل من المفضلة':'❤️ أُضيف إلى المفضلة')}
+function updateWlBtns(id){document.querySelectorAll(`.pcard-wl[data-pid="${id}"]`).forEach(b=>b.classList.toggle('active',isWished(id)));const detBtn=document.getElementById('det-wl-btn');if(detBtn)detBtn.classList.toggle('active',isWished(id))}
+// POINTS
+function getPoints(){try{const v=localStorage.getItem('dl_pts');return v?parseInt(v):0}catch{return 0}}
+function addPoints(pts){const cur=getPoints();const newVal=cur+pts;localStorage.setItem('dl_pts',newVal);const hist=getPtsHistory();hist.unshift({pts,date:new Date().toISOString(),note:'طلب جديد'});localStorage.setItem('dl_pts_hist',JSON.stringify(hist.slice(0,20)));updatePtsUI()}
+function getPtsHistory(){try{const v=localStorage.getItem('dl_pts_hist');return v?JSON.parse(v):[]}catch{return[]}}
+function getRank(pts){if(pts>=1500)return{label:t('rank_gold'),cls:'rank-gold',next:null,max:1500};if(pts>=500)return{label:t('rank_silver'),cls:'rank-silver',next:1500,max:1000};return{label:t('rank_bronze'),cls:'rank-bronze',next:500,max:500}}
+function calcEarnPts(total){return Math.round(total*PTS_PER_DOLLAR)}
+function updatePtsUI(){const pts=getPoints();const pv=document.getElementById('pts-hdr-val');if(pv)pv.textContent=pts;const mpv=document.getElementById('mob-pts-val');if(mpv)mpv.textContent=pts+' نقطة'}
 
 // STATE
 const S={
@@ -824,6 +939,7 @@ const S={
   logged:false,dqty:1,buyMode:'normal',onum:null,search:'',offersOnly:false,
   lang:localStorage.getItem('dl_lang')||'ar',
   dark:localStorage.getItem('dl_dark')==='1',
+  cat:'all',sort:'def',
 };
 
 // PRICE
@@ -865,7 +981,7 @@ function applyLang(){
   const t1=document.getElementById('trust-content-1');const t2=document.getElementById('trust-content-2');
   if(t1)t1.innerHTML=tr+' &nbsp;|&nbsp;&nbsp;&nbsp;';
   if(t2)t2.innerHTML=tr;
-  const navMap={'dn-home':'nav_home','dn-products':'nav_products','dn-offers':'nav_offers','dn-contact':'nav_contact','mn-home':'nav_home','mn-products':'nav_products','mn-offers':'nav_offers','mn-contact':'nav_contact','mn-orders':'nav_orders'};
+  const navMap={'dn-home':'nav_home','dn-products':'nav_products','dn-offers':'nav_offers','dn-contact':'nav_contact','dn-wl':'nav_wl','mn-home':'nav_home','mn-products':'nav_products','mn-offers':'nav_offers','mn-contact':'nav_contact','mn-orders':'nav_orders','mn-wl':'nav_wl','mn-points':'nav_points'};
   Object.entries(navMap).forEach(([id,key])=>{const el=document.getElementById(id);if(el)el.textContent=t(key)});
   const cl=document.getElementById('cart-btn-lbl');if(cl)cl.textContent=t('cart_lbl');
 }
@@ -875,7 +991,7 @@ function esc(s){if(s==null)return'';return String(s).replace(/&/g,'&amp;').repla
 let tt;
 function toast(m){const e=document.getElementById('toast');clearTimeout(tt);e.textContent=m;e.classList.add('show');tt=setTimeout(()=>e.classList.remove('show'),2800)}
 function go(p,d=null){S.page=p;S.data=d;if(p!=='product'){S.dqty=1;S.buyMode='normal'}render();window.scrollTo(0,0);updateUI()}
-function goOffers(){S.offersOnly=true;S.search='';go('home')}
+function goOffers(){S.offersOnly=true;S.cat='offers';S.search='';go('home')}
 function showDenied(){const o=document.getElementById('denied-ov');if(!o)return;o.classList.add('show');setTimeout(()=>o.classList.remove('show'),2200)}
 document.addEventListener('contextmenu',e=>{e.preventDefault();showDenied()});
 document.addEventListener('keydown',e=>{
@@ -899,7 +1015,7 @@ window.addEventListener('scroll',()=>{
 
 function updateCartBadge(){const c=cCount();const b=document.getElementById('cart-badge');if(b){b.textContent=c;b.style.display=c?'flex':'none'}}
 function updateUI(){
-  updateCartBadge();applyLang();applyDark();
+  updateCartBadge();applyLang();applyDark();updatePtsUI();
   const admin=['alogin','admin'];const noFooter=['cart','checkout','review','alogin','admin'];
   const f=document.getElementById('site-footer');const h=document.getElementById('main-hdr');
   const tb=document.getElementById('trust-bar');const wf=document.getElementById('wa-fab');
@@ -925,68 +1041,37 @@ async function trackVisit(){
   const ts=now.toLocaleTimeString('ar-LB',{hour:'2-digit',minute:'2-digit'});
   const ua=navigator.userAgent;
   function getDeviceName(ua){
-    const iphone=ua.match(/iPhone OS ([\d_]+)/);
-    if(iphone){const v=iphone[1].replace(/_/g,'.');return`📱 iPhone (iOS ${v})`}
-    const ipad=ua.match(/iPad.*OS ([\d_]+)/);
-    if(ipad){const v=ipad[1].replace(/_/g,'.');return`📱 iPad (iOS ${v})`}
-    const samModel=ua.match(/SM-([A-Z0-9]+)/i);
-    const sam=ua.match(/Samsung/i);
-    if(sam||samModel){const model=samModel?`SM-${samModel[1]}`:'Samsung';return`📱 Samsung ${model}`}
-    const hw=ua.match(/HUAWEI ([A-Z0-9\-]+)/i)||ua.match(/HW-([A-Z0-9]+)/i);
-    if(hw)return`📱 Huawei ${hw[1]}`;
-    const xi=ua.match(/Redmi ([A-Z0-9 ]+)/i)||ua.match(/POCO ([A-Z0-9]+)/i)||ua.match(/MI ([A-Z0-9 ]+)/i);
-    if(xi)return`📱 Xiaomi ${xi[1].trim()}`;
-    const op=ua.match(/OnePlus([A-Z0-9 ]+)/i);
-    if(op)return`📱 OnePlus ${op[1].trim()}`;
-    const rm=ua.match(/Realme ([A-Z0-9 ]+)/i)||ua.match(/RMX([0-9]+)/i);
-    if(rm)return`📱 Realme ${rm[0]}`;
-    const oppo=ua.match(/OPPO ([A-Z0-9]+)/i)||ua.match(/CPH([0-9]+)/i);
-    if(oppo)return`📱 OPPO ${oppo[0]}`;
-    const nokia=ua.match(/Nokia([A-Z0-9\. ]+)/i);
-    if(nokia)return`📱 Nokia ${nokia[1].trim()}`;
-    const lg=ua.match(/LG-([A-Z0-9]+)/i)||ua.match(/LG ([A-Z0-9]+)/i);
-    if(lg)return`📱 LG ${lg[1]}`;
-    const sony=ua.match(/Sony([A-Z0-9 ]+)/i)||ua.match(/Xperia ([A-Z0-9 ]+)/i);
-    if(sony)return`📱 Sony Xperia ${sony[1].trim()}`;
-    const android=ua.match(/Android ([\d.]+)/);
-    if(android){const model=ua.match(/;\s([^;()]+)\sBuild\//);const m=model?model[1].trim():'Android Device';return`📱 ${m} (Android ${android[1]})`}
-    const win=ua.match(/Windows NT ([\d.]+)/);
-    if(win){const versions={'10.0':'10/11','6.3':'8.1','6.2':'8','6.1':'7'};const wv=versions[win[1]]||win[1];return`💻 Windows ${wv}`}
-    const mac=ua.match(/Mac OS X ([\d_]+)/);
-    if(mac){const v=mac[1].replace(/_/g,'.');return`💻 macOS ${v}`}
-    if(/Linux/.test(ua))return`💻 Linux`;
+    const iphone=ua.match(/iPhone OS ([\d_]+)/);if(iphone){const v=iphone[1].replace(/_/g,'.');return`📱 iPhone (iOS ${v})`}
+    const android=ua.match(/Android ([\d.]+)/);if(android){const model=ua.match(/;\s([^;()]+)\sBuild\//);const m=model?model[1].trim():'Android';return`📱 ${m} (Android ${android[1]})`}
+    const win=ua.match(/Windows NT ([\d.]+)/);if(win)return`💻 Windows`;
+    if(/Mac OS/.test(ua))return`💻 macOS`;
     return`❓ Unknown`;
   }
-  const deviceName=getDeviceName(ua);
   const browser=(()=>{if(/Edg/.test(ua))return'Edge';if(/OPR|Opera/.test(ua))return'Opera';if(/Firefox/.test(ua))return'Firefox';if(/Chrome/.test(ua))return'Chrome';if(/Safari/.test(ua))return'Safari';return'Other';})();
-  const ref=document.referrer||'مباشر / Direct';
-  const lang=navigator.language||'—';
-  const screen_=`${screen.width}×${screen.height}`;
-  const msg=`━━━━━━━━━━━━━━━━━━━━━━━\n👁️ *زيارة جديدة — Dash Lebanon*\n━━━━━━━━━━━━━━━━━━━━━━━\n📅 ${ds}\n🕐 ${ts}\n📲 *الجهاز:* ${deviceName}\n🌐 المتصفح: ${browser}\n📐 الشاشة: ${screen_}\n🗣️ اللغة: ${lang}\n🔗 المصدر: ${ref.substring(0,80)}\n━━━━━━━━━━━━━━━━━━━━━━━`;
+  const msg=`━━━━━━━━━━━━━━━━━━━━━━━\n👁️ *زيارة جديدة — Dash Lebanon*\n━━━━━━━━━━━━━━━━━━━━━━━\n📅 ${ds}\n🕐 ${ts}\n📲 *الجهاز:* ${getDeviceName(ua)}\n🌐 المتصفح: ${browser}\n📐 الشاشة: ${screen.width}×${screen.height}\n━━━━━━━━━━━━━━━━━━━━━━━`;
   tgSend(msg);
 }
 
 async function trackCartAdd(productName,qty,price){
-  const now=new Date();const ts=now.toLocaleTimeString('ar-LB',{hour:'2-digit',minute:'2-digit'});
-  const msg=`🛒 *إضافة للسلة — Dash Lebanon*\n━━━━━━━━━━━━━━━━━━━━━━━\n📦 المنتج: *${productName}*\n🔢 الكمية: ${qty}\n💵 السعر: ${fmt(price)} (${fmtLBPNum(price)} ل.ل)\n🕐 ${ts}\n━━━━━━━━━━━━━━━━━━━━━━━`;
+  const ts=new Date().toLocaleTimeString('ar-LB',{hour:'2-digit',minute:'2-digit'});
+  const msg=`🛒 *إضافة للسلة — Dash Lebanon*\n━━━━━━━━━━━━━━━━━━━━━━━\n📦 المنتج: *${productName}*\n🔢 الكمية: ${qty}\n💵 السعر: ${fmt(price)}\n🕐 ${ts}\n━━━━━━━━━━━━━━━━━━━━━━━`;
   tgSend(msg);
 }
 async function trackOnboard(data){
   const now=new Date();const ds=now.toLocaleDateString('ar-LB',{weekday:'long',year:'numeric',month:'long',day:'numeric'});const ts=now.toLocaleTimeString('ar-LB',{hour:'2-digit',minute:'2-digit'});
-  const msg=`━━━━━━━━━━━━━━━━━━━━━━━\n🆕 *زائر جديد — Dash Lebanon*\n━━━━━━━━━━━━━━━━━━━━━━━\n👤 *الاسم:* ${data.name||'لم يذكر'}\n🎂 *العمر:* ${data.age||'لم يذكر'}\n📱 *الهاتف:* ${data.phone||'لم يذكر'}\n🌐 *اللغة المفضلة:* ${data.lang}\n💰 *العملة المفضلة:* ${data.currency}\n📅 ${ds} — 🕐 ${ts}\n━━━━━━━━━━━━━━━━━━━━━━━`;
+  const msg=`━━━━━━━━━━━━━━━━━━━━━━━\n🆕 *زائر جديد — Dash Lebanon*\n━━━━━━━━━━━━━━━━━━━━━━━\n👤 *الاسم:* ${data.name||'لم يذكر'}\n🎂 *العمر:* ${data.age||'لم يذكر'}\n📱 *الهاتف:* ${data.phone||'لم يذكر'}\n🌐 *اللغة:* ${data.lang}\n💰 *العملة:* ${data.currency}\n📅 ${ds} — 🕐 ${ts}\n━━━━━━━━━━━━━━━━━━━━━━━`;
   tgSend(msg);
 }
 async function sendOrder(info,num){
   const now=new Date();const ds=now.toLocaleDateString('ar-LB',{weekday:'long',year:'numeric',month:'long',day:'numeric'});const ts=now.toLocaleTimeString('ar-LB',{hour:'2-digit',minute:'2-digit'});
   const totalQty=S.cart.reduce((s,i)=>s+i.qty,0);
-  const items=S.cart.map((i,x)=>{const tag=i.isOffer?` (🎁 ${i.offerLabel||'عرض'})`:'';return`${x+1}\\. 🔹 *${i.name}*${tag}\n     ▫️ الكمية: ${i.qty}\n     ▫️ سعر القطعة: ${fmt(i.price)} (${fmtLBPNum(i.price)} ل.ل)\n     ▫️ المجموع: *${fmt(i.price*i.qty)}*`}).join('\n\n');
-  const t_=`━━━━━━━━━━━━━━━━━━━━━━━\n🛒 *طلب جديد — Dash Lebanon*\n━━━━━━━━━━━━━━━━━━━━━━━\n📋 *رقم الطلب:* \`${num}\`\n📅 ${ds} — 🕐 ${ts}\n\n━━━━━━━━━━━━━━━━━━━━━━━\n👤 *معلومات الزبون*\n━━━━━━━━━━━━━━━━━━━━━━━\n🙍 الاسم: *${info.name}*\n📱 الهاتف: *${info.phone}*${info.phone2?`\n📱 هاتف 2: *${info.phone2}*`:''}\n\n━━━━━━━━━━━━━━━━━━━━━━━\n📍 *عنوان التوصيل*\n━━━━━━━━━━━━━━━━━━━━━━━\n🏙️ *${info.city}* — 🗺️ *${info.district}*\n🏠 *${info.address}*${info.floor?`\n🏢 الطابق: *${info.floor}*`:''}${info.notes?`\n📝 *${info.notes}*`:''}\n\n━━━━━━━━━━━━━━━━━━━━━━━\n🛍️ *تفاصيل الطلب* (${totalQty} قطعة)\n━━━━━━━━━━━━━━━━━━━━━━━\n\n${items}\n\n━━━━━━━━━━━━━━━━━━━━━━━\n💰 *الفاتورة*\n━━━━━━━━━━━━━━━━━━━━━━━\n🧾 مجموع المنتجات: *${fmt(cSub())}* (${fmtLBPNum(cSub())} ل.ل)\n🚚 رسوم التوصيل: *${fmt(cDlv())}*\n━━━━━━━━━━━━━━━━━━━━━━━\n💵 *الإجمالي: ${fmt(cTot())}*\n💵 *بالليرة: ${fmtLBPNum(cTot())} ل.ل*\n━━━━━━━━━━━━━━━━━━━━━━━\n✅ الحالة: *مقبول*`;
-  return await tgSend(t_);
+  const items=S.cart.map((i,x)=>{const tag=i.isOffer?` (🎁 ${i.offerLabel||'عرض'})`:'';return`${x+1}\\. 🔹 *${i.name}*${tag}\n     ▫️ الكمية: ${i.qty}\n     ▫️ السعر: ${fmt(i.price)}\n     ▫️ المجموع: *${fmt(i.price*i.qty)}*`}).join('\n\n');
+  const msg=`━━━━━━━━━━━━━━━━━━━━━━━\n🛒 *طلب جديد — Dash Lebanon*\n━━━━━━━━━━━━━━━━━━━━━━━\n📋 *رقم الطلب:* \`${num}\`\n📅 ${ds} — 🕐 ${ts}\n\n👤 *${info.name}* | 📱 *${info.phone}*\n📍 *${info.city}* — *${info.district}*\n🏠 *${info.address}*${info.notes?`\n📝 *${info.notes}*`:''}\n\n🛍️ *المنتجات (${totalQty} قطعة):*\n\n${items}\n\n💵 *الإجمالي: ${fmt(cTot())}*\n💵 *بالليرة: ${fmtLBPNum(cTot())} ل.ل*\n✅ الحالة: *مقبول*`;
+  return await tgSend(msg);
 }
-
 async function sendCancel(info,num,reason,transferAmt,hasProof){
   const now=new Date();const ds=now.toLocaleDateString('ar-LB',{weekday:'long',year:'numeric',month:'long',day:'numeric'});const ts=now.toLocaleTimeString('ar-LB',{hour:'2-digit',minute:'2-digit'});
-  const msg=`━━━━━━━━━━━━━━━━━━━━━━━\n❌ *إلغاء طلب — Dash Lebanon*\n━━━━━━━━━━━━━━━━━━━━━━━\n📋 *رقم الطلب:* \`${num}\`\n👤 *${info.name}* | 📱 *${info.phone}*\n📅 ${ds} — 🕐 ${ts}\n\n💜 *رسوم الإلغاء عبر Whish Money*\n💵 المبلغ المُحوَّل: *${transferAmt||'لم يذكر'} $*\n📸 إشعار تحويل: *${hasProof?'✅ أرسل':'❌ لم يرسل'}*\n📝 *سبب الإلغاء:* ${reason||'لم يذكر سبباً'}\n━━━━━━━━━━━━━━━━━━━━━━━`;
+  const msg=`━━━━━━━━━━━━━━━━━━━━━━━\n❌ *إلغاء طلب — Dash Lebanon*\n━━━━━━━━━━━━━━━━━━━━━━━\n📋 *رقم الطلب:* \`${num}\`\n👤 *${info.name}* | 📱 *${info.phone}*\n📅 ${ds} — 🕐 ${ts}\n💜 *رسوم الإلغاء:* ${transferAmt||'لم يذكر'} $\n📸 إشعار: *${hasProof?'✅ أرسل':'❌ لم يرسل'}*\n📝 *السبب:* ${reason||'—'}\n━━━━━━━━━━━━━━━━━━━━━━━`;
   return await tgSend(msg);
 }
 
@@ -1008,17 +1093,17 @@ function showOnboarding(){
       <div class="fg">
         <label class="fl">${t('ob_lang')}</label>
         <div class="lang-radio-group">
-          <div class="lang-radio"><input type="radio" name="ob_lang" id="obl_ar" value="ar" checked><label for="obl_ar"><span>🇱🇧</span>العربية</label></div>
-          <div class="lang-radio"><input type="radio" name="ob_lang" id="obl_fr" value="fr"><label for="obl_fr"><span>🇫🇷</span>Français</label></div>
-          <div class="lang-radio"><input type="radio" name="ob_lang" id="obl_en" value="en"><label for="obl_en"><span>🇬🇧</span>English</label></div>
+          <div class="lang-radio"><input type="radio" name="ob_lang" id="obl_ar" value="ar" checked><label for="obl_ar">🇱🇧 العربية</label></div>
+          <div class="lang-radio"><input type="radio" name="ob_lang" id="obl_fr" value="fr"><label for="obl_fr">🇫🇷 Français</label></div>
+          <div class="lang-radio"><input type="radio" name="ob_lang" id="obl_en" value="en"><label for="obl_en">🇬🇧 English</label></div>
         </div>
       </div>
       <div class="fg" style="margin-bottom:20px">
         <label class="fl">${t('ob_currency')}</label>
         <div class="curr-radio-group">
-          <div class="curr-radio"><input type="radio" name="ob_curr" id="obc_both" value="both" checked><label for="obc_both"><span>🔁</span>USD + LBP</label></div>
-          <div class="curr-radio"><input type="radio" name="ob_curr" id="obc_usd" value="USD"><label for="obc_usd"><span>💵</span>USD</label></div>
-          <div class="curr-radio"><input type="radio" name="ob_curr" id="obc_lbp" value="LBP"><label for="obc_lbp"><span>🏦</span>LBP</label></div>
+          <div class="curr-radio"><input type="radio" name="ob_curr" id="obc_both" value="both" checked><label for="obc_both">🔁 USD + LBP</label></div>
+          <div class="curr-radio"><input type="radio" name="ob_curr" id="obc_usd" value="USD"><label for="obc_usd">💵 USD</label></div>
+          <div class="curr-radio"><input type="radio" name="ob_curr" id="obc_lbp" value="LBP"><label for="obc_lbp">🏦 LBP</label></div>
         </div>
       </div>
       <button class="btn btn-r" onclick="submitOnboard()">${t('ob_submit')}</button>
@@ -1049,10 +1134,10 @@ function openWaOrder(){
       <div class="wa-modal-header"><div class="wa-ico">💬</div><h3>${t('wa_modal_title')}</h3><p>${t('wa_modal_sub')}</p></div>
       <div class="wa-order-summary"><div class="wa-order-sum-title">${t('order_summary_lbl')}</div>${cartSummary}<div class="wa-sum-total"><span>💵 ${t('total_lbl')}</span><span>${fmt(cTot())} (${fmtLBPNum(cTot())} ل.ل)</span></div></div>
       <div id="wa-err" class="alert a-d" style="display:none">${t('fill_all')}</div>
-      <div class="fg"><label class="fl">${t('full_name')} <span class="req">*</span></label><input id="wa-name" class="fc" type="text" placeholder="الاسم والعائلة"></div>
-      <div class="fg"><label class="fl">${t('phone')} <span class="req">*</span></label><input id="wa-phone" class="fc" type="tel" placeholder="03 123 456" dir="ltr"></div>
-      <div class="fg"><label class="fl">${t('city')} <span class="req">*</span></label><input id="wa-city" class="fc" type="text" placeholder="بيروت، طرابلس..."></div>
-      <div class="fg"><label class="fl">${t('full_address')} <span class="req">*</span></label><input id="wa-address" class="fc" type="text" placeholder="الحي، الشارع..."></div>
+      <div class="fg"><label class="fl">${t('full_name')} <span class="req">*</span></label><input id="wa-name" class="fc" type="text"></div>
+      <div class="fg"><label class="fl">${t('phone')} <span class="req">*</span></label><input id="wa-phone" class="fc" type="tel" dir="ltr"></div>
+      <div class="fg"><label class="fl">${t('city')} <span class="req">*</span></label><input id="wa-city" class="fc" type="text"></div>
+      <div class="fg"><label class="fl">${t('full_address')} <span class="req">*</span></label><input id="wa-address" class="fc" type="text"></div>
       <div class="fg" style="margin-bottom:18px"><label class="fl">${t('notes')} <span class="opt">(${t('optional')})</span></label><textarea id="wa-notes" class="fc" style="min-height:60px"></textarea></div>
       <button class="btn btn-wa" onclick="sendWaWithInfo()">💬 ${t('wa_send')}</button>
       <button class="btn btn-o" onclick="clsWaMo()" style="margin-top:10px">${t('cancel')}</button>
@@ -1069,41 +1154,55 @@ function sendWaWithInfo(){
   const errEl=document.getElementById('wa-err');let ok=true;
   [document.getElementById('wa-name'),document.getElementById('wa-phone'),document.getElementById('wa-city'),document.getElementById('wa-address')].forEach(el=>{if(!el.value.trim()){el.classList.add('inv');ok=false}else el.classList.remove('inv')});
   if(!ok){errEl.style.display='block';return}errEl.style.display='none';
-  const cartLines=S.cart.map(i=>`• ${i.name}${i.isOffer?' (عرض 🎁)':''} × ${i.qty} = ${fmt(parseFloat(i.price)*i.qty)} (${fmtLBPNum(parseFloat(i.price)*i.qty)} ل.ل)`).join('\n');
-  const msg=`مرحباً Dash Lebanon! 👋\n━━━━━━━━━━━━━━━━━━━━\n🛍️ *طلب جديد عبر واتساب*\n━━━━━━━━━━━━━━━━━━━━\n👤 *الاسم:* ${name}\n📱 *الهاتف:* ${phone}\n📍 *المدينة:* ${city}\n🏠 *العنوان:* ${address}${notes?'\n📝 *ملاحظات:* '+notes:''}\n━━━━━━━━━━━━━━━━━━━━\n🛒 *المنتجات:*\n${cartLines}\n━━━━━━━━━━━━━━━━━━━━\n🚚 التوصيل: ${fmt(cDlv())}\n💵 *الإجمالي: ${fmt(cTot())}*\n🏦 *بالليرة: ${fmtLBPNum(cTot())} ل.ل*\n━━━━━━━━━━━━━━━━━━━━`;
+  const cartLines=S.cart.map(i=>`• ${i.name}${i.isOffer?' (عرض 🎁)':''} × ${i.qty} = ${fmt(parseFloat(i.price)*i.qty)}`).join('\n');
+  const msg=`مرحباً Dash Lebanon! 👋\n━━━━━━━━━━━━━━━━━━━━\n🛍️ *طلب جديد عبر واتساب*\n━━━━━━━━━━━━━━━━━━━━\n👤 *الاسم:* ${name}\n📱 *الهاتف:* ${phone}\n📍 *المدينة:* ${city}\n🏠 *العنوان:* ${address}${notes?'\n📝 *ملاحظات:* '+notes:''}\n━━━━━━━━━━━━━━━━━━━━\n🛒 *المنتجات:*\n${cartLines}\n━━━━━━━━━━━━━━━━━━━━\n🚚 التوصيل: ${fmt(cDlv())}\n💵 *الإجمالي: ${fmt(cTot())}*\n━━━━━━━━━━━━━━━━━━━━`;
   window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank');
   document.getElementById('mroot').innerHTML='';
 }
 
-// RENDER ROUTER
-function render(){
-  const a=document.getElementById('app');
-  switch(S.page){
-    case'home':a.innerHTML=pHome();break;
-    case'product':a.innerHTML=pProduct();break;
-    case'cart':a.innerHTML=pCart();break;
-    case'checkout':a.innerHTML=pCheckout();break;
-    case'review':a.innerHTML=pReview();break;
-    case'success':a.innerHTML=pSuccess();break;
-    case'cancelled':a.innerHTML=pCancelled();break;
-    case'orders':a.innerHTML=pOrders();break;
-    case'contact':a.innerHTML=pContact();break;
-    case'alogin':a.innerHTML=pALogin();bindALogin();break;
-    case'admin':a.innerHTML=pAdmin();bindAdmin();break;
-    default:a.innerHTML=pHome();
-  }
+// ─── CATEGORY FILTER ───
+function catLabel(cat){
+  const c=CATS.find(x=>x.id===cat);if(!c)return cat;
+  if(S.lang==='fr')return c.labelFr;if(S.lang==='en')return c.labelEn;return c.label;
+}
+function buildCats(){
+  const ps=getP();
+  return CATS.map(c=>{
+    const count=c.id==='all'?ps.length:c.id==='offers'?ps.filter(p=>p.offer).length:ps.filter(p=>p.cat===c.id).length;
+    if(c.id!=='all'&&c.id!=='offers'&&count===0)return'';
+    return`<button class="cat-pill${S.cat===c.id?' active':''}" onclick="setCat('${c.id}')">${catLabel(c.id)} <span class="cat-count">${count}</span></button>`;
+  }).join('');
+}
+function setCat(cat){
+  S.cat=cat;S.offersOnly=(cat==='offers');S.search='';
+  const grid=document.getElementById('pgrid-container');if(grid)grid.innerHTML=buildGrid();
+  const cats=document.getElementById('cats-row');if(cats)cats.innerHTML=buildCats();
 }
 
-// HOME
+// ─── SORT ───
+function setSort(s){
+  S.sort=s;
+  const grid=document.getElementById('pgrid-container');if(grid)grid.innerHTML=buildGrid();
+  const sortBtns=document.querySelectorAll('.sort-btn');sortBtns.forEach(b=>b.classList.toggle('active',b.dataset.sort===s));
+}
+
+// ─── BUILD GRID ───
 function buildGrid(){
   let all=getP();
-  if(S.offersOnly)all=all.filter(p=>p.offer);
+  if(S.offersOnly||S.cat==='offers')all=all.filter(p=>p.offer);
+  else if(S.cat!=='all')all=all.filter(p=>p.cat===S.cat);
   const q=S.search.trim().toLowerCase();
-  const ps=q?all.filter(p=>p.name.toLowerCase().includes(q)||(p.description||'').toLowerCase().includes(q)):all;
+  let ps=q?all.filter(p=>p.name.toLowerCase().includes(q)||(p.description||'').toLowerCase().includes(q)):all;
+  // SORT
+  if(S.sort==='price_asc')ps=[...ps].sort((a,b)=>a.price-b.price);
+  else if(S.sort==='price_desc')ps=[...ps].sort((a,b)=>b.price-a.price);
+  else if(S.sort==='offer')ps=[...ps].sort((a,b)=>(b.offer?1:0)-(a.offer?1:0));
   if(!all.length)return`<div style="grid-column:span 2"><div class="empty"><div class="empty-ico">🛍️</div><div class="empty-ttl">${t('no_products')}</div></div></div>`;
   if(!ps.length)return`<div class="no-results"><div class="no-results-ico">🔍</div><div class="no-results-ttl">${t('no_results_for')} "${esc(S.search)}"</div><div class="no-results-sub">${t('try_diff')}</div></div>`;
   return ps.map(p=>{
     const disc=discountPct(p.oldPrice,p.price);
+    const wished=isWished(p.id);
+    const earnPts=calcEarnPts(p.price);
     return`<div class="pcard" onclick="S.offersOnly=false;go('product',${p.id})">
       <div class="pcard-img-wrap">
         ${p.offer?`<div class="offer-ribbon">🔥 عرض</div>`:''}
@@ -1116,14 +1215,29 @@ function buildGrid(){
         <div class="pcard-price">${fmt(p.price)} <small>${t('per_piece')}</small></div>
         <div class="pcard-lbp">${fmtLBPNum(p.price)} ل.ل</div>
         ${p.offer?`<div class="pcard-offer-tag">🎁 ${esc(p.offer.label)}</div>`:''}
+        <div class="pcard-footer">
+          <span class="pcard-pts">⭐ +${earnPts} نقطة</span>
+          <button class="pcard-wl${wished?' active':''}" data-pid="${p.id}" onclick="toggleWish(${p.id},event)" title="المفضلة">${wished?'❤️':'🤍'}</button>
+        </div>
       </div>
     </div>`;
   }).join('');
 }
 
+// ─── HOME PAGE ───
 function pHome(){
   let offersBanner='';
-  if(S.offersOnly){offersBanner=`<div class="offers-banner"><span class="offers-banner-ico">🔥</span><div><div class="offers-banner-h">${t('offers_lbl')}</div><div class="offers-banner-sub">أسعار لا تُفوَّت!</div></div><button class="clear-filter" onclick="S.offersOnly=false;go('home')">← كل المنتجات</button></div>`}
+  if(S.offersOnly||S.cat==='offers'){offersBanner=`<div class="offers-banner"><span class="offers-banner-ico">🔥</span><div><div class="offers-banner-h">${t('offers_lbl')}</div><div class="offers-banner-sub">أسعار لا تُفوَّت!</div></div><button class="clear-filter" onclick="S.offersOnly=false;setCat('all')">← كل المنتجات</button></div>`}
+  const pts=getPoints();const rank=getRank(pts);
+  const ptsBar=`<div class="pts-bar" onclick="go('points')">
+    <span class="pts-bar-ico">⭐</span>
+    <div class="pts-bar-info">
+      <div class="pts-bar-title">${t('pts_my')} — <span class="rank-badge ${rank.cls}">${rank.label}</span></div>
+      <div class="pts-bar-sub">${pts>=1500?'🎉 أنت في أعلى مستوى!':rank.next?`${rank.next-pts} نقطة للمستوى التالي`:''}</div>
+      ${rank.next?`<div class="pts-progress-wrap"><div class="pts-progress-bar"><div class="pts-progress-fill" style="width:${Math.min(100,Math.round(pts/rank.next*100))}%"></div></div><div class="pts-progress-lbl"><span>${pts}</span><span>${rank.next}</span></div></div>`:''}
+    </div>
+    <span class="pts-bar-count">${pts}</span>
+  </div>`;
   const whySec=`<div class="why-sec">
     <div class="why-ttl">${t('why_title')}</div>
     <div class="why-grid">
@@ -1136,11 +1250,14 @@ function pHome(){
     </div>
   </div>`;
   const commentsSec=renderComments();
+  const ps=getP();const visibleCount=S.cat==='all'?ps.length:S.cat==='offers'?ps.filter(p=>p.offer).length:ps.filter(p=>p.cat===S.cat).length;
   return`<div class="main pi">
     ${offersBanner}
+    ${ptsBar}
     <div class="hometop">
-      <div class="sec-ttl">${S.offersOnly?t('offers_lbl'):t('all_products')}</div>
+      <div class="sec-ttl">${S.offersOnly||S.cat==='offers'?t('offers_lbl'):t('all_products')}</div>
       <div class="hdr-acts">
+        <button class="adm-lnk" onclick="go('wishlist')">❤️</button>
         <button class="adm-lnk" onclick="go('orders')">${t('my_orders')}</button>
         <button class="adm-lnk" onclick="go('contact')">${t('contact_lbl')}</button>
       </div>
@@ -1150,9 +1267,18 @@ function pHome(){
       <input class="search-inp" id="search-field" type="text" placeholder="${t('search_ph')}" value="${esc(S.search)}" oninput="doSearch(this.value)" autocomplete="off" autocorrect="off" spellcheck="false">
       <button class="search-clr ${S.search?'visible':''}" id="search-clr-btn" onclick="clearSearch()" type="button">✕</button>
     </div>
+    <div class="cats-row" id="cats-row">${buildCats()}</div>
+    <div class="sort-row">
+      <span class="sort-lbl">ترتيب:</span>
+      <button class="sort-btn active" data-sort="def" onclick="setSort('def')">${t('sort_def')}</button>
+      <button class="sort-btn" data-sort="price_asc" onclick="setSort('price_asc')">${t('sort_price_asc')}</button>
+      <button class="sort-btn" data-sort="price_desc" onclick="setSort('price_desc')">${t('sort_price_desc')}</button>
+      <button class="sort-btn" data-sort="offer" onclick="setSort('offer')">${t('sort_offer')}</button>
+      <span class="results-count">${visibleCount} منتج</span>
+    </div>
     <div class="pgrid" id="pgrid-container">${buildGrid()}</div>
-    ${!S.offersOnly?whySec:''}
-    ${!S.offersOnly?commentsSec:''}
+    ${!(S.offersOnly||S.cat==='offers')?whySec:''}
+    ${!(S.offersOnly||S.cat==='offers')?commentsSec:''}
   </div>`;
 }
 
@@ -1189,10 +1315,76 @@ function renderComments(){
   return`<div class="comments-sec"><div class="comments-ttl">${t('comments_ttl')}</div><div class="comments-grid">${cards}</div></div>`;
 }
 
-// PRODUCT PAGE
+// ─── WISHLIST PAGE ───
+function pWishlist(){
+  const wl=getWishlist();const all=getP();
+  const wished=all.filter(p=>wl.includes(p.id));
+  return`<div class="main pi">
+    <button class="back-btn" onclick="go('home')">${t('back')}</button>
+    <div class="sec-ttl" style="margin-bottom:16px">${t('wl_ttl')} <span style="font-size:0.85rem;font-weight:400;color:var(--muted)">(${wished.length})</span></div>
+    ${!wished.length?`<div class="wl-empty"><div class="wl-empty-ico">🤍</div><div class="wl-empty-ttl">${t('wl_empty')}</div><div class="empty-sub">${t('wl_empty_sub')}</div><br><button class="btn btn-r" style="width:auto;padding:12px 26px;margin:0 auto" onclick="go('home')">${t('browse')}</button></div>`:
+    `<div class="pgrid">${wished.map(p=>{const disc=discountPct(p.oldPrice,p.price);return`<div class="pcard" onclick="go('product',${p.id})">
+      <div class="pcard-img-wrap">
+        ${p.offer?`<div class="offer-ribbon">🔥 عرض</div>`:''}
+        ${disc>0?`<div class="discount-chip">-${disc}%</div>`:''}
+        <img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" onerror="this.src='https://placehold.co/300x300/e5e7eb/9ca3af?text=صورة'">
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-name">${esc(p.name)}</div>
+        ${p.oldPrice?`<div class="pcard-old">${fmt(p.oldPrice)}</div>`:''}
+        <div class="pcard-price">${fmt(p.price)} <small>${t('per_piece')}</small></div>
+        <div class="pcard-lbp">${fmtLBPNum(p.price)} ل.ل</div>
+        <div class="pcard-footer">
+          <span class="pcard-pts">⭐ +${calcEarnPts(p.price)}</span>
+          <button class="pcard-wl active" data-pid="${p.id}" onclick="toggleWish(${p.id},event)">❤️</button>
+        </div>
+      </div>
+    </div>`}).join('')}</div>`}
+  </div>`;
+}
+
+// ─── POINTS PAGE ───
+function pPoints(){
+  const pts=getPoints();const rank=getRank(pts);
+  const tiers=[
+    {label:t('rank_bronze'),ico:'🥉',req:'0–499 نقطة',current:pts<500},
+    {label:t('rank_silver'),ico:'🥈',req:'500–1499 نقطة',current:pts>=500&&pts<1500},
+    {label:t('rank_gold'),ico:'🥇',req:'+1500 نقطة',current:pts>=1500},
+  ];
+  const tierCards=tiers.map(tier=>`<div class="pts-tier${tier.current?' current':''}">
+    <div class="pts-tier-ico">${tier.ico}</div>
+    <div class="pts-tier-name">${tier.label}${tier.current?' ✓':''}</div>
+    <div class="pts-tier-req">${tier.req}</div>
+  </div>`).join('');
+  const history=getPtsHistory();
+  const histRows=history.length?history.map(h=>{
+    const d=new Date(h.date);const ds=d.toLocaleDateString('ar-LB',{month:'short',day:'numeric'});
+    return`<div class="pts-hist-row"><div class="pts-hist-ico">🛒</div><div class="pts-hist-info"><div class="pts-hist-name">${esc(h.note||'طلب')}</div><div class="pts-hist-date">${ds}</div></div><div class="pts-hist-pts">+${h.pts} نقطة</div></div>`;
+  }).join(''):
+  `<div style="text-align:center;padding:30px;color:var(--muted);font-size:0.85rem">${t('pts_no_history')}</div>`;
+  return`<div class="main pi">
+    <button class="back-btn" onclick="go('home')">${t('back')}</button>
+    <div class="pts-page-hero">
+      <div style="font-size:0.9rem;opacity:0.8;margin-bottom:6px">${t('pts_total')}</div>
+      <div class="pts-hero-pts">${pts}</div>
+      <div class="pts-hero-lbl">نقطة</div>
+      <div class="pts-hero-rank"><span>${rank.label}</span></div>
+      ${rank.next?`<div style="font-size:0.78rem;opacity:0.75;margin-top:10px">${rank.next-pts} نقطة ${t('pts_next')}</div>`:'<div style="font-size:0.78rem;opacity:0.75;margin-top:10px">🎉 لقد وصلت للمستوى الأعلى!</div>'}
+    </div>
+    <div class="pts-tiers">${tierCards}</div>
+    <div class="pts-history"><div class="pts-hist-ttl">${t('pts_history_ttl')}</div>${histRows}</div>
+    <div style="margin-top:14px;background:linear-gradient(135deg,rgba(26,63,160,0.05),rgba(26,63,160,0.02));border:1px solid var(--border);border-radius:var(--r);padding:16px;text-align:center">
+      <div style="font-size:0.88rem;font-weight:700;color:var(--primary);margin-bottom:4px">💡 كيف تكسب نقاطاً؟</div>
+      <div style="font-size:0.8rem;color:var(--muted)">اربح <strong>${PTS_PER_DOLLAR} نقطة</strong> لكل دولار تصرفه على Dash Lebanon!</div>
+    </div>
+  </div>`;
+}
+
+// ─── PRODUCT PAGE ───
 function pProduct(){
   const p=getP().find(p=>p.id===S.data);if(!p){go('home');return''}
   const others=getP().filter(x=>x.id!==p.id);const disc=discountPct(p.oldPrice,p.price);
+  const earnPts=calcEarnPts(S.buyMode==='offer'&&p.offer?p.offer.price:parseFloat(p.price)*S.dqty);
   let offerSec='';
   if(p.offer){
     const savings=fmt(p.price*p.offer.qty-p.offer.price);
@@ -1225,6 +1417,7 @@ function pProduct(){
       </div>
     </div>`).join('');
   const showQty=!p.offer||S.buyMode==='normal';
+  const wished=isWished(p.id);
   return`<div class="main pi">
     <button class="back-btn" onclick="go('home')">${t('back')}</button>
     <img class="det-img" src="${esc(p.image)}" alt="${esc(p.name)}" onerror="this.src='https://placehold.co/500x375/e5e7eb/9ca3af?text=صورة'">
@@ -1237,6 +1430,7 @@ function pProduct(){
     <div class="det-desc">${esc(p.description)}</div>
     <div class="chip chip-blue">${t('delivery_cost')}: <strong style="margin-right:4px">${fmt(p.deliveryPrice)}</strong></div>
     ${p.note?`<div class="chip chip-yel">📌 ${esc(p.note)}</div>`:''}
+    <div class="pts-earn-chip" id="pts-earn-chip">⭐ ${t('pts_earn')} <strong style="margin:0 4px">${earnPts}</strong> ${t('pts_from_order')}</div>
     ${offerSec}
     <div class="qty-row" id="qty-row" style="${!showQty?'display:none':''}">
       <span class="qty-lbl">${t('qty')}</span>
@@ -1250,7 +1444,10 @@ function pProduct(){
       <span>${t('total_lbl')}</span>
       <strong id="dsub">${getDetSubHTML(p)}</strong>
     </div>
-    <button class="btn btn-r" onclick="doAdd(${p.id})">${t('add_cart')}</button>
+    <div class="det-actions">
+      <button class="btn btn-r" onclick="doAdd(${p.id})" style="flex:1">${t('add_cart')}</button>
+      <button class="wl-btn${wished?' active':''}" id="det-wl-btn" onclick="toggleWish(${p.id},null);this.classList.toggle('active');" title="${t('wl_ttl')}">${wished?'❤️':'🤍'}</button>
+    </div>
     ${others.length?`<div class="rel-sec"><div class="rel-ttl">${t('related_lbl')}</div><div class="pgrid-sm">${relCards}</div></div>`:''}
   </div>`;
 }
@@ -1262,9 +1459,11 @@ function selOpt(mode){
   const qr=document.getElementById('qty-row');if(qr)qr.style.display=mode==='offer'?'none':'flex';
   document.getElementById('dsub').innerHTML=getDetSubHTML(p);
   document.getElementById('det-price').innerHTML=mode==='offer'&&p.offer?`${fmt(p.offer.price)} <span style="font-size:1rem;color:var(--muted);font-weight:400">/ ${p.offer.qty} ${t('qty')}</span><span class="price-lbp">${fmtLBPNum(p.offer.price)} ل.ل</span>`:`${fmt(p.price)} <span style="font-size:1rem;color:var(--muted);font-weight:400">${t('per_piece')}</span><span class="price-lbp">${fmtLBPNum(p.price)} ل.ل</span>`;
+  const earnPts=calcEarnPts(mode==='offer'&&p.offer?p.offer.price:parseFloat(p.price)*S.dqty);
+  const pec=document.getElementById('pts-earn-chip');if(pec)pec.innerHTML=`⭐ ${t('pts_earn')} <strong style="margin:0 4px">${earnPts}</strong> ${t('pts_from_order')}`;
 }
-function dqD(d){const p=getP().find(p=>p.id===S.data);if(!p)return;const inp=document.getElementById('dq');S.dqty=Math.max(1,S.dqty+d);inp.value=S.dqty;document.getElementById('dsub').innerHTML=getDetSubHTML(p)}
-function dqManual(v){const p=getP().find(p=>p.id===S.data);if(!p)return;S.dqty=Math.max(1,parseInt(v)||1);document.getElementById('dsub').innerHTML=getDetSubHTML(p)}
+function dqD(d){const p=getP().find(p=>p.id===S.data);if(!p)return;const inp=document.getElementById('dq');S.dqty=Math.max(1,S.dqty+d);inp.value=S.dqty;document.getElementById('dsub').innerHTML=getDetSubHTML(p);const earnPts=calcEarnPts(parseFloat(p.price)*S.dqty);const pec=document.getElementById('pts-earn-chip');if(pec)pec.innerHTML=`⭐ ${t('pts_earn')} <strong style="margin:0 4px">${earnPts}</strong> ${t('pts_from_order')}`;}
+function dqManual(v){const p=getP().find(p=>p.id===S.data);if(!p)return;S.dqty=Math.max(1,parseInt(v)||1);document.getElementById('dsub').innerHTML=getDetSubHTML(p);}
 function doAdd(pid){
   const p=getP().find(p=>p.id===pid);if(!p)return;
   if(S.buyMode==='offer'&&p.offer){
@@ -1278,12 +1477,13 @@ function doAdd(pid){
   updateCartBadge();
 }
 
-// CART
+// ─── CART ───
 function pCart(){
   if(!S.cart.length)return`<div class="main pi">
     <button class="back-btn" onclick="go('home')">${t('continue_shopping')}</button>
     <div class="empty"><div class="empty-ico">🛒</div><div class="empty-ttl">${t('cart_empty_ttl')}</div><div class="empty-sub">${t('cart_empty_sub')}</div><br>
     <button class="btn btn-r" style="width:auto;padding:12px 26px;margin:0 auto" onclick="go('home')">${t('browse')}</button></div></div>`;
+  const willEarn=calcEarnPts(cTot());
   const items=S.cart.map(i=>`
     <div class="ci">
       <img src="${esc(i.image)}" onerror="this.src='https://placehold.co/74x74/e5e7eb/9ca3af?text=?'">
@@ -1303,6 +1503,14 @@ function pCart(){
   return`<div class="main pi" style="padding-bottom:110px">
     <button class="back-btn" onclick="go('home')">${t('continue_shopping')}</button>
     ${items}
+    <div class="pts-cart-earn">
+      <div class="pts-cart-earn-ico">⭐</div>
+      <div class="pts-cart-earn-info">
+        <div class="pts-cart-earn-h">${t('pts_earn')} من هذا الطلب</div>
+        <div class="pts-cart-earn-s">${t('pts_your')}: ${getPoints()} نقطة</div>
+      </div>
+      <div class="pts-cart-earn-val">+${willEarn}</div>
+    </div>
     <div class="scard">
       <div class="srow"><span class="slbl">${t('cart_subtotal')}</span><span>${fmt(cSub())} <small style="color:var(--muted)">(${fmtLBPNum(cSub())} ل.ل)</small></span></div>
       <div class="srow"><span class="slbl">${t('cart_delivery')}</span><span>${fmt(cDlv())}</span></div>
@@ -1316,7 +1524,7 @@ function doQty(uid,q){cQty(uid,q);render();updateUI()}
 function doQtyInp(uid,v){cQty(uid,Math.max(1,parseInt(v)||1));render();updateUI()}
 function doRm(uid){cRm(uid);render();updateUI()}
 
-// CHECKOUT
+// ─── CHECKOUT ───
 function pCheckout(){
   const o=S.order||{};
   return`<div class="main pi" style="padding-bottom:110px">
@@ -1349,13 +1557,14 @@ function subCO(){
   S.order=info;go('review');
 }
 
-// REVIEW
+// ─── REVIEW ───
 function pReview(){
-  const o=S.order;
+  const o=S.order;const willEarn=calcEarnPts(cTot());
   const items=S.cart.map(i=>`<div class="rrow"><span class="rlbl">${esc(i.name)}${i.isOffer?' 🎁':''} × ${i.qty}</span><span class="rval">${fmt(parseFloat(i.price)*i.qty)}</span></div>`).join('');
   return`<div class="main pi" style="padding-bottom:130px">
     <button class="back-btn" onclick="go('checkout')">${t('back')}</button>
-    <div class="review-notice">⚠️ <span>يرجى مراجعة طلبك بعناية قبل التأكيد. بعد التأكيد سيتواصل معك الفريق لترتيب التوصيل.</span></div>
+    <div class="review-notice">⚠️ <span>يرجى مراجعة طلبك بعناية قبل التأكيد.</span></div>
+    <div class="pts-earn-chip">⭐ ${t('pts_earn')} <strong style="margin:0 4px">+${willEarn}</strong> ${t('pts_from_order')}</div>
     <div class="rcard"><div class="rlbl2">${t('order_summary')}</div>${items}<div class="rdiv"></div>
       <div class="rrow"><span class="rlbl">${t('cart_subtotal')}</span><span class="rval">${fmt(cSub())} (${fmtLBPNum(cSub())} ل.ل)</span></div>
       <div class="rrow"><span class="rlbl">🚚 Delivery</span><span class="rval">${fmt(cDlv())}</span></div>
@@ -1383,12 +1592,12 @@ function pReview(){
       <div class="mhan"></div>
       <div class="mttl">↩️ إلغاء الطلب</div>
       ${cancelFeeHTML()}
-      <div class="fg"><label class="fl">سبب الإلغاء <span class="opt">(اختياري)</span></label><textarea id="cnl-rsn" class="fc" placeholder="مثال: غيّرت رأيي..."></textarea></div>
-      <div class="fg"><label class="fl">المبلغ المُحوَّل ($) <span class="req">*</span></label><input id="cnl-amt" class="fc" type="number" dir="ltr" placeholder="4" min="0" step="0.5"></div>
+      <div class="fg"><label class="fl">سبب الإلغاء <span class="opt">(اختياري)</span></label><textarea id="cnl-rsn" class="fc"></textarea></div>
+      <div class="fg"><label class="fl">المبلغ المُحوَّل ($) <span class="req">*</span></label><input id="cnl-amt" class="fc" type="number" dir="ltr" placeholder="${CANCEL_FEE}" min="0" step="0.5"></div>
       <div class="fg" style="margin-bottom:18px"><label class="fl">هل أرسلت إشعار التحويل على واتساب؟</label>
         <div style="display:flex;gap:10px;margin-top:6px">
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.86rem;font-weight:600;color:var(--primary)"><input type="radio" name="cnl_proof" value="yes" id="cp_yes"> ✅ نعم أرسلته</label>
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.86rem;font-weight:600;color:var(--muted)"><input type="radio" name="cnl_proof" value="no" id="cp_no"> لم أرسل بعد</label>
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.86rem;font-weight:600;color:var(--primary)"><input type="radio" name="cnl_proof" value="yes" id="cp_yes"> ✅ نعم</label>
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.86rem;font-weight:600;color:var(--muted)"><input type="radio" name="cnl_proof" value="no" id="cp_no"> لم أرسل</label>
         </div>
       </div>
       <div style="display:flex;gap:9px;margin-top:4px">
@@ -1403,30 +1612,14 @@ function cancelFeeHTML(){
   return`<div class="cancel-fee-box">
     <div class="cancel-fee-title">💜 رسوم الإلغاء</div>
     <div class="cancel-fee-amount">${CANCEL_FEE} $</div>
-    <div class="cancel-fee-sub">يُطلب منك تحويل رسوم إلغاء رمزية قدرها <strong>${CANCEL_FEE}$</strong> عبر Whish Money<br>
-	رسوم الدلفري انتيباه كتأكيد جدي لطلب الإلغاء.</div>
+    <div class="cancel-fee-sub">يُطلب منك تحويل رسوم إلغاء رمزية قدرها <strong>${CANCEL_FEE}$</strong> عبر Whish Money</div>
     <div class="cancel-steps">
       <div class="cancel-steps-title">📋 خطوات الإلغاء</div>
-      <div class="cancel-step">
-        <div class="cancel-step-num">1</div>
-        <span>افتح تطبيق <strong>Whish Money</strong> على هاتفك</span>
-      </div>
-      <div class="cancel-step">
-        <div class="cancel-step-num">2</div>
-        <span>حوّل مبلغ <strong>${CANCEL_FEE}$</strong> إلى الرقم التالي:</span>
-      </div>
-      <div class="cancel-whish">
-        <div class="cancel-whish-lbl">💜 Whish Money  </div>
-        <div class="cancel-whish-num">${WHISH_NUMBER}</div>
-      </div>
-      <div class="cancel-step">
-        <div class="cancel-step-num">3</div>
-        <span>أرسل <strong>صورة إشعار التحويل</strong> على واتساب: <a href="https://wa.me/${WA_NUMBER}" target="_blank" style="color:var(--success);font-weight:700">+961 ${WA_NUMBER.slice(3)}</a></span>
-      </div>
-      <div class="cancel-step">
-        <div class="cancel-step-num">4</div>
-        <span>أكمل النموذج أدناه وأرسل طلب الإلغاء</span>
-      </div>
+      <div class="cancel-step"><div class="cancel-step-num">1</div><span>افتح تطبيق <strong>Whish Money</strong></span></div>
+      <div class="cancel-step"><div class="cancel-step-num">2</div><span>حوّل <strong>${CANCEL_FEE}$</strong> إلى:</span></div>
+      <div class="cancel-whish"><div class="cancel-whish-lbl">💜 Whish Money</div><div class="cancel-whish-num">${WHISH_NUMBER}</div></div>
+      <div class="cancel-step"><div class="cancel-step-num">3</div><span>أرسل إشعار التحويل على <a href="https://wa.me/${WA_NUMBER}" target="_blank" style="color:var(--success);font-weight:700">واتساب</a></span></div>
+      <div class="cancel-step"><div class="cancel-step-num">4</div><span>أكمل النموذج أدناه</span></div>
     </div>
   </div>`;
 }
@@ -1436,26 +1629,43 @@ function closeCnl(){document.getElementById('cnl-modal').style.display='none'}
 async function doConfirm(){
   const btn=document.getElementById('cfbtn');btn.disabled=true;btn.innerHTML=`<div class="spin"></div> ${t('sending')}`;
   const num=onum();S.onum=num;const ok=await sendOrder(S.order,num);
-  if(ok){saveOrderLocal({num,date:new Date().toISOString(),info:{...S.order},items:S.cart.map(i=>({name:i.name,qty:i.qty,price:i.price,isOffer:i.isOffer,offerLabel:i.offerLabel})),sub:cSub(),dlv:cDlv(),total:cTot(),status:'accepted'});S.cart=[];saveCart();go('success')}
-  else{btn.disabled=false;btn.innerHTML=t('confirm_btn');toast('❌ فشل الإرسال — تحقق من الاتصال')}
+  if(ok){
+    const earnedPts=calcEarnPts(cTot());
+    addPoints(earnedPts);
+    saveOrderLocal({num,date:new Date().toISOString(),info:{...S.order},items:S.cart.map(i=>({name:i.name,qty:i.qty,price:i.price,isOffer:i.isOffer,offerLabel:i.offerLabel})),sub:cSub(),dlv:cDlv(),total:cTot(),status:'accepted',ptsEarned:earnedPts});
+    S.cart=[];saveCart();S.earnedPts=earnedPts;go('success');
+  }else{btn.disabled=false;btn.innerHTML=t('confirm_btn');toast('❌ فشل الإرسال')}
 }
 async function doCancel(){
   const btn=document.getElementById('cnl-cfbtn');btn.disabled=true;btn.innerHTML='<div class="spin" style="border-top-color:#fff"></div>';
-  const reason=document.getElementById('cnl-rsn').value.trim();
-  const amt=document.getElementById('cnl-amt').value.trim();
-  const proofEl=document.querySelector('input[name="cnl_proof"]:checked');
-  const hasProof=proofEl?proofEl.value==='yes':false;
+  const reason=document.getElementById('cnl-rsn').value.trim();const amt=document.getElementById('cnl-amt').value.trim();
+  const proofEl=document.querySelector('input[name="cnl_proof"]:checked');const hasProof=proofEl?proofEl.value==='yes':false;
   const num=S.onum||('DL-X-'+Date.now().toString().slice(-6));
   await sendCancel(S.order,num,reason,amt,hasProof);
   if(S.onum)updateOrderStatus(S.onum,'cancelled');
   S.cart=[];saveCart();S.order=null;S.onum=null;go('cancelled');
 }
 
-// SUCCESS & CANCELLED
-function pSuccess(){const n=S.onum||'';return`<div class="main pi"><div class="rswrap"><div class="rsico">🎉</div><div class="rs-ok">${t('order_sent_ttl')}</div>${n?`<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 22px;margin-bottom:14px;font-size:0.84rem;color:#166534">رقم طلبك: <strong>${n}</strong></div>`:''}<div class="rs-sub">${t('thank_you')}<br><br>${t('auto_accepted').replace('\n','<br>')}</div><br><div style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:250px;margin:0 auto"><button class="btn btn-r" onclick="S.onum=null;go('home')">${t('back_store')}</button><button class="btn btn-out" onclick="go('orders')">${t('track_orders_btn')}</button></div></div></div>`}
-function pCancelled(){return`<div class="main pi"><div class="rswrap"><div class="rsico">😔</div><div class="rs-cn">${t('cancelled_ttl')}</div><div class="rs-sub">${t('cancelled_sub').replace('\n','<br>')}</div><br><button class="btn btn-r" style="max-width:230px;margin:0 auto" onclick="go('home')">${t('back_store')}</button></div></div>`}
+// ─── SUCCESS & CANCELLED ───
+function pSuccess(){
+  const n=S.onum||'';const ep=S.earnedPts||0;
+  return`<div class="main pi"><div class="rswrap">
+    <div class="rsico">🎉</div>
+    <div class="rs-ok">${t('order_sent_ttl')}</div>
+    ${n?`<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 22px;margin-bottom:14px;font-size:0.84rem;color:#166534">رقم طلبك: <strong>${n}</strong></div>`:''}
+    ${ep?`<div class="pts-earned-box"><div style="font-size:0.84rem;color:var(--muted);margin-bottom:4px">🎉 كسبت نقاطاً من هذا الطلب!</div><div class="pts-earned-num">+${ep}</div><div class="pts-earned-lbl">نقطة • الإجمالي: ${getPoints()} نقطة</div></div>`:''}
+    <div class="rs-sub">${t('thank_you')}<br><br>${t('auto_accepted').replace('\n','<br>')}</div>
+    <br>
+    <div style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:260px;margin:0 auto">
+      <button class="btn btn-r" onclick="S.onum=null;S.earnedPts=0;go('home')">${t('back_store')}</button>
+      <button class="btn btn-out" onclick="go('points')">⭐ نقاطي</button>
+      <button class="btn btn-out" onclick="go('orders')">${t('track_orders_btn')}</button>
+    </div>
+  </div></div>`;
+}
+function pCancelled(){return`<div class="main pi"><div class="rswrap"><div class="rsico">😔</div><div class="rs-cn">${t('cancelled_ttl')}</div><div class="rs-sub">${t('cancelled_sub')}</div><br><button class="btn btn-r" style="max-width:230px;margin:0 auto" onclick="go('home')">${t('back_store')}</button></div></div>`}
 
-// ORDERS
+// ─── ORDERS ───
 function pOrders(){
   const orders=getOrders();
   if(!orders.length)return`<div class="main pi"><button class="back-btn" onclick="go('home')">${t('back')}</button><div class="empty"><div class="empty-ico">📋</div><div class="empty-ttl">${t('no_orders_ttl')}</div><div class="empty-sub">${t('no_orders_sub')}</div><br><button class="btn btn-r" style="width:auto;padding:12px 26px;margin:0 auto" onclick="go('home')">${t('browse')}</button></div></div>`;
@@ -1466,7 +1676,8 @@ function pOrders(){
     const stillCancel=o.status==='accepted'&&canCancel(o.date);
     const cancelBtn=stillCancel?`<button class="btn btn-c btn-sm" onclick="openOrdCancel('${esc(o.num)}')">↩️ إلغاء</button>`:'';
     const waBtn=o.status==='accepted'?`<a class="btn btn-wa btn-sm" href="https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('مرحباً، أريد الاستفسار عن طلب رقم '+o.num)}" target="_blank">💬</a>`:'';
-    return`<div class="ord-card"><div class="ord-head"><div><div class="ord-num">${esc(o.num)}</div><div class="ord-date">${dateStr}</div></div>${badge}</div><div class="ord-items">${esc(itemsStr)}</div><div class="ord-total"><span class="ord-total-lbl">${t('total_lbl2')}</span><span class="ord-total-amt">${fmt(o.total)} (${fmtLBPNum(o.total)} ل.ل)</span></div>${cancelBtn||waBtn?`<div class="ord-actions">${cancelBtn}${waBtn}</div>`:''}</div>`;
+    const ptsRow=o.ptsEarned?`<div style="font-size:0.72rem;color:var(--gold);margin-top:4px">⭐ +${o.ptsEarned} نقطة</div>`:'';
+    return`<div class="ord-card"><div class="ord-head"><div><div class="ord-num">${esc(o.num)}</div><div class="ord-date">${dateStr}</div>${ptsRow}</div>${badge}</div><div class="ord-items">${esc(itemsStr)}</div><div class="ord-total"><span class="ord-total-lbl">${t('total_lbl2')}</span><span class="ord-total-amt">${fmt(o.total)} (${fmtLBPNum(o.total)} ل.ل)</span></div>${cancelBtn||waBtn?`<div class="ord-actions">${cancelBtn}${waBtn}</div>`:''}</div>`;
   }).join('');
   return`<div class="main pi">
     <button class="back-btn" onclick="go('home')">${t('back')}</button>
@@ -1477,13 +1688,12 @@ function pOrders(){
         <div class="mhan"></div>
         <div class="mttl">↩️ إلغاء الطلب</div>
         ${cancelFeeHTML()}
-        <p style="color:var(--muted);font-size:0.82rem;margin-bottom:12px">⏰ الإلغاء متاح خلال 24 ساعة من وقت الطلب.</p>
         <div class="fg"><label class="fl">سبب الإلغاء <span class="opt">(اختياري)</span></label><textarea id="ord-cnl-rsn" class="fc"></textarea></div>
-        <div class="fg"><label class="fl">المبلغ المُحوَّل ($) <span class="req">*</span></label><input id="ord-cnl-amt" class="fc" type="number" dir="ltr" placeholder="4" min="0" step="0.5"></div>
-        <div class="fg" style="margin-bottom:18px"><label class="fl">هل أرسلت إشعار التحويل على واتساب؟</label>
+        <div class="fg"><label class="fl">المبلغ المُحوَّل ($)</label><input id="ord-cnl-amt" class="fc" type="number" dir="ltr" placeholder="${CANCEL_FEE}" min="0" step="0.5"></div>
+        <div class="fg" style="margin-bottom:18px"><label class="fl">هل أرسلت إشعار التحويل؟</label>
           <div style="display:flex;gap:10px;margin-top:6px">
             <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.86rem;font-weight:600;color:var(--primary)"><input type="radio" name="ord_proof" value="yes"> ✅ نعم</label>
-            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.86rem;font-weight:600;color:var(--muted)"><input type="radio" name="ord_proof" value="no"> لم أرسل بعد</label>
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.86rem;font-weight:600;color:var(--muted)"><input type="radio" name="ord_proof" value="no"> لا</label>
           </div>
         </div>
         <div style="display:flex;gap:9px">
@@ -1500,10 +1710,8 @@ function openOrdCancel(num){cancelingNum=num;document.getElementById('ord-cnl-mo
 function closeOrdCancel(){document.getElementById('ord-cnl-modal').style.display='none';cancelingNum=null}
 async function doOrdCancel(){
   if(!cancelingNum)return;const btn=document.getElementById('ord-cnl-cfbtn');btn.disabled=true;btn.innerHTML='<div class="spin" style="border-top-color:#fff"></div>';
-  const reason=document.getElementById('ord-cnl-rsn').value.trim();
-  const amt=document.getElementById('ord-cnl-amt').value.trim();
-  const proofEl=document.querySelector('input[name="ord_proof"]:checked');
-  const hasProof=proofEl?proofEl.value==='yes':false;
+  const reason=document.getElementById('ord-cnl-rsn').value.trim();const amt=document.getElementById('ord-cnl-amt').value.trim();
+  const proofEl=document.querySelector('input[name="ord_proof"]:checked');const hasProof=proofEl?proofEl.value==='yes':false;
   const orders=getOrders();const order=orders.find(o=>o.num===cancelingNum);
   if(order&&!canCancel(order.date)){closeOrdCancel();toast('❌ انتهت مهلة الإلغاء (24 ساعة)');return}
   const info=order?order.info:{name:'غير معروف',phone:'—'};
@@ -1511,7 +1719,7 @@ async function doOrdCancel(){
   updateOrderStatus(cancelingNum,'cancelled');cancelingNum=null;toast('✅ تم إرسال طلب الإلغاء');go('orders');
 }
 
-// CONTACT
+// ─── CONTACT ───
 function pContact(){
   return`<div class="main pi">
     <button class="back-btn" onclick="go('home')">${t('back')}</button>
@@ -1519,7 +1727,7 @@ function pContact(){
     <div class="contact-card"><div class="contact-card-head"><span class="contact-card-ico">💬</span><div><div class="contact-card-h">WhatsApp</div><div class="contact-card-v">+961 81 877 323</div></div></div><a class="btn btn-wa" href="https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('مرحباً Dash Lebanon! أريد الاستفسار عن...')}" target="_blank">${t('wa_open')}</a></div>
     <div class="contact-card"><div class="contact-card-head"><span class="contact-card-ico">✉️</span><div><div class="contact-card-h">Email</div><div class="contact-card-v">${STORE_EMAIL}</div></div></div><a class="btn btn-d" href="mailto:${STORE_EMAIL}" style="display:inline-flex">${t('email_open')}</a></div>
     <div class="contact-ask fcard"><div class="contact-ask-h">${t('ask_ttl')}</div>
-      <div class="fg"><label class="fl">${t('ask_name')}</label><input id="ask-name" class="fc" type="text" placeholder="الاسم"></div>
+      <div class="fg"><label class="fl">${t('ask_name')}</label><input id="ask-name" class="fc" type="text"></div>
       <div class="fg"><label class="fl">${t('ask_msg')}</label><textarea id="ask-msg" class="fc" style="min-height:100px"></textarea></div>
       <button class="btn btn-wa" onclick="sendAsk()">${t('ask_send')}</button>
     </div>
@@ -1528,8 +1736,8 @@ function pContact(){
 }
 function sendAsk(){const name=document.getElementById('ask-name').value.trim();const msg=document.getElementById('ask-msg').value.trim();if(!msg){toast('⚠️ اكتب سؤالك أولاً');return}const text=`مرحباً Dash Lebanon!\n${name?'الاسم: '+name+'\n':''}السؤال: ${msg}`;window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`,'_blank')}
 
-// ADMIN
-function pALogin(){return`<div class="al-wrap"><div class="al-card"><div class="al-logo">Dash <span>Lebanon</span></div><div class="al-sub">لوحة تحكم الأدمن</div><div id="al-err" class="alert a-d" style="display:none">بيانات الدخول غير صحيحة</div><div class="fg"><label class="fl">اسم المستخدم</label><input id="al-u" class="fc" type="text" dir="ltr" placeholder="username"></div><div class="fg" style="margin-bottom:20px"><label class="fl">كلمة المرور</label><input id="al-p" class="fc" type="password" dir="ltr" placeholder="password"></div><button class="btn btn-d" onclick="doLogin()">دخول →</button><button onclick="go('home')" style="background:none;border:none;color:var(--muted);cursor:pointer;font-family:'Cairo',sans-serif;font-size:0.78rem;margin-top:12px;width:100%;text-align:center">← العودة للمتجر</button></div></div>`}
+// ─── ADMIN ───
+function pALogin(){return`<div class="al-wrap"><div class="al-card"><div class="al-logo">Dash <span>Lebanon</span></div><div class="al-sub">لوحة تحكم الأدمن</div><div id="al-err" class="alert a-d" style="display:none">بيانات الدخول غير صحيحة</div><div class="fg"><label class="fl">اسم المستخدم</label><input id="al-u" class="fc" type="text" dir="ltr"></div><div class="fg" style="margin-bottom:20px"><label class="fl">كلمة المرور</label><input id="al-p" class="fc" type="password" dir="ltr"></div><button class="btn btn-d" onclick="doLogin()">دخول →</button><button onclick="go('home')" style="background:none;border:none;color:var(--muted);cursor:pointer;font-family:'Cairo',sans-serif;font-size:0.78rem;margin-top:12px;width:100%;text-align:center">← العودة للمتجر</button></div></div>`}
 function bindALogin(){setTimeout(()=>{const p=document.getElementById('al-p');if(p)p.onkeydown=e=>{if(e.key==='Enter')doLogin()}},50)}
 function doLogin(){const u=document.getElementById('al-u').value.trim();const p=document.getElementById('al-p').value;const a=getA();if(u===a.u&&p===a.p){S.logged=true;S.tab='products';go('admin')}else document.getElementById('al-err').style.display='block'}
 function pAdmin(){
@@ -1541,21 +1749,42 @@ function pAdmin(){
 }
 function bindAdmin(){setTimeout(()=>{const i=document.getElementById('ap-img');if(i)i.oninput=()=>prv('ap-img','ap-prv')},50)}
 function aTab(t_){S.tab=t_;render()}
-function aProd(){const ps=getP();if(!ps.length)return`<div class="empty"><div class="empty-ico">📦</div><div class="empty-ttl">لا توجد منتجات</div></div>`;return ps.map(p=>`<div class="a-row"><img src="${esc(p.image)}" onerror="this.src='https://placehold.co/56x56/e5e7eb/9ca3af?text=?'"><div class="a-info"><div class="a-name">${esc(p.name)}</div><div class="a-price">${fmt(p.price)} (${fmtLBPNum(p.price)} ل.ل)${p.oldPrice?` | was: ${fmt(p.oldPrice)}`:''}${p.offer?` | 🎁 ${fmt(p.offer.price)}×${p.offer.qty}`:''}</div><div class="a-meta">دليفري: ${fmt(p.deliveryPrice)}</div></div><div class="a-btns"><button class="btn btn-out btn-sm" onclick="openEdit(${p.id})">✏️</button><button class="btn btn-x btn-sm" onclick="aDel(${p.id})">🗑️</button></div></div>`).join('')}
+function aProd(){const ps=getP();if(!ps.length)return`<div class="empty"><div class="empty-ico">📦</div><div class="empty-ttl">لا توجد منتجات</div></div>`;return ps.map(p=>`<div class="a-row"><img src="${esc(p.image)}" onerror="this.src='https://placehold.co/56x56/e5e7eb/9ca3af?text=?'"><div class="a-info"><div class="a-name">${esc(p.name)}</div><div class="a-price">${fmt(p.price)} (${fmtLBPNum(p.price)} ل.ل)${p.oldPrice?` | was: ${fmt(p.oldPrice)}`:''}${p.offer?` | 🎁 ${fmt(p.offer.price)}×${p.offer.qty}`:''}</div><div class="a-meta">دليفري: ${fmt(p.deliveryPrice)} | تصنيف: ${p.cat||'—'}</div></div><div class="a-btns"><button class="btn btn-out btn-sm" onclick="openEdit(${p.id})">✏️</button><button class="btn btn-x btn-sm" onclick="aDel(${p.id})">🗑️</button></div></div>`).join('')}
 function aOrdsAdmin(){const orders=getOrders();if(!orders.length)return`<div class="empty"><div class="empty-ico">📋</div><div class="empty-ttl">لا توجد طلبات</div></div>`;return orders.map(o=>{const d=new Date(o.date);const dateStr=d.toLocaleDateString('ar-LB',{year:'numeric',month:'short',day:'numeric'});const itemsStr=o.items.map(i=>`${i.name}${i.isOffer?' 🎁':''} ×${i.qty}`).join(' | ');const badge=o.status==='cancelled'?`<span class="ord-badge badge-cancelled">❌ ملغى</span>`:`<span class="ord-badge badge-accepted">✅ مقبول</span>`;return`<div class="ord-card"><div class="ord-head"><div><div class="ord-num">${esc(o.num)}</div><div class="ord-date">${dateStr} • ${esc(o.info.name)} • ${esc(o.info.phone)}</div></div>${badge}</div><div class="ord-items">${esc(itemsStr)}</div><div class="ord-total"><span class="ord-total-lbl">${esc(o.info.city)} — ${esc(o.info.district)}</span><span class="ord-total-amt">${fmt(o.total)} (${fmtLBPNum(o.total)} ل.ل)</span></div></div>`}).join('')}
 function aAdd(){return`<div class="fcard"><div style="font-size:0.95rem;font-weight:800;color:var(--primary);margin-bottom:14px">➕ إضافة منتج جديد</div>${pForm()}<div style="display:flex;gap:9px;margin-top:14px"><button class="btn btn-r" onclick="aSaveNew()">💾 إضافة</button><button class="btn btn-o" onclick="aTab('products')">إلغاء</button></div></div>`}
-function aSet(){const a=getA();return`<div class="fcard"><div style="font-size:0.95rem;font-weight:800;color:var(--primary);margin-bottom:14px">⚙️ بيانات الأدمن</div><div id="s-al" style="display:none"></div><div class="fg"><label class="fl">اسم المستخدم</label><input id="s-u" class="fc" type="text" dir="ltr" value="${esc(a.u)}"></div><div class="fg"><label class="fl">كلمة المرور الجديدة</label><input id="s-p" class="fc" type="password" dir="ltr" placeholder="اتركه فارغاً للإبقاء"></div><div class="fg"><label class="fl">تأكيد كلمة المرور</label><input id="s-p2" class="fc" type="password" dir="ltr"></div><button class="btn btn-r" onclick="aSaveSt()">💾 حفظ</button></div>`}
-function pForm(p=null){const px=p?'ep':'ap';return`<div class="fg"><label class="fl">اسم المنتج <span class="req">*</span></label><input id="${px}-name" class="fc" type="text" value="${esc(p?p.name:'')}"></div><div class="fg"><label class="fl">السعر القديم ($)</label><input id="${px}-oldprice" class="fc" type="number" min="0" step="0.5" dir="ltr" placeholder="سعر قديم للشطب" value="${esc(p&&p.oldPrice?p.oldPrice:'')}"></div><div class="fg"><label class="fl">رابط الصورة <span class="req">*</span></label><input id="${px}-img" class="fc" type="url" dir="ltr" value="${esc(p?p.image:'')}" oninput="prv('${px}-img','${px}-prv')"><div class="prvbox" id="${px}-prv" style="${p&&p.image?'display:block':''}"><img src="${esc(p?p.image:'')}" onerror="this.parentElement.style.display='none'"></div></div><div class="fg"><label class="fl">وصف المنتج</label><textarea id="${px}-desc" class="fc">${esc(p?p.description:'')}</textarea></div><div class="frow"><div class="fg"><label class="fl">السعر ($) <span class="req">*</span></label><input id="${px}-price" class="fc" type="number" min="0" step="0.5" dir="ltr" value="${esc(p?p.price:'')}"></div><div class="fg"><label class="fl">سعر الدليفري ($)</label><input id="${px}-dlv" class="fc" type="number" min="0" dir="ltr" placeholder="3" value="${esc(p?p.deliveryPrice:'')}"></div></div><div class="fg"><label class="fl">ملاحظة</label><input id="${px}-note" class="fc" type="text" value="${esc(p?p.note:'')}"></div><div style="background:var(--bg);border-radius:var(--rs);padding:13px;margin-top:4px"><div style="font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:10px">🔥 إعدادات العرض (اختياري)</div><div class="frow"><div class="fg"><label class="fl">كمية العرض</label><input id="${px}-oqty" class="fc" type="number" min="2" dir="ltr" placeholder="2" value="${esc(p&&p.offer?p.offer.qty:'')}"></div><div class="fg"><label class="fl">سعر العرض ($)</label><input id="${px}-oprice" class="fc" type="number" min="0" step="0.5" dir="ltr" value="${esc(p&&p.offer?p.offer.price:'')}"></div></div><div class="fg" style="margin-bottom:0"><label class="fl">نص العرض</label><input id="${px}-olabel" class="fc" type="text" value="${esc(p&&p.offer?p.offer.label:'')}"></div></div>`}
+function aSet(){const a=getA();return`<div class="fcard"><div style="font-size:0.95rem;font-weight:800;color:var(--primary);margin-bottom:14px">⚙️ بيانات الأدمن</div><div id="s-al" style="display:none"></div><div class="fg"><label class="fl">اسم المستخدم</label><input id="s-u" class="fc" type="text" dir="ltr" value="${esc(a.u)}"></div><div class="fg"><label class="fl">كلمة المرور الجديدة</label><input id="s-p" class="fc" type="password" dir="ltr"></div><div class="fg"><label class="fl">تأكيد كلمة المرور</label><input id="s-p2" class="fc" type="password" dir="ltr"></div><button class="btn btn-r" onclick="aSaveSt()">💾 حفظ</button></div>`}
+function pForm(p=null){const px=p?'ep':'ap';const catOpts=CATS.filter(c=>c.id!=='all'&&c.id!=='offers').map(c=>`<option value="${c.id}" ${p&&p.cat===c.id?'selected':''}>${c.label}</option>`).join('');return`<div class="fg"><label class="fl">اسم المنتج <span class="req">*</span></label><input id="${px}-name" class="fc" type="text" value="${esc(p?p.name:'')}"></div><div class="fg"><label class="fl">التصنيف</label><select id="${px}-cat" class="fc"><option value="home">🏠 منزل</option><option value="bathroom">🛁 حمام</option><option value="kitchen">🍽️ مطبخ</option><option value="car">🚗 سيارة</option><option value="tech">💡 تقنية</option></select></div><div class="fg"><label class="fl">السعر القديم ($)</label><input id="${px}-oldprice" class="fc" type="number" min="0" step="0.5" dir="ltr" value="${esc(p&&p.oldPrice?p.oldPrice:'')}"></div><div class="fg"><label class="fl">رابط الصورة <span class="req">*</span></label><input id="${px}-img" class="fc" type="url" dir="ltr" value="${esc(p?p.image:'')}" oninput="prv('${px}-img','${px}-prv')"><div class="prvbox" id="${px}-prv" style="${p&&p.image?'display:block':''}"><img src="${esc(p?p.image:'')}" onerror="this.parentElement.style.display='none'"></div></div><div class="fg"><label class="fl">وصف المنتج</label><textarea id="${px}-desc" class="fc">${esc(p?p.description:'')}</textarea></div><div class="frow"><div class="fg"><label class="fl">السعر ($) <span class="req">*</span></label><input id="${px}-price" class="fc" type="number" min="0" step="0.5" dir="ltr" value="${esc(p?p.price:'')}"></div><div class="fg"><label class="fl">سعر الدليفري ($)</label><input id="${px}-dlv" class="fc" type="number" min="0" dir="ltr" placeholder="3" value="${esc(p?p.deliveryPrice:'')}"></div></div><div class="fg"><label class="fl">ملاحظة</label><input id="${px}-note" class="fc" type="text" value="${esc(p?p.note:'')}"></div><div style="background:var(--bg);border-radius:var(--rs);padding:13px;margin-top:4px"><div style="font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:10px">🔥 إعدادات العرض (اختياري)</div><div class="frow"><div class="fg"><label class="fl">كمية العرض</label><input id="${px}-oqty" class="fc" type="number" min="2" dir="ltr" placeholder="2" value="${esc(p&&p.offer?p.offer.qty:'')}"></div><div class="fg"><label class="fl">سعر العرض ($)</label><input id="${px}-oprice" class="fc" type="number" min="0" step="0.5" dir="ltr" value="${esc(p&&p.offer?p.offer.price:'')}"></div></div><div class="fg" style="margin-bottom:0"><label class="fl">نص العرض</label><input id="${px}-olabel" class="fc" type="text" value="${esc(p&&p.offer?p.offer.label:'')}"></div></div>`}
 function prv(iid,pid){const url=document.getElementById(iid).value.trim();const box=document.getElementById(pid);if(!box)return;if(url){box.style.display='block';box.querySelector('img').src=url}else box.style.display='none'}
-function rdF(px){const oqty=parseInt(document.getElementById(`${px}-oqty`).value)||0;const oprice=parseFloat(document.getElementById(`${px}-oprice`).value)||0;const olabel=document.getElementById(`${px}-olabel`).value.trim();const offer=(oqty>=2&&oprice>0)?{qty:oqty,price:oprice,label:olabel||`اشتري ${oqty} بـ ${oprice}$`}:null;const oldPriceVal=parseFloat(document.getElementById(`${px}-oldprice`).value)||null;return{name:document.getElementById(`${px}-name`).value.trim(),image:document.getElementById(`${px}-img`).value.trim(),description:document.getElementById(`${px}-desc`).value.trim(),price:parseFloat(document.getElementById(`${px}-price`).value)||0,oldPrice:oldPriceVal,deliveryPrice:parseFloat(document.getElementById(`${px}-dlv`).value)||3,note:document.getElementById(`${px}-note`).value.trim(),offer}}
+function rdF(px){const oqty=parseInt(document.getElementById(`${px}-oqty`).value)||0;const oprice=parseFloat(document.getElementById(`${px}-oprice`).value)||0;const olabel=document.getElementById(`${px}-olabel`).value.trim();const offer=(oqty>=2&&oprice>0)?{qty:oqty,price:oprice,label:olabel||`اشتري ${oqty} بـ ${oprice}$`}:null;const oldPriceVal=parseFloat(document.getElementById(`${px}-oldprice`).value)||null;const catEl=document.getElementById(`${px}-cat`);const cat=catEl?catEl.value:'home';return{name:document.getElementById(`${px}-name`).value.trim(),image:document.getElementById(`${px}-img`).value.trim(),description:document.getElementById(`${px}-desc`).value.trim(),price:parseFloat(document.getElementById(`${px}-price`).value)||0,oldPrice:oldPriceVal,deliveryPrice:parseFloat(document.getElementById(`${px}-dlv`).value)||3,note:document.getElementById(`${px}-note`).value.trim(),offer,cat}}
 function aSaveNew(){const d=rdF('ap');if(!d.name||!d.price){toast('⚠️ الاسم والسعر مطلوبان');return}const ps=getP();ps.push({id:Date.now(),...d});setP(ps);toast('✅ تمت إضافة المنتج');aTab('products')}
-function aDel(id){if(!confirm('هل أنت متأكد من حذف هذا المنتج؟'))return;setP(getP().filter(p=>p.id!==id));toast('🗑️ تم الحذف');render()}
-function openEdit(id){const p=getP().find(p=>p.id===id);if(!p)return;const r=document.getElementById('mroot2')||document.getElementById('mroot');r.innerHTML=`<div class="mov" id="mo" onclick="clsM(event)"><div class="msh" onclick="event.stopPropagation()"><div class="mhan"></div><div class="mttl">✏️ تعديل المنتج</div>${pForm(p)}<div style="display:flex;gap:9px;margin-top:14px"><button class="btn btn-r" onclick="aSaveEd(${id})">💾 حفظ</button><button class="btn btn-o" onclick="clsM()">إلغاء</button></div></div></div>`;setTimeout(()=>{const i=document.getElementById('ep-img');if(i)i.oninput=()=>prv('ep-img','ep-prv')},30)}
+function aDel(id){if(!confirm('هل أنت متأكد؟'))return;setP(getP().filter(p=>p.id!==id));toast('🗑️ تم الحذف');render()}
+function openEdit(id){const p=getP().find(p=>p.id===id);if(!p)return;const r=document.getElementById('mroot2')||document.getElementById('mroot');r.innerHTML=`<div class="mov" id="mo" onclick="clsM(event)"><div class="msh" onclick="event.stopPropagation()"><div class="mhan"></div><div class="mttl">✏️ تعديل المنتج</div>${pForm(p)}<div style="display:flex;gap:9px;margin-top:14px"><button class="btn btn-r" onclick="aSaveEd(${id})">💾 حفظ</button><button class="btn btn-o" onclick="clsM()">إلغاء</button></div></div></div>`;setTimeout(()=>{const catEl=document.getElementById('ep-cat');if(catEl)catEl.value=p.cat||'home';const i=document.getElementById('ep-img');if(i)i.oninput=()=>prv('ep-img','ep-prv')},30)}
 function aSaveEd(id){const d=rdF('ep');if(!d.name||!d.price){toast('⚠️ الاسم والسعر مطلوبان');return}const ps=getP(),i=ps.findIndex(p=>p.id===id);if(i<0)return;ps[i]={id,...d};setP(ps);clsM();toast('✅ تم التعديل');render()}
 function clsM(e){if(e&&e.target.id!=='mo')return;const r=document.getElementById('mroot2')||document.getElementById('mroot');if(r)r.innerHTML=''}
 function aSaveSt(){const u=document.getElementById('s-u').value.trim();const p=document.getElementById('s-p').value;const p2=document.getElementById('s-p2').value;const al=document.getElementById('s-al');if(!u){al.className='alert a-d';al.textContent='اسم المستخدم مطلوب';al.style.display='block';return}if(p&&p!==p2){al.className='alert a-d';al.textContent='كلمتا المرور غير متطابقتين';al.style.display='block';return}setA({u,p:p||getA().p});al.className='alert a-s';al.textContent='✅ تم الحفظ';al.style.display='block';setTimeout(()=>al.style.display='none',3000)}
 
-// BOOT
+// ─── RENDER ROUTER ───
+function render(){
+  const a=document.getElementById('app');
+  switch(S.page){
+    case'home':a.innerHTML=pHome();break;
+    case'product':a.innerHTML=pProduct();break;
+    case'cart':a.innerHTML=pCart();break;
+    case'checkout':a.innerHTML=pCheckout();break;
+    case'review':a.innerHTML=pReview();break;
+    case'success':a.innerHTML=pSuccess();break;
+    case'cancelled':a.innerHTML=pCancelled();break;
+    case'orders':a.innerHTML=pOrders();break;
+    case'contact':a.innerHTML=pContact();break;
+    case'wishlist':a.innerHTML=pWishlist();break;
+    case'points':a.innerHTML=pPoints();break;
+    case'alogin':a.innerHTML=pALogin();bindALogin();break;
+    case'admin':a.innerHTML=pAdmin();bindAdmin();break;
+    default:a.innerHTML=pHome();
+  }
+}
+
+// ─── BOOT ───
 S.dqty=1;applyDark();applyLang();render();updateUI();trackVisit();
 setTimeout(()=>showOnboarding(),1200);
 </script>
