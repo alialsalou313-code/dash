@@ -950,279 +950,293 @@ const FAKE_COMMENTS=[
 // ─── DEMO PRODUCTS ───
 const DEMO = [
   {
-    id: 1,
-    cat: 'home',
-    name: 'المكنسة اللاسلكية 3 في 1',
-    description: `حل عملي لتنظيف المنزل والسيارة بسهولة 🧹
-
-مكنسة متعددة الوظائف: شفط غبار، منفاخ هواء، ومضخة تفريغ الهواء  
-تصميم لاسلكي يمنحك حرية كاملة أثناء الاستخدام 🚗
-
-💪 قوية وفعالة  
-🔋 تعمل بدون أسلاك  
-🧼 مناسبة للمنزل والسيارة`,
-    image: 'https://cdn.corenexis.com/files/c/1186979720.jpg',
-    price: 7.99,
-    oldPrice: 10.99,
-    deliveryPrice: 3,
-    note: 'تنظيف سريع وعملي في كل مكان 👌',
-    offer: { qty: 2, price: 12.99, label: 'اشتري 2 بـ 12.99$' }
-  },
-
-  {
-    id: 2,
-    cat: 'bathroom',
-    name: 'رأس دوش التوربو المتطور',
-    description: `تجربة استحمام مريحة بضغط قوي 🚿
-
-رأس دوش عصري مع تدفق ماء محسّن وزر إيقاف  
-يساعد على تقليل استهلاك المياه مع راحة أكبر
-
-💧 ضغط قوي ومريح  
-🔘 زر إيقاف عملي  
-🛁 مناسب لكل الحمامات`,
-    image: 'https://cdn.corenexis.com/files/c/7223327720.jpg',
-    price: 6.99,
-    oldPrice: 9.99,
-    deliveryPrice: 3,
-    note: 'تركيب سهل لجميع الأنواع 👌',
-    offer: { qty: 2, price: 9.99, label: 'اشتري 2 بـ 9.99$' }
-  },
-
-  {
-    id: 3,
-    cat: 'bathroom',
-    name: 'وصلة صنبور مرنة 1080 درجة',
-    description: `وصلة ذكية لتسهيل استخدام المغسلة 🚰
-
-تدور بسهولة لتصل لكل الزوايا بدون تعب  
-تجعل الغسيل والتنظيف أسرع وأسهل
-
-🔄 دوران كامل 1080°  
-💧 استخدام عملي يومي  
-🧲 تركيب بسيط وسريع`,
-    image: 'https://cdn.corenexis.com/files/c/9947163720.jpg',
-    price: 4.99,
-    oldPrice: 8.99,
-    deliveryPrice: 3,
-    note: 'مرونة عالية في الاستخدام',
-    offer: { qty: 2, price: 7.99, label: 'اشتري 2 بـ 7.99$' }
-  },
-
-  {
-    id: 4,
-    cat: 'kitchen',
-    name: 'مطحنة التوابل والقهوة الكهربائية',
-    description: `طحن سريع ودقيق للمطبخ ☕
-
-مناسبة للقهوة والتوابل والحبوب  
-تصميم عملي وسهل الاستخدام
-
-⚡ أداء قوي  
-🌿 متعددة الاستخدام  
-🧽 سهلة التنظيف`,
-    image: 'https://cdn.corenexis.com/files/c/5641244720.jpg',
-    price: 8.99,
-    oldPrice: 12.99,
-    deliveryPrice: 3,
-    note: 'طحن سريع ونتيجة دقيقة',
-    offer: { qty: 2, price: 15.99, label: 'اشتري 2 بـ 15.99$' }
-  },
-
-  {
-    id: 5,
-    cat: 'home',
-    name: 'اقراص تنظيف الغسالة',
-    description: `تنظيف عميق لحوض الغسالة 🧼
-
-تزيل الرواسب والروائح والبكتيريا بسهولة  
-تحافظ على نظافة الغسالة من الداخل
-
-✨ تنظيف فعال  
-🧴 استخدام سهل  
-📦 عبوة اقتصادية`,
-    image: 'https://cdn.corenexis.com/files/c/2817323720.jpg',
-    price: 4.99,
-    oldPrice: 6.00,
-    deliveryPrice: 3,
-    note: 'تنظيف داخلي قوي',
-    offer: { qty: 2, price: 7.99, label: 'اشتري 2 بـ 7.99$' }
-  },
-
-  {
-    id: 6,
-    cat: 'home',
-    name: 'منظف الزجاج المغناطيسي المزدوج',
-    description: `تنظيف النوافذ بسهولة من الداخل والخارج 🪟
-
-تصميم مغناطيسي يختصر الوقت والجهد  
-نتيجة نظافة من الجهتين بنفس الوقت
-
-🧲 تنظيف مزدوج  
-🧽 عملي وسهل  
-🔒 مزود بحبل أمان`,
-    image: 'https://cdn.corenexis.com/files/c/1362116720.jpg',
-    price: 7.99,
-    oldPrice: 11.99,
-    deliveryPrice: 3,
-    note: 'تنظيف أسرع للنوافذ',
-    offer: { qty: 2, price: 14.99, label: 'اشتري 2 بـ 14.99$' }
-  },
-
-  {
-    id: 7,
-    cat: 'kitchen',
-    name: 'منظم الثلاجة القابل للتوسيع',
-    description: `تنظيم أفضل داخل الثلاجة 🧊
-
-يساعدك على استغلال المساحة بشكل ذكي  
-يحافظ على ترتيب الأطعمة داخل الثلاجة
-
-📦 تنظيم عملي  
-🧊 يوفر مساحة  
-🔧 قابل للتوسيع`,
-    image: 'https://cdn.corenexis.com/files/c/3772812720.png',
-    price: 2.49,
-    oldPrice: 4.00,
-    deliveryPrice: 3,
-    note: 'ترتيب ذكي للثلاجة',
-    offer: { qty: 5, price: 9.99, label: 'عرض 5 قطع بـ 9.99$' }
-  },
-
-  {
-    id: 8,
-    cat: 'car',
-    name: 'محول الطاقة الذكي للسيارة 4 في 1',
-    description: `حل عملي لشحن الأجهزة داخل السيارة 🚗
-
-يحتوي على منافذ متعددة وشحن سريع  
-مناسب للسفر والاستخدام اليومي
-
-⚡ شحن سريع  
-🔌 4 منافذ  
-🚗 مناسب للسيارة`,
-    image: 'https://cdn.corenexis.com/files/c/1344431720.jpg',
-    price: 15.99,
-    oldPrice: 25.99,
-    deliveryPrice: 3,
-    note: 'طاقة معك أينما ذهبت',
-    offer: { qty: 2, price: 28.99, label: 'عرض 2 بـ 28.99$' }
-  },
-
-  {
-    id: 9,
-    cat: 'home',
-    name: 'DASH Multi-Angle Cutter',
-    description: `أداة قص دقيقة وعملية ✂️
-
-مصممة لقص الزوايا بدقة وسهولة  
-مناسبة للأعمال اليدوية
-
-🔪 حاد ودقيق  
-🧰 عملي  
-📐 نتائج احترافية`,
-    image: 'https://cdn.corenexis.com/files/c/4679843720.jpg',
-    price: 11.99,
-    oldPrice: 20.99,
-    deliveryPrice: 3,
-    note: 'دقة في القص',
-    offer: { qty: 2, price: 22.99, label: 'عرض 2 بـ 22.99$' }
-  },
-
-  {
-    id: 10,
-    cat: 'bathroom',
-    name: 'مستشعر السيفون الذكي اللاسلكي',
-    description: `تحكم ذكي في الحمام 🚽
-
-يعمل بحساس حركة لتجربة أكثر راحة  
-تصميم عصري وعملي
-
-🤖 ذكي  
-🔋 توفير طاقة  
-🚻 استخدام مريح`,
-    image: 'https://cdn.corenexis.com/files/c/1244941720.jpg',
-    price: 9.99,
-    oldPrice: 19.99,
-    deliveryPrice: 3,
-    note: 'تجربة حمام ذكية',
-    offer: { qty: 2, price: 18.99, label: 'عرض 2 بـ 18.99$' }
-  },
-
-  {
-    id: 11,
-    cat: 'home',
-    name: 'مصحح اصابع القدم السيليكوني',
-    description: `راحة يومية للقدم 👣
-
-مصنوع من سيليكون ناعم يساعد على راحة الأصابع  
-مناسب للاستخدام اليومي
-
-🦶 مريح  
-🧼 سهل التنظيف  
-🌿 خامة ناعمة`,
-    image: 'https://cdn.corenexis.com/files/c/6313123720.png',
-    price: 4.99,
-    oldPrice: 7.00,
-    deliveryPrice: 3,
-    note: 'راحة للقدم',
-    offer: { qty: 2, price: 6.99, label: 'عرض قطعتين بـ 6.99$' }
-  },
-
-  {
-    id: 12,
-    cat: 'home',
-    name: '5 Layers Pant Hanger - تعليقة بناطلين',
-    description: `تنظيم عملي للخزانة 👖
-
-تعليقة متعددة الطبقات تساعدك على ترتيب البنطلونات بسهولة  
-توفر مساحة داخل الخزانة
-
-👖 5 طبقات  
-📦 توفير مساحة  
-🛠️ سهلة الاستخدام`,
-    image: 'https://cdn.corenexis.com/files/c/5444497720.webp',
-    price: 5,
-    oldPrice: 10,
-    deliveryPrice: 3,
-    note: 'تنظيم ذكي للخزانة 👌',
-    offer: { qty: 5, price: 20, label: 'عرض 5 بـ 20$' }
+    "id": 1,
+    "cat": "home",
+    "name": "المكنسة اللاسلكية 3 في 1",
+    "description": "حل عملي لتنظيف المنزل والسيارة بسهولة 🧹\n\nمكنسة متعددة الوظائف: شفط غبار، منفاخ هواء، ومضخة تفريغ الهواء  \nتصميم لاسلكي يمنحك حرية كاملة أثناء الاستخدام 🚗\n\n💪 قوية وفعالة  \n🔋 تعمل بدون أسلاك  \n🧼 مناسبة للمنزل والسيارة",
+    "image": "https://cdn.corenexis.com/files/c/1186979720.jpg",
+    "price": 7.99,
+    "oldPrice": 10.99,
+    "deliveryPrice": 3,
+    "note": "تنظيف سريع وعملي في كل مكان 👌",
+    "offer": {
+      "qty": 2,
+      "price": 12.99,
+      "label": "اشتري 2 بـ 12.99$"
+    }
   },
   {
-  id: 13,
-  cat: 'home',
-  name: 'Stain Removal Wipes - وايبس ازالة البقع',
-  description: 'وايبس ازالة البقع الفعالة والسريعة لتنظيف الملابس...',
-  image: 'https://cdn.corenexis.com/files/c/8217744720.webp',
-  price: 4.5,
-  oldPrice: 8.5,
-  deliveryPrice: 3,
-  note: 'فعّال وسريع على أغلب البقع اليومية ✨',
-  offer: {
-    qty: 2,
-    price: 7,
-    label: 'اشتري التنين بي 7$ وفر 1$'
+    "id": 2,
+    "cat": "bathroom",
+    "name": "رأس دوش التوربو المتطور",
+    "description": "تجربة استحمام مريحة بضغط قوي 🚿",
+    "image": "https://cdn.corenexis.com/files/c/7223327720.jpg",
+    "price": 6.99,
+    "oldPrice": 9.99,
+    "deliveryPrice": 3,
+    "note": "تركيب سهل لجميع الأنواع 👌",
+    "offer": {
+      "qty": 2,
+      "price": 9.99,
+      "label": "اشتري 2 بـ 9.99$"
+    }
+  },
+  {
+    "id": 3,
+    "cat": "bathroom",
+    "name": "وصلة صنبور مرنة 1080 درجة",
+    "description": "وصلة ذكية لتسهيل استخدام المغسلة 🚰",
+    "image": "https://cdn.corenexis.com/files/c/9947163720.jpg",
+    "price": 4.99,
+    "oldPrice": 8.99,
+    "deliveryPrice": 3,
+    "note": "مرونة عالية في الاستخدام",
+    "offer": {
+      "qty": 2,
+      "price": 7.99,
+      "label": "اشتري 2 بـ 7.99$"
+    }
+  },
+  {
+    "id": 4,
+    "cat": "kitchen",
+    "name": "مطحنة التوابل والقهوة الكهربائية",
+    "description": "طحن سريع ودقيق للمطبخ ☕",
+    "image": "https://cdn.corenexis.com/files/c/5641244720.jpg",
+    "price": 8.99,
+    "oldPrice": 12.99,
+    "deliveryPrice": 3,
+    "note": "طحن سريع ونتيجة دقيقة",
+    "offer": {
+      "qty": 2,
+      "price": 15.99,
+      "label": "اشتري 2 بـ 15.99$"
+    }
+  },
+  {
+    "id": 5,
+    "cat": "home",
+    "name": "اقراص تنظيف الغسالة",
+    "description": "تنظيف عميق لحوض الغسالة 🧼",
+    "image": "https://cdn.corenexis.com/files/c/2817323720.jpg",
+    "price": 4.99,
+    "oldPrice": 6,
+    "deliveryPrice": 3,
+    "note": "تنظيف داخلي قوي",
+    "offer": {
+      "qty": 2,
+      "price": 7.99,
+      "label": "اشتري 2 بـ 7.99$"
+    }
+  },
+  {
+    "id": 6,
+    "cat": "home",
+    "name": "منظف الزجاج المغناطيسي المزدوج",
+    "description": "تنظيف النوافذ بسهولة 🪟",
+    "image": "https://cdn.corenexis.com/files/c/1362116720.jpg",
+    "price": 7.99,
+    "oldPrice": 11.99,
+    "deliveryPrice": 3,
+    "note": "تنظيف أسرع للنوافذ",
+    "offer": {
+      "qty": 2,
+      "price": 14.99,
+      "label": "اشتري 2 بـ 14.99$"
+    }
+  },
+  {
+    "id": 7,
+    "cat": "kitchen",
+    "name": "منظم الثلاجة القابل للتوسيع",
+    "description": "تنظيم أفضل داخل الثلاجة 🧊",
+    "image": "https://cdn.corenexis.com/files/c/3772812720.png",
+    "price": 2.49,
+    "oldPrice": 4,
+    "deliveryPrice": 3,
+    "note": "ترتيب ذكي للثلاجة",
+    "offer": {
+      "qty": 5,
+      "price": 9.99,
+      "label": "عرض 5 قطع بـ 9.99$"
+    }
+  },
+  {
+    "id": 8,
+    "cat": "car",
+    "name": "محول الطاقة الذكي للسيارة 4 في 1",
+    "description": "شحن سريع داخل السيارة 🚗",
+    "image": "https://cdn.corenexis.com/files/c/1344431720.jpg",
+    "price": 15.99,
+    "oldPrice": 25.99,
+    "deliveryPrice": 3,
+    "note": "طاقة معك أينما ذهبت",
+    "offer": {
+      "qty": 2,
+      "price": 28.99,
+      "label": "عرض 2 بـ 28.99$"
+    }
+  },
+  {
+    "id": 9,
+    "cat": "home",
+    "name": "DASH Multi-Angle Cutter",
+    "description": "أداة قص دقيقة ✂️",
+    "image": "https://cdn.corenexis.com/files/c/4679843720.jpg",
+    "price": 11.99,
+    "oldPrice": 20.99,
+    "deliveryPrice": 3,
+    "note": "دقة في القص",
+    "offer": {
+      "qty": 2,
+      "price": 22.99,
+      "label": "عرض 2 بـ 22.99$"
+    }
+  },
+  {
+    "id": 10,
+    "cat": "bathroom",
+    "name": "مستشعر السيفون الذكي اللاسلكي",
+    "description": "تحكم ذكي 🚽",
+    "image": "https://cdn.corenexis.com/files/c/1244941720.jpg",
+    "price": 9.99,
+    "oldPrice": 19.99,
+    "deliveryPrice": 3,
+    "note": "تجربة حمام ذكية",
+    "offer": {
+      "qty": 2,
+      "price": 18.99,
+      "label": "عرض 2 بـ 18.99$"
+    }
+  },
+  {
+    "id": 11,
+    "cat": "home",
+    "name": "مصحح اصابع القدم السيليكوني",
+    "description": "راحة يومية 👣",
+    "image": "https://cdn.corenexis.com/files/c/6313123720.png",
+    "price": 4.99,
+    "oldPrice": 7,
+    "deliveryPrice": 3,
+    "note": "راحة للقدم",
+    "offer": {
+      "qty": 2,
+      "price": 6.99,
+      "label": "عرض قطعتين بـ 6.99$"
+    }
+  },
+  {
+    "id": 12,
+    "cat": "home",
+    "name": "5 Layers Pant Hanger - تعليقة بناطلين",
+    "description": "تنظيم عملي 👖",
+    "image": "https://cdn.corenexis.com/files/c/5444497720.webp",
+    "price": 5,
+    "oldPrice": 10,
+    "deliveryPrice": 3,
+    "note": "تنظيم ذكي للخزانة 👌",
+    "offer": {
+      "qty": 5,
+      "price": 20,
+      "label": "عرض 5 بـ 20$"
+    }
+  },
+  {
+    "id": 13,
+    "cat": "home",
+    "name": "Stain Removal Wipes - وايبس ازالة البقع",
+    "description": "وايبس ازالة البقع...",
+    "image": "https://cdn.corenexis.com/files/c/8217744720.webp",
+    "price": 4.5,
+    "oldPrice": 8.5,
+    "deliveryPrice": 3,
+    "note": "فعّال وسريع ✨",
+    "offer": {
+      "qty": 2,
+      "price": 7,
+      "label": "اشتري التنين بي 7$"
+    }
+  },
+  {
+    "id": 14,
+    "cat": "home",
+    "name": "Mini Electric Massager - مكنة مساج",
+    "description": "جهاز مساج صغير...",
+    "image": "https://cdn.corenexis.com/files/c/1266373720.webp",
+    "price": 7,
+    "oldPrice": 10,
+    "deliveryPrice": 3,
+    "note": "",
+    "offer": {
+      "qty": 2,
+      "price": 11,
+      "label": "اشتري تنين بـ 11$"
+    }
+  },
+  {
+    "id": 15,
+    "cat": "home",
+    "name": "طقم أدوات مطبخ 4 قطع عملي وضروري بكل بيت ",
+    "description": "طقم أدوات مطبخ 4 قطع عملي وضروري بكل بيت 🔥\nتصميم ذكي بيوفر وقتك بالمطبخ 👌\nسهل الاستخدام وخفيف على الإيد ✨\nجودة مرتبة وقصّ وتقطيع سريع 💯\n\nبيحتوي على:\nقطاعة مقسمة🍎\nمقشرة عدد 2 🥕\nمبشرة متعددة 🧀\nدفة فرم 🔪\n\nحجم مريح وتخزين سهل 👏\n\n",
+    "image": "https://cdn.corenexis.com/files/c/5673419720.png",
+    "price": 5,
+    "oldPrice": 5.99,
+    "deliveryPrice": 3,
+    "note": "",
+    "offer": {
+      "qty": 2,
+      "price": 9,
+      "label": ""
+    }
+  },
+  {
+    "id": 16,
+    "cat": "home",
+    "name": "قطاعة خضار 3 بـ 1 ",
+    "description": "بتفرم وبتبشر وبتعمل شرائح بطريقة سهلة\n\nكاسة دوّارة عملية وسريعة بالاستخدام\n\nمناسبة للخضار والسلطات والتزيين\n\nفيها 3 شفرات متعددة الاستعمال\n\nحجمها صغير وما بتاخد محل بالمطبخ\n\nتنظيفها سهل ومرتبة كتير",
+    "image": "https://cdn.corenexis.com/files/c/8787221720.png",
+    "price": 5,
+    "oldPrice": 7,
+    "deliveryPrice": 3,
+    "note": "",
+    "offer": {
+      "qty": 2,
+      "price": 9,
+      "label": ""
+    }
+  },
+  {
+    "id": 17,
+    "cat": "home",
+    "name": "مطحنة قهوة يدوية ستانلس ستيل Silver",
+    "description": "تصميم أنيق وفخم للمطبخ ✨\n\nطحن يدوي يعطيك نكهة قهوة أقوى وأطيب\n\nشفرات داخلية قوية لطحن ناعم ومتوسط\n\nحجم عملي وسهل الحمل لأي مكان\n\nمناسبة للقهوة، الهيل، والبهارات\n\nجودة متينة واستعمال طويل",
+    "image": "https://cdn.corenexis.com/files/c/4653764720.png",
+    "price": 7,
+    "oldPrice": 13,
+    "deliveryPrice": 3,
+    "note": "",
+    "offer": {
+      "qty": 2,
+      "price": 12,
+      "label": ""
+    }
+  },
+  {
+    "id": 18,
+    "cat": "home",
+    "name": "سيشوار + فرشاية شعر عالكهربا",
+    "description": "✔️ بتمشّط وبتجفف الشعر بنفس الوقت  \n✔️ عملية وسهلة الاستخدام  \n✔️ بتوفر وقت وجهد",
+    "image": "https://cdn.corenexis.com/files/c/7182655720.png",
+    "price": 11,
+    "oldPrice": 20,
+    "deliveryPrice": 32,
+    "note": "",
+    "offer": {
+      "qty": 2,
+      "price": 20,
+      "label": ""
+    }
   }
-}, // ✅ سكّرنا المنتج 13 هون
-
-{
-  id: Date.now(),
-  cat: 'home',
-  name: 'Mini Electric Massager - مكنة مساج',
-  description: 'جهاز مساج رقبة صغير وقابل للحمل...',
-  image: 'https://cdn.corenexis.com/files/c/1266373720.webp',
-  price: 7,
-  oldPrice: 10,
-  deliveryPrice: 3,
-  note: '',
-  offer: {
-    qty: 2,
-    price: 11,
-    label: 'اشتري تنين بـ 11$ وفر 3$'
-  }
-}
-
-
 ];
 
 
