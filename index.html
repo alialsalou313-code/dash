@@ -842,7 +842,7 @@ const TRANS={
     comments_ttl:'آراء عملائنا',
     welcome_title:'مرحباً بك في Dash Lebanon!',onboard_sub:'ساعدنا نقدّم لك تجربة افضل',
     ob_fname:'الاسم الاول',ob_lname:'الكنية',ob_phone:'رقم هاتفك',ob_lang:'اللغة المفضلة',
-    ob_submit:'ابدأ التسوق',
+    ob_submit:'ابدأ التسوق',ob_skip:'تخطي',
     no_products:'لا توجد منتجات حالياً',no_results_for:'لا نتائج لـ',try_diff:'جرّب كلمة مختلفة',
     orders_ttl:'طلباتي',no_orders_ttl:'لا توجد طلبات بعد',no_orders_sub:'طلباتك ستظهر هنا بعد تاكيدها',
     order_count:'طلب محفوظ على هذا الجهاز',total_lbl2:'الاجمالي',accepted_lbl:'مقبول',cancelled_lbl:'ملغى',
@@ -1757,7 +1757,12 @@ function showOTPStep(fname, phone){
         </button>
       </div>
 
-
+      <button class="btn btn-o" onclick="skipOnboard()"
+        style="margin-top:8px;font-size:0.8rem;opacity:0.6">
+        ${t('ob_skip')}
+      </button>
+    </div>
+  </div>`;
 
   // Auto-focus OTP input
   setTimeout(()=>{ document.getElementById('ob-otp')?.focus(); }, 250);
