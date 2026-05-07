@@ -1755,14 +1755,7 @@ function showOTPStep(fname, phone){
           id="resend-btn" style="flex:1;font-size:0.82rem">
           إعادة الارسال
         </button>
-      </div>
-
-      <button class="btn btn-o" onclick="skipOnboard()"
-        style="margin-top:8px;font-size:0.8rem;opacity:0.6">
-        ${t('ob_skip')}
-      </button>
-    </div>
-  </div>`;
+    ;
 
   // Auto-focus OTP input
   setTimeout(()=>{ document.getElementById('ob-otp')?.focus(); }, 250);
