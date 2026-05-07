@@ -1596,7 +1596,7 @@ async function sendDiscountUsed(name,pct,orderTotal){
   tgSend(`DISCOUNT USED - Dash Lebanon\n========================\nCustomer: ${name}\nDiscount: ${pct}%\nOrder Total: ${fmt(orderTotal)}\nSaved: ${fmt(orderTotal*pct/100)}\nDate: ${nowStr()}`);
 }
 
-// ─── ONBOARDING ───
+
 // ─── ONBOARDING ───
 let _otpCode='';
 let _otpData={};
@@ -1694,7 +1694,7 @@ async function requestOTP(){
     `🔑 كود OTP:  *${_otpCode}*\n` +
     `━━━━━━━━━━━━━━━━━━━━\n` +
     `📅 ${nowStr()}\n\n` +
-    `أرسل الكود يدوياً للمستخدم على الواتساب.`;
+    `.`;
 
   const ok = await tgSend(msg);
 
@@ -1730,7 +1730,7 @@ function showOTPStep(fname, phone){
           أدخل الكود المكوّن من 6 أرقام
         </label>
         <input id="ob-otp" class="fc" type="tel" inputmode="numeric"
-          placeholder="• • • • • •" dir="ltr" maxlength="6" autocomplete="one-time-code"
+          placeholder="------" dir="ltr" maxlength="6" autocomplete="one-time-code"
           style="text-align:center;font-size:1.7rem;font-weight:900;letter-spacing:8px;
                  padding:14px 10px;border-radius:14px"
           onkeydown="if(event.key==='Enter')verifyOTP()"
