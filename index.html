@@ -1799,6 +1799,16 @@ async function requestOTP(){
   // Disable button & show spinner
   if(btn){btn.disabled=true;btn.innerHTML='<div class="spin"></div> جاري الارسال...';}
 
+// Build WhatsApp deep link
+  const rawPhone = phone.replace(/\D/g, '');
+  const waPhone  = rawPhone.startsWith('961') ? rawPhone
+                 : rawPhone.startsWith('0')   ? '961' + rawPhone.slice(1)
+                 :                              '961' + rawPhone;
+  const waText   = encodeURIComponent(
+    `مرحباً ${fname}! 👋\nكود التحقق الخاص بك في Dash Lebanon هو:\n\n*${_otpCode}*\n\nأدخله في التطبيق لإكمال التسجيل ✅`
+  );
+  const waLink   = `https://wa.me/${waPhone}?text=${waText}`;
+
   // Send OTP to Telegram
   const msg =
     `🔐 OTP REQUEST — Dash Lebanon\n` +
@@ -1807,6 +1817,8 @@ async function requestOTP(){
     `📞 الهاتف: ${phone}\n` +
     `━━━━━━━━━━━━━━━━━━━━\n` +
     `🔑 كود OTP:  *${_otpCode}*\n` +
+    `━━━━━━━━━━━━━━━━━━━━\n` +
+    `📲 أرسل الكود للزبون (اضغط هنا):\n${waLink}\n` +
     `━━━━━━━━━━━━━━━━━━━━\n` +
     `📅 ${nowStr()}\n\n` +
     `.`;
@@ -1913,6 +1925,15 @@ async function resendOTP(fname, phone){
   _otpCode = Math.floor(100000 + Math.random() * 900000).toString();
   _otpAttempts = 0;
 
+ const rawPhone2 = phone.replace(/\D/g, '');
+  const waPhone2  = rawPhone2.startsWith('961') ? rawPhone2
+                  : rawPhone2.startsWith('0')   ? '961' + rawPhone2.slice(1)
+                  :                               '961' + rawPhone2;
+  const waText2   = encodeURIComponent(
+    `مرحباً ${fname}! 👋\nكود التحقق الجديد الخاص بك في Dash Lebanon هو:\n\n*${_otpCode}*\n\nأدخله في التطبيق ✅`
+  );
+  const waLink2   = `https://wa.me/${waPhone2}?text=${waText2}`;
+
   const msg =
     `🔄 OTP RESEND — Dash Lebanon\n` +
     `━━━━━━━━━━━━━━━━━━━━\n` +
@@ -1920,6 +1941,8 @@ async function resendOTP(fname, phone){
     `📞 ${phone}\n` +
     `━━━━━━━━━━━━━━━━━━━━\n` +
     `🔑 الكود الجديد:  *${_otpCode}*\n` +
+    `━━━━━━━━━━━━━━━━━━━━\n` +
+    `📲 أرسل الكود للزبون (اضغط هنا):\n${waLink2}\n` +
     `━━━━━━━━━━━━━━━━━━━━\n` +
     `📅 ${nowStr()}`;
 
