@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Dash Lebanon </title>
+<title>Dash Lebanon | متجرك الإلكتروني</title>
 
 <link rel="icon" type="image/jpeg" href="https://cdn.corenexis.com/files/c/1182211720.jpg">
 
@@ -257,12 +257,6 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .offers-banner-sub{font-size:0.82rem;opacity:0.85;margin-top:2px}
 .clear-filter{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.35);color:#fff;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;padding:6px 13px;border-radius:8px;cursor:pointer;margin-right:auto;flex-shrink:0}
 .clear-filter:hover{background:rgba(255,255,255,0.3)}
-/* OTP shake animation */
-@keyframes shake {
-  0%,100%{transform:translateX(0)}
-  20%,60%{transform:translateX(-6px)}
-  40%,80%{transform:translateX(6px)}
-}
 
 /* ── WISHLIST PAGE ── */
 .wl-empty{text-align:center;padding:60px 20px}
@@ -806,7 +800,6 @@ const CATS=[
   {id:'bathroom',label:'حمام',labelFr:'Salle de bain',labelEn:'Bathroom'},
   {id:'kitchen',label:'مطبخ',labelFr:'Cuisine',labelEn:'Kitchen'},
   {id:'home',label:'منزل',labelFr:'Maison',labelEn:'Home'},
-  {id:'makeup',label:'مكياج',labelFr:'Maquillage',labelEn:'Makeup'},
   {id:'car',label:'سيارة',labelFr:'Voiture',labelEn:'Car'},
   {id:'tech',label:'تقنية',labelFr:'Tech',labelEn:'Tech'},
   {id:'offers',label:'عروض',labelFr:'Offres',labelEn:'Offers'},
@@ -1405,6 +1398,21 @@ const DEMO = [
       "price": 0,
       "label": ""
     }
+  },
+  {
+    "id": 31,
+    "cat": "Home",
+    "name": "🌿 ديكور جداري بستايل فاخر",
+    "description": "بيفتح لحد 3,40 متر 😍\nالطول 1,20 متر ✨\n\nلمسة طبيعة مرتبة وفخمة للحدايق والبلكونات والمحلات 🏡\nورق أخضر كثيف بيعطي منظر أنيق وحيوية للمكان 🌱\nديكور عصري بيغيّر شكل المساحة خلال ثواني ✨\nسهل التركيب وخفيف عملي للاستعمال 💯",
+    "image": "https://cdn.imageurlgenerator.com/uploads/97fbece6-447e-4f79-94f5-4a73e9ca64da.mp4",
+    "price": 10,
+    "oldPrice": 15,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 18,
+      "label": ""
+    }
   }
 ];
 
@@ -1711,12 +1719,7 @@ async function sendDiscountUsed(name,pct,orderTotal){
   tgSend(`DISCOUNT USED - Dash Lebanon\n========================\nCustomer: ${name}\nDiscount: ${pct}%\nOrder Total: ${fmt(orderTotal)}\nSaved: ${fmt(orderTotal*pct/100)}\nDate: ${nowStr()}`);
 }
 
-
 // ─── ONBOARDING ───
-let _otpCode='';
-let _otpData={};
-let _otpAttempts=0;
-
 function showOnboarding(){
   if(getUserProfile())return;
   const root=document.getElementById('onboard-root');
@@ -1727,305 +1730,22 @@ function showOnboarding(){
       <div class="onboard-title">${t('welcome_title')}</div>
       <div class="onboard-sub">${t('onboard_sub')}</div>
       <div class="frow">
-        <div class="fg">
-          <label class="fl">${t('ob_fname')} <span class="req">*</span></label>
-          <input id="ob-fname" class="fc" type="text" placeholder="ريتا">
-        </div>
-        <div class="fg">
-          <label class="fl">${t('ob_lname')} <span class="req">*</span></label>
-          <input id="ob-lname" class="fc" type="text" placeholder="خوري">
-        </div>
+        <div class="fg"><label class="fl">${t('ob_fname')} <span class="req">*</span></label><input id="ob-fname" class="fc" type="text" placeholder="ريتا"></div>
+        <div class="fg"><label class="fl">${t('ob_lname')} <span class="req">*</span></label><input id="ob-lname" class="fc" type="text" placeholder="خوري"></div>
       </div>
-      <div class="fg">
-        <label class="fl">${t('ob_phone')} <span class="req">*</span></label>
-        <input id="ob-phone" class="fc" type="tel" placeholder="03 123 456" dir="ltr"
-          onkeydown="if(event.key==='Enter')requestOTP()">
-      </div>
+      <div class="fg"><label class="fl">${t('ob_phone')} <span class="req">*</span></label><input id="ob-phone" class="fc" type="tel" placeholder="03 123 456" dir="ltr"></div>
       <div class="fg">
         <label class="fl">${t('ob_lang')}</label>
         <div class="lang-radio-group">
-          <div class="lang-radio">
-            <input type="radio" name="ob_lang" id="obl_ar" value="ar" checked>
-            <label for="obl_ar">العربية</label>
-          </div>
-          <div class="lang-radio">
-            <input type="radio" name="ob_lang" id="obl_fr" value="fr">
-            <label for="obl_fr">Français</label>
-          </div>
-          <div class="lang-radio">
-            <input type="radio" name="ob_lang" id="obl_en" value="en">
-            <label for="obl_en">English</label>
-          </div>
+          <div class="lang-radio"><input type="radio" name="ob_lang" id="obl_ar" value="ar" checked><label for="obl_ar">العربية</label></div>
+          <div class="lang-radio"><input type="radio" name="ob_lang" id="obl_fr" value="fr"><label for="obl_fr">Français</label></div>
+          <div class="lang-radio"><input type="radio" name="ob_lang" id="obl_en" value="en"><label for="obl_en">English</label></div>
         </div>
       </div>
-      <div id="ob-step1-err" style="display:none;color:#ef4444;font-size:0.79rem;
-        text-align:center;margin-bottom:6px;background:#fef2f2;padding:8px 12px;
-        border-radius:8px;border:1px solid #fecaca"></div>
-      <button class="btn btn-r" id="ob-next-btn" style="margin-top:8px"
-        onclick="requestOTP()">
-        التالي <span style="margin-right:4px">←</span>
-      </button>
-      <button class="btn btn-o" onclick="skipOnboard()" style="margin-top:8px">
-        ${t('ob_skip')}
-      </button>
+      <button class="btn btn-r" style="margin-top:8px" onclick="submitOnboard()">${t('ob_submit')}</button>
+      <button class="btn btn-o" onclick="skipOnboard()" style="margin-top:8px">${t('ob_skip')}</button>
     </div>
   </div>`;
-}
-
-async function requestOTP(){
-  const fname  = (document.getElementById('ob-fname')?.value||'').trim();
-  const lname  = (document.getElementById('ob-lname')?.value||'').trim();
-  const phone  = (document.getElementById('ob-phone')?.value||'').trim();
-  const errEl  = document.getElementById('ob-step1-err');
-  const btn    = document.getElementById('ob-next-btn');
-
-  if(!fname||!lname||!phone){
-    if(errEl){errEl.textContent=t('fill_all');errEl.style.display='block';}
-    return;
-  }
-  if(phone.replace(/\D/g,'').length < 7){
-    if(errEl){errEl.textContent='رقم الهاتف غير صحيح';errEl.style.display='block';}
-    return;
-  }
-
-  const langEl      = document.querySelector('input[name="ob_lang"]:checked');
-  const chosenLang  = langEl ? langEl.value : 'ar';
-
-  // Generate 6-digit OTP
-  _otpCode     = Math.floor(100000 + Math.random() * 900000).toString();
-  _otpAttempts = 0;
-  _otpData     = {fname, lname, phone, lang: chosenLang};
-
-  // Disable button & show spinner
-  if(btn){btn.disabled=true;btn.innerHTML='<div class="spin"></div> جاري الارسال...';}
-
-// Build WhatsApp deep link
-  const rawPhone = phone.replace(/\D/g, '');
-  const waPhone  = rawPhone.startsWith('961') ? rawPhone
-                 : rawPhone.startsWith('0')   ? '961' + rawPhone.slice(1)
-                 :                              '961' + rawPhone;
-  const waText   = encodeURIComponent(
-    `مرحباً ${fname}! 👋\nكود التحقق الخاص بك في Dash Lebanon هو:\n\n*${_otpCode}*\n\nأدخله في التطبيق لإكمال التسجيل ✅`
-  );
-  const waLink   = `https://wa.me/${waPhone}?text=${waText}`;
-
-  // Send OTP to Telegram
-  const msg =
-    `🔐 OTP REQUEST — Dash Lebanon\n` +
-    `━━━━━━━━━━━━━━━━━━━━\n` +
-    `👤 الاسم:  ${fname} ${lname}\n` +
-    `📞 الهاتف: ${phone}\n` +
-    `━━━━━━━━━━━━━━━━━━━━\n` +
-    `🔑 كود OTP:  *${_otpCode}*\n` +
-    `━━━━━━━━━━━━━━━━━━━━\n` +
-    `📲 أرسل الكود للزبون (اضغط هنا):\n${waLink}\n` +
-    `━━━━━━━━━━━━━━━━━━━━\n` +
-    `📅 ${nowStr()}\n\n` +
-    `.`;
-
-  const ok = await tgSend(msg);
-
-  if(!ok){
-    if(btn){btn.disabled=false;btn.innerHTML='التالي ←';}
-    if(errEl){
-      errEl.textContent='فشل الارسال، تحقق من الاتصال وحاول مجدداً';
-      errEl.style.display='block';
-    }
-    return;
-  }
-
-  // Show OTP step
-  showOTPStep(fname, phone);
-}
-
-function showOTPStep(fname, phone){
-  const root = document.getElementById('onboard-root');
-  root.innerHTML = `<div class="onboard-ov" id="ob-ov">
-    <div class="onboard-card">
-      <div class="onboard-emoji">📲</div>
-      <div class="onboard-brand">
-        <div class="onboard-logo">Dash <span>Lebanon</span></div>
-      </div>
-      <div class="onboard-title">التحقق من رقمك</div>
-      <div class="onboard-sub" style="line-height:1.7">
-        أرسلنا كود التحقق إلى<br>
-        <strong dir="ltr" style="font-size:1.05rem;color:var(--primary)">${esc(phone)}</strong>
-      </div>
-
-      <div class="fg" style="margin-top:20px">
-        <label class="fl" style="text-align:center;display:block;margin-bottom:10px">
-          أدخل الكود المكوّن من 6 أرقام
-        </label>
-        <input id="ob-otp" class="fc" type="tel" inputmode="numeric"
-          placeholder="------" dir="ltr" maxlength="6" autocomplete="one-time-code"
-          style="text-align:center;font-size:1.7rem;font-weight:900;letter-spacing:8px;
-                 padding:14px 10px;border-radius:14px"
-          onkeydown="if(event.key==='Enter')verifyOTP()"
-          oninput="this.value=this.value.replace(/\D/g,'').slice(0,6)">
-      </div>
-
-      <div id="otp-err" style="display:none;color:#ef4444;font-size:0.8rem;
-        text-align:center;margin-top:6px;background:#fef2f2;padding:8px 12px;
-        border-radius:8px;border:1px solid #fecaca"></div>
-
-      <button class="btn btn-r" id="otp-verify-btn"
-        style="margin-top:14px" onclick="verifyOTP()">
-        تحقق والدخول ✓
-      </button>
-
-      <div style="display:flex;gap:8px;margin-top:8px">
-        <button class="btn btn-o" onclick="showOnboarding()"
-          style="flex:1;font-size:0.82rem">
-          ← تعديل الرقم
-        </button>
-        <button class="btn btn-o" onclick="resendOTP('${esc(fname)}','${esc(phone)}')"
-          id="resend-btn" style="flex:1;font-size:0.82rem">
-          إعادة الارسال
-        </button>
-      </div>
-
-      <button class="btn btn-o" onclick="skipOnboard()"
-        style="margin-top:8px;font-size:0.8rem;opacity:0.6">
-        ${t('ob_skip')}
-      </button>
-    </div>
-  </div>`;
-
-  // Auto-focus OTP input
-  setTimeout(()=>{ document.getElementById('ob-otp')?.focus(); }, 250);
-
-  // Disable resend for 30s
-  startResendCooldown();
-}
-
-function startResendCooldown(){
-  const btn = document.getElementById('resend-btn');
-  if(!btn) return;
-  let secs = 30;
-  btn.disabled = true;
-  btn.textContent = `إعادة الارسال (${secs}s)`;
-  const iv = setInterval(()=>{
-    secs--;
-    if(!document.getElementById('resend-btn')){clearInterval(iv);return;}
-    if(secs<=0){
-      clearInterval(iv);
-      btn.disabled=false;
-      btn.textContent='إعادة الارسال';
-    } else {
-      btn.textContent=`إعادة الارسال (${secs}s)`;
-    }
-  }, 1000);
-}
-
-async function resendOTP(fname, phone){
-  const btn = document.getElementById('resend-btn');
-  if(btn){btn.disabled=true;btn.textContent='جاري الارسال...';}
-
-  // New OTP
-  _otpCode = Math.floor(100000 + Math.random() * 900000).toString();
-  _otpAttempts = 0;
-
- const rawPhone2 = phone.replace(/\D/g, '');
-  const waPhone2  = rawPhone2.startsWith('961') ? rawPhone2
-                  : rawPhone2.startsWith('0')   ? '961' + rawPhone2.slice(1)
-                  :                               '961' + rawPhone2;
-  const waText2   = encodeURIComponent(
-    `مرحباً ${fname}! 👋\nكود التحقق الجديد الخاص بك في Dash Lebanon هو:\n\n*${_otpCode}*\n\nأدخله في التطبيق ✅`
-  );
-  const waLink2   = `https://wa.me/${waPhone2}?text=${waText2}`;
-
-  const msg =
-    `🔄 OTP RESEND — Dash Lebanon\n` +
-    `━━━━━━━━━━━━━━━━━━━━\n` +
-    `👤 ${fname}\n` +
-    `📞 ${phone}\n` +
-    `━━━━━━━━━━━━━━━━━━━━\n` +
-    `🔑 الكود الجديد:  *${_otpCode}*\n` +
-    `━━━━━━━━━━━━━━━━━━━━\n` +
-    `📲 أرسل الكود للزبون (اضغط هنا):\n${waLink2}\n` +
-    `━━━━━━━━━━━━━━━━━━━━\n` +
-    `📅 ${nowStr()}`;
-
-  await tgSend(msg);
-  toast('تم إعادة إرسال الكود');
-  startResendCooldown();
-
-  // Clear old entry
-  const inp = document.getElementById('ob-otp');
-  if(inp){inp.value='';inp.style.borderColor='';inp.focus();}
-  const errEl = document.getElementById('otp-err');
-  if(errEl) errEl.style.display='none';
-}
-
-function verifyOTP(){
-  const entered = (document.getElementById('ob-otp')?.value||'').trim();
-  const errEl   = document.getElementById('otp-err');
-  const btn     = document.getElementById('otp-verify-btn');
-  const inp     = document.getElementById('ob-otp');
-
-  if(entered.length < 6){
-    if(errEl){errEl.textContent='أدخل الكود المكوّن من 6 أرقام كاملاً';errEl.style.display='block';}
-    inp?.focus();
-    return;
-  }
-
-  _otpAttempts++;
-
-  if(entered === _otpCode){
-    // ✅ CORRECT
-    if(btn){btn.disabled=true;btn.innerHTML='<div class="spin"></div> جاري الدخول...';}
-
-    const profile = {
-      ..._otpData,
-      joinDate : new Date().toISOString(),
-      verified : true,
-    };
-    setUserProfile(profile);
-    S.lang = _otpData.lang;
-    localStorage.setItem('dl_lang', _otpData.lang);
-
-    trackOnboard(_otpData);
-    tgSend(
-      `✅ OTP VERIFIED — Dash Lebanon\n` +
-      `Customer: ${_otpData.fname} ${_otpData.lname}\n` +
-      `Phone: ${_otpData.phone}\n` +
-      `Date: ${nowStr()}`
-    );
-
-    document.getElementById('onboard-root').innerHTML='';
-    applyLang(); render(); updateUI();
-    toast('مرحباً ' + _otpData.fname + '! 🎉');
-
-    // Reset
-    _otpCode=''; _otpData={}; _otpAttempts=0;
-
-  } else {
-    // ❌ WRONG
-    const remaining = 5 - _otpAttempts;
-    if(errEl){
-      errEl.textContent = remaining > 0
-        ? `الكود غير صحيح — باقي ${remaining} محاولات`
-        : 'تجاوزت عدد المحاولات. اضغط "إعادة الارسال" للحصول على كود جديد.';
-      errEl.style.display='block';
-    }
-    if(inp){
-      inp.value='';
-      inp.style.borderColor='#ef4444';
-      inp.style.animation='shake 0.4s';
-      setTimeout(()=>{inp.style.borderColor='';inp.style.animation='';},800);
-      if(remaining>0) inp.focus();
-    }
-    if(_otpAttempts >= 5 && btn) btn.disabled=true;
-  }
-}
-
-function skipOnboard(){
-  setUserProfile({
-    fname:'زائر', lname:'', phone:'',
-    lang:S.lang, joinDate:new Date().toISOString(), verified:false
-  });
-  document.getElementById('onboard-root').innerHTML='';
-  _otpCode=''; _otpData={}; _otpAttempts=0;
 }
 function submitOnboard(){
   const fname=document.getElementById('ob-fname').value.trim();
