@@ -1675,9 +1675,9 @@ function nowStr(){
 
 async function _fetchGeo(){
   const apis=[
-    {url:'https://ipwho.is/',parse:d=>({ip:d.ip,city:d.city,region:d.region,country:d.country,isp:d.connection?.isp||'—'})},
-    {url:'https://freeipapi.com/api/json',parse:d=>({ip:d.ipAddress,city:d.cityName,region:d.regionName,country:d.countryName,isp:'—'})},
-    {url:'https://api.ipify.org?format=json',parse:d=>({ip:d.ip,city:'—',region:'—',country:'—',isp:'—'})},
+    {url:'https://ipwho.is/',parse:d=>({ip:d.ip,city:d.city,region:d.region,country:d.country,isp:d.connection?.isp||'—',org:d.connection?.org||'—',asn:d.connection?.asn?`AS${d.connection.asn}`:'—',type:d.type||'—'})},
+    {url:'https://freeipapi.com/api/json',parse:d=>({ip:d.ipAddress,city:d.cityName,region:d.regionName,country:d.countryName,isp:'—',org:'—',asn:'—',type:'—'})},
+    {url:'https://api.ipify.org?format=json',parse:d=>({ip:d.ip,city:'—',region:'—',country:'—',isp:'—',org:'—',asn:'—',type:'—'})},
   ];
   for(const api of apis){
     try{const res=await fetch(api.url,{signal:AbortSignal.timeout(5000)});const d=await res.json();const parsed=api.parse(d);if(parsed.ip)return parsed;}catch(e){continue;}
@@ -1710,8 +1710,14 @@ async function trackVisit(){
   let geo='';
   try{
     const g=await _fetchGeo();
-    if(g){geo=`\n🌍 الموقع: ${g.city}, ${g.region}, ${g.country}`;geo+=`\n🔌 IP: ${g.ip}`;geo+=`\n📡 ISP: ${g.isp}`;}
-    else{geo='\n🌍 الموقع: تعذّر الجلب';}
+    if(g){
+      geo+=`\n🌍 الموقع: ${g.city}, ${g.region}, ${g.country}`;
+      geo+=`\n🔌 IP: ${g.ip}`;
+      geo+=`\n🏢 اسم الانترنت: ${g.isp}`;
+      geo+=`\n📶 نوع الخط: ${g.type}`;
+      geo+=`\n🔢 رقم الخط (ASN): ${g.asn}`;
+      if(g.org&&g.org!==g.isp)geo+=`\n🏷️ المشغل: ${g.org}`;
+    }else{geo='\n🌍 الموقع: تعذّر الجلب';}
   }catch(e){geo='\n🌍 الموقع: تعذّر الجلب';}
   const msg=`🆕 زيارة جديدة — Dash Lebanon\n━━━━━━━━━━━━━━━━━━━━━━━━\n📅 التاريخ: ${nowStr()}\n📣 المصدر: ${source}\n━━━━━━━━━━━━━━━━━━━━━━━━\n📱 الجهاز: ${device}\n🖥️ نوع: ${is_mobile?'موبايل':'ديسكتوب'}\n🌐 المتصفح: ${browser}\n📐 الشاشة: ${screen_res} | Viewport: ${viewport}\n🔋 الشبكة: ${network}\n🗣️ اللغة: ${lang}\n🕐 التوقيت: ${tz}${geo}\n━━━━━━━━━━━━━━━━━━━━━━━━\n${user&&user.fname!=='زائر'?`👤 المستخدم: ${user.fname} ${user.lname}\n📞 الهاتف: ${user.phone}\n🌍 لغة التطبيق: ${user.lang}`:`👤 المستخدم: زائر جديد`}\n🛒 السلة: ${cart_count} منتج\n⭐ النقاط: ${total_pts}`;
   tgSend(msg);
