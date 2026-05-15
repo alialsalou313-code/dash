@@ -1722,8 +1722,7 @@ function _inferLineType(isp,asn){
 }
 
 const _visitData={startTime:Date.now(),pages:[],referrer:document.referrer||'مباشر'};
-const _origGo=go;
-function go(p,d=null,ph=true){_visitData.pages.push(p);_origGo(p,d,ph);}
+
 function _getDevice(ua){const iphone=ua.match(/iPhone OS ([\d_]+)/);if(iphone)return`iPhone (iOS ${iphone[1].replace(/_/g,'.')})`;const ipad=ua.match(/iPad.*OS ([\d_]+)/);if(ipad)return`iPad (iPadOS ${ipad[1].replace(/_/g,'.')})`;const android=ua.match(/Android ([\d.]+)/);if(android){const model=ua.match(/;\s([^;()]+)\sBuild\//);return`${model?model[1].trim():'Android'} (Android ${android[1]})`}if(/Windows NT 10/.test(ua))return'Windows 10/11';if(/Windows NT 6/.test(ua))return'Windows 7/8';if(/Macintosh/.test(ua))return'macOS';if(/Linux/.test(ua))return'Linux';return'Unknown';}
 function _getBrowser(ua){if(/SamsungBrowser/.test(ua))return'Samsung Browser';if(/OPR|Opera/.test(ua))return'Opera';if(/Edg/.test(ua))return'Edge';if(/Firefox/.test(ua))return'Firefox';if(/Chrome/.test(ua))return'Chrome';if(/Safari/.test(ua))return'Safari';return'Other';}
 function _getSource(ref){if(!ref||ref==='مباشر')return'📲 مباشر (Direct)';if(/instagram/i.test(ref))return'📸 Instagram';if(/facebook|fb\./i.test(ref))return'🔵 Facebook';if(/tiktok/i.test(ref))return'🎵 TikTok';if(/google/i.test(ref))return'🔍 Google';if(/whatsapp/i.test(ref))return'💬 WhatsApp';if(/t\.co|twitter/i.test(ref))return'🐦 Twitter/X';return'🌐 '+ref.replace(/https?:\/\//,'').split('/')[0];}
