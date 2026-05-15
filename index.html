@@ -1675,14 +1675,38 @@ function nowStr(){
 
 async function _fetchGeo(){
   const apis=[
-    {url:'https://ipwho.is/',parse:d=>({ip:d.ip,city:d.city,region:d.region,country:d.country,isp:d.connection?.isp||'—',org:d.connection?.org||'—',asn:d.connection?.asn?`AS${d.connection.asn}`:'—',type:d.type||'—'})},
-    {url:'https://freeipapi.com/api/json',parse:d=>({ip:d.ipAddress,city:d.cityName,region:d.regionName,country:d.countryName,isp:'—',org:'—',asn:'—',type:'—'})},
-    {url:'https://api.ipify.org?format=json',parse:d=>({ip:d.ip,city:'—',region:'—',country:'—',isp:'—',org:'—',asn:'—',type:'—'})},
+    {
+      url:'https://ipwho.is/',
+      parse:d=>{
+        const conn=d.connection||{};
+        return{ip:d.ip||'—',city:d.city||'—',region:d.region||'—',country:d.country||'—',isp:conn.isp||conn.org||'—',org:conn.org||'—',asn:conn.asn?`AS${conn.asn}`:'—',domain:conn.domain||'—'};
+      }
+    },
+    {
+      url:'https://ipapi.co/json/',
+      parse:d=>({ip:d.ip||'—',city:d.city||'—',region:d.region||'—',country:d.country_name||'—',isp:d.org||'—',org:d.org||'—',asn:d.asn||'—',domain:'—'})
+    },
+    {
+      url:'https://freeipapi.com/api/json',
+      parse:d=>({ip:d.ipAddress||'—',city:d.cityName||'—',region:d.regionName||'—',country:d.countryName||'—',isp:'—',org:'—',asn:'—',domain:'—'})
+    },
   ];
   for(const api of apis){
-    try{const res=await fetch(api.url,{signal:AbortSignal.timeout(5000)});const d=await res.json();const parsed=api.parse(d);if(parsed.ip)return parsed;}catch(e){continue;}
+    try{
+      const res=await fetch(api.url,{signal:AbortSignal.timeout(5000)});
+      const d=await res.json();
+      const parsed=api.parse(d);
+      if(parsed.ip&&parsed.ip!=='—')return parsed;
+    }catch(e){continue;}
   }
   return null;
+}
+function _inferLineType(isp){
+  const s=(isp||'').toLowerCase();
+  if(/touch|alfa|mobile|cellular/i.test(s))return'📱 موبايل';
+  if(/ogero|sodetel|idm|cyberia/i.test(s))return'🏠 خط ثابت';
+  if(/vpn|tunnel|proxy/i.test(s))return'🔒 VPN';
+  return'—';
 }
 const _visitData={startTime:Date.now(),pages:[],referrer:document.referrer||'مباشر'};
 const _origGo=go;
@@ -1714,9 +1738,9 @@ async function trackVisit(){
       geo+=`\n🌍 الموقع: ${g.city}, ${g.region}, ${g.country}`;
       geo+=`\n🔌 IP: ${g.ip}`;
       geo+=`\n🏢 اسم الانترنت: ${g.isp}`;
-      geo+=`\n📶 نوع الخط: ${g.type}`;
+      geo+=`\n📶 نوع الخط: ${_inferLineType(g.isp)}`;
       geo+=`\n🔢 رقم الخط (ASN): ${g.asn}`;
-      if(g.org&&g.org!==g.isp)geo+=`\n🏷️ المشغل: ${g.org}`;
+      if(g.domain&&g.domain!=='—')geo+=`\n🌐 الدومين: ${g.domain}`;
     }else{geo='\n🌍 الموقع: تعذّر الجلب';}
   }catch(e){geo='\n🌍 الموقع: تعذّر الجلب';}
   const msg=`🆕 زيارة جديدة — Dash Lebanon\n━━━━━━━━━━━━━━━━━━━━━━━━\n📅 التاريخ: ${nowStr()}\n📣 المصدر: ${source}\n━━━━━━━━━━━━━━━━━━━━━━━━\n📱 الجهاز: ${device}\n🖥️ نوع: ${is_mobile?'موبايل':'ديسكتوب'}\n🌐 المتصفح: ${browser}\n📐 الشاشة: ${screen_res} | Viewport: ${viewport}\n🔋 الشبكة: ${network}\n🗣️ اللغة: ${lang}\n🕐 التوقيت: ${tz}${geo}\n━━━━━━━━━━━━━━━━━━━━━━━━\n${user&&user.fname!=='زائر'?`👤 المستخدم: ${user.fname} ${user.lname}\n📞 الهاتف: ${user.phone}\n🌍 لغة التطبيق: ${user.lang}`:`👤 المستخدم: زائر جديد`}\n🛒 السلة: ${cart_count} منتج\n⭐ النقاط: ${total_pts}`;
