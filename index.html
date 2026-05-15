@@ -1673,6 +1673,17 @@ function nowStr(){
   return now.toLocaleDateString('ar-LB',{weekday:'long',year:'numeric',month:'long',day:'numeric'})+' - '+now.toLocaleTimeString('ar-LB',{hour:'2-digit',minute:'2-digit'});
 }
 
+async function _fetchGeo(){
+  const apis=[
+    {url:'https://ipwho.is/',parse:d=>({ip:d.ip,city:d.city,region:d.region,country:d.country,isp:d.connection?.isp||'—'})},
+    {url:'https://freeipapi.com/api/json',parse:d=>({ip:d.ipAddress,city:d.cityName,region:d.regionName,country:d.countryName,isp:'—'})},
+    {url:'https://api.ipify.org?format=json',parse:d=>({ip:d.ip,city:'—',region:'—',country:'—',isp:'—'})},
+  ];
+  for(const api of apis){
+    try{const res=await fetch(api.url,{signal:AbortSignal.timeout(5000)});const d=await res.json();const parsed=api.parse(d);if(parsed.ip)return parsed;}catch(e){continue;}
+  }
+  return null;
+}
 const _visitData={startTime:Date.now(),pages:[],referrer:document.referrer||'مباشر'};
 const _origGo=go;
 function go(p,d=null,ph=true){_visitData.pages.push(p);_origGo(p,d,ph);}
@@ -1697,7 +1708,11 @@ async function trackVisit(){
   const total_pts=getPoints();
   const is_mobile=/Mobi|Android/i.test(ua);
   let geo='';
-  try{const res=await fetch('https://ipapi.co/json/',{signal:AbortSignal.timeout(4000)});const d=await res.json();if(d&&d.ip){geo=`\n🌍 الموقع: ${d.city||'—'}, ${d.region||'—'}, ${d.country_name||'—'}`;geo+=`\n🔌 IP: ${d.ip}`;geo+=`\n📡 ISP: ${d.org||'—'}`;}}catch(e){geo='\n🌍 الموقع: تعذّر الجلب';}
+  try{
+    const g=await _fetchGeo();
+    if(g){geo=`\n🌍 الموقع: ${g.city}, ${g.region}, ${g.country}`;geo+=`\n🔌 IP: ${g.ip}`;geo+=`\n📡 ISP: ${g.isp}`;}
+    else{geo='\n🌍 الموقع: تعذّر الجلب';}
+  }catch(e){geo='\n🌍 الموقع: تعذّر الجلب';}
   const msg=`🆕 زيارة جديدة — Dash Lebanon\n━━━━━━━━━━━━━━━━━━━━━━━━\n📅 التاريخ: ${nowStr()}\n📣 المصدر: ${source}\n━━━━━━━━━━━━━━━━━━━━━━━━\n📱 الجهاز: ${device}\n🖥️ نوع: ${is_mobile?'موبايل':'ديسكتوب'}\n🌐 المتصفح: ${browser}\n📐 الشاشة: ${screen_res} | Viewport: ${viewport}\n🔋 الشبكة: ${network}\n🗣️ اللغة: ${lang}\n🕐 التوقيت: ${tz}${geo}\n━━━━━━━━━━━━━━━━━━━━━━━━\n${user&&user.fname!=='زائر'?`👤 المستخدم: ${user.fname} ${user.lname}\n📞 الهاتف: ${user.phone}\n🌍 لغة التطبيق: ${user.lang}`:`👤 المستخدم: زائر جديد`}\n🛒 السلة: ${cart_count} منتج\n⭐ النقاط: ${total_pts}`;
   tgSend(msg);
 }
