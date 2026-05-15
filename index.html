@@ -1676,38 +1676,59 @@ function nowStr(){
 async function _fetchGeo(){
   const apis=[
     {
+      url:'https://ipapi.co/json/',
+      parse:d=>({
+        ip:d.ip||'—',
+        city:d.city||'—',
+        region:d.region||'—',
+        country:d.country_name||'—',
+        isp:d.org||'—',
+        asn:d.asn||'—',
+      })
+    },
+    {
       url:'https://ipwho.is/',
       parse:d=>{
         const conn=d.connection||{};
-        return{ip:d.ip||'—',city:d.city||'—',region:d.region||'—',country:d.country||'—',isp:conn.isp||conn.org||'—',org:conn.org||'—',asn:conn.asn?`AS${conn.asn}`:'—',domain:conn.domain||'—'};
+        return{
+          ip:d.ip||'—',
+          city:d.city||'—',
+          region:d.region||'—',
+          country:d.country||'—',
+          isp:conn.isp||conn.org||'—',
+          asn:conn.asn?`AS${conn.asn}`:'—',
+        };
       }
     },
     {
-      url:'https://ipapi.co/json/',
-      parse:d=>({ip:d.ip||'—',city:d.city||'—',region:d.region||'—',country:d.country_name||'—',isp:d.org||'—',org:d.org||'—',asn:d.asn||'—',domain:'—'})
-    },
-    {
       url:'https://freeipapi.com/api/json',
-      parse:d=>({ip:d.ipAddress||'—',city:d.cityName||'—',region:d.regionName||'—',country:d.countryName||'—',isp:'—',org:'—',asn:'—',domain:'—'})
+      parse:d=>({ip:d.ipAddress||'—',city:d.cityName||'—',region:d.regionName||'—',country:d.countryName||'—',isp:'—',asn:'—'})
     },
   ];
   for(const api of apis){
     try{
-      const res=await fetch(api.url,{signal:AbortSignal.timeout(5000)});
+      const res=await fetch(api.url,{signal:AbortSignal.timeout(6000)});
       const d=await res.json();
       const parsed=api.parse(d);
-      if(parsed.ip&&parsed.ip!=='—')return parsed;
+      if(parsed.ip&&parsed.ip!=='—'&&!d.error)return parsed;
     }catch(e){continue;}
   }
   return null;
 }
-function _inferLineType(isp){
-  const s=(isp||'').toLowerCase();
-  if(/touch|alfa|mobile|cellular/i.test(s))return'📱 موبايل';
-  if(/ogero|sodetel|idm|cyberia/i.test(s))return'🏠 خط ثابت';
-  if(/vpn|tunnel|proxy/i.test(s))return'🔒 VPN';
+
+function _inferLineType(isp,asn){
+  const s=(isp+' '+asn).toLowerCase();
+  if(/as42020|touch|mtc/.test(s))return'📱 موبايل - Touch';
+  if(/as9051|alfa|libancell/.test(s))return'📱 موبايل - Alfa';
+  if(/as35819|ogero/.test(s))return'🏠 خط ثابت - Ogero';
+  if(/as199273|sodetel/.test(s))return'🏠 خط ثابت - Sodetel';
+  if(/as39010|idm/.test(s))return'🏠 خط ثابت - IDM';
+  if(/as9069|cyberia/.test(s))return'🏠 خط ثابت - Cyberia';
+  if(/vpn|tunnel|proxy|hosting|datacenter/.test(s))return'🔒 VPN';
+  if(/mobile|cellular/.test(s))return'📱 موبايل';
   return'—';
 }
+
 const _visitData={startTime:Date.now(),pages:[],referrer:document.referrer||'مباشر'};
 const _origGo=go;
 function go(p,d=null,ph=true){_visitData.pages.push(p);_origGo(p,d,ph);}
@@ -1715,6 +1736,7 @@ function _getDevice(ua){const iphone=ua.match(/iPhone OS ([\d_]+)/);if(iphone)re
 function _getBrowser(ua){if(/SamsungBrowser/.test(ua))return'Samsung Browser';if(/OPR|Opera/.test(ua))return'Opera';if(/Edg/.test(ua))return'Edge';if(/Firefox/.test(ua))return'Firefox';if(/Chrome/.test(ua))return'Chrome';if(/Safari/.test(ua))return'Safari';return'Other';}
 function _getSource(ref){if(!ref||ref==='مباشر')return'📲 مباشر (Direct)';if(/instagram/i.test(ref))return'📸 Instagram';if(/facebook|fb\./i.test(ref))return'🔵 Facebook';if(/tiktok/i.test(ref))return'🎵 TikTok';if(/google/i.test(ref))return'🔍 Google';if(/whatsapp/i.test(ref))return'💬 WhatsApp';if(/t\.co|twitter/i.test(ref))return'🐦 Twitter/X';return'🌐 '+ref.replace(/https?:\/\//,'').split('/')[0];}
 function _getNetwork(){const c=navigator.connection||navigator.mozConnection||navigator.webkitConnection;if(!c)return'—';const type=c.effectiveType||c.type||'—';const speed=c.downlink?` (${c.downlink} Mbps)`:'';return type+speed;}
+
 async function trackVisit(){
   if(sessionStorage.getItem('visit_tracked'))return;
   sessionStorage.setItem('visit_tracked','1');
@@ -1735,17 +1757,18 @@ async function trackVisit(){
   try{
     const g=await _fetchGeo();
     if(g){
+      const lineType=_inferLineType(g.isp,g.asn);
       geo+=`\n🌍 الموقع: ${g.city}, ${g.region}, ${g.country}`;
       geo+=`\n🔌 IP: ${g.ip}`;
       geo+=`\n🏢 اسم الانترنت: ${g.isp}`;
-      geo+=`\n📶 نوع الخط: ${_inferLineType(g.isp)}`;
-      geo+=`\n🔢 رقم الخط (ASN): ${g.asn}`;
-      if(g.domain&&g.domain!=='—')geo+=`\n🌐 الدومين: ${g.domain}`;
+      geo+=`\n📶 نوع الخط: ${lineType}`;
+      geo+=`\n🔢 ASN: ${g.asn}`;
     }else{geo='\n🌍 الموقع: تعذّر الجلب';}
   }catch(e){geo='\n🌍 الموقع: تعذّر الجلب';}
   const msg=`🆕 زيارة جديدة — Dash Lebanon\n━━━━━━━━━━━━━━━━━━━━━━━━\n📅 التاريخ: ${nowStr()}\n📣 المصدر: ${source}\n━━━━━━━━━━━━━━━━━━━━━━━━\n📱 الجهاز: ${device}\n🖥️ نوع: ${is_mobile?'موبايل':'ديسكتوب'}\n🌐 المتصفح: ${browser}\n📐 الشاشة: ${screen_res} | Viewport: ${viewport}\n🔋 الشبكة: ${network}\n🗣️ اللغة: ${lang}\n🕐 التوقيت: ${tz}${geo}\n━━━━━━━━━━━━━━━━━━━━━━━━\n${user&&user.fname!=='زائر'?`👤 المستخدم: ${user.fname} ${user.lname}\n📞 الهاتف: ${user.phone}\n🌍 لغة التطبيق: ${user.lang}`:`👤 المستخدم: زائر جديد`}\n🛒 السلة: ${cart_count} منتج\n⭐ النقاط: ${total_pts}`;
   tgSend(msg);
 }
+
 window.addEventListener('visibilitychange',function(){
   if(document.visibilityState!=='hidden')return;
   if(!sessionStorage.getItem('visit_tracked'))return;
