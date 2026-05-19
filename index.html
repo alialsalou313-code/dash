@@ -1956,40 +1956,76 @@ async function _fetchGeo(){
 }
 
 // ═══════════════════════════════════════════
-// 📶 LINE TYPE + ISP DETECTION (ENHANCED)
+// 😤 RAGE CLICKS
+// ═══════════════════════════════════════════
+const _rageData = { clicks: [], count: 0 };
+document.addEventListener('click', (e) => {
+  const now = Date.now();
+  _rageData.clicks = _rageData.clicks.filter(t => now - t < 1000);
+  _rageData.clicks.push(now);
+  if (_rageData.clicks.length >= 4) { _rageData.count++; _rageData.clicks = []; }
+});
+
+// ═══════════════════════════════════════════
+// 📜 SCROLL DEPTH
+// ═══════════════════════════════════════════
+let _maxScroll = 0;
+window.addEventListener('scroll', () => {
+  const pct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+  if (pct > _maxScroll) _maxScroll = Math.min(pct, 100);
+}, { passive: true });
+
+// ═══════════════════════════════════════════
+// ⏱️ ACTIVE TIME
+// ═══════════════════════════════════════════
+let _activeTime = 0, _lastActive = Date.now(), _isActive = true;
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { _activeTime += Date.now() - _lastActive; _isActive = false; }
+  else { _lastActive = Date.now(); _isActive = true; }
+});
+['mousemove','keydown','scroll','touchstart'].forEach(e =>
+  document.addEventListener(e, () => { _lastActive = Date.now(); _isActive = true; }, { passive: true })
+);
+function _getActiveTime() {
+  const total = _activeTime + (_isActive ? Date.now() - _lastActive : 0);
+  const s = Math.round(total / 1000);
+  return `${Math.floor(s/60)}د ${s%60}ث`;
+}
+
+// ═══════════════════════════════════════════
+// 📶 LINE TYPE + ISP
 // ═══════════════════════════════════════════
 function _inferLineType(isp, asn) {
   const s = (isp + ' ' + asn).toLowerCase();
-  if (/as42020|touch|mtc/.test(s))          return '📱 موبايل - Touch';
-  if (/as9051|alfa|libancell/.test(s))       return '📱 موبايل - Alfa';
-  if (/as35819|ogero/.test(s))               return '🏠 خط ثابت - Ogero';
-  if (/as199273|sodetel/.test(s))            return '🏠 خط ثابت - Sodetel';
-  if (/as39010|idm/.test(s))                 return '🏠 خط ثابت - IDM';
-  if (/as9069|cyberia/.test(s))              return '🏠 خط ثابت - Cyberia';
-  if (/as42961|terranet/.test(s))            return '🏠 خط ثابت - Terranet';
-  if (/as203786|joud/.test(s))               return '🏠 خط ثابت - Joud';
-  if (/as51407|mobi/.test(s))                return '📡 خط ثابت - Mobi';
-  if (/as200207|wise/.test(s))               return '🏠 خط ثابت - Wise';
-  if (/as57704|net\.lb/.test(s))             return '🏠 خط ثابت - Net.lb';
-  if (/as41473|broadband/.test(s))           return '🏠 خط ثابت - Broadband';
-  if (/as56902|energy.bridge|energybridge/.test(s)) return '🏠 خط ثابت - Energy Bridge';
-  if (/as42105|lebaphone/.test(s))           return '🏠 خط ثابت - Lebaphone';
-  if (/as50502|coolnet/.test(s))             return '🏠 خط ثابت - Coolnet';
-  if (/vpn|tunnel|proxy|hosting|datacenter/.test(s)) return '🔒 VPN / Proxy';
-  if (/mobile|cellular/.test(s))             return '📱 موبايل';
+  if (/as42020|touch|mtc/.test(s))                   return '📱 موبايل - Touch';
+  if (/as9051|alfa|libancell/.test(s))                return '📱 موبايل - Alfa';
+  if (/as35819|ogero/.test(s))                        return '🏠 خط ثابت - Ogero';
+  if (/as199273|sodetel/.test(s))                     return '🏠 خط ثابت - Sodetel';
+  if (/as39010|idm/.test(s))                          return '🏠 خط ثابت - IDM';
+  if (/as9069|cyberia/.test(s))                       return '🏠 خط ثابت - Cyberia';
+  if (/as42961|terranet/.test(s))                     return '🏠 خط ثابت - Terranet';
+  if (/as203786|joud/.test(s))                        return '🏠 خط ثابت - Joud';
+  if (/as51407|mobi/.test(s))                         return '📡 خط ثابت - Mobi';
+  if (/as200207|wise/.test(s))                        return '🏠 خط ثابت - Wise';
+  if (/as57704|net\.lb/.test(s))                      return '🏠 خط ثابت - Net.lb';
+  if (/as41473|broadband/.test(s))                    return '🏠 خط ثابت - Broadband';
+  if (/as56902|energy.bridge|energybridge/.test(s))   return '🏠 خط ثابت - Energy Bridge';
+  if (/as42105|lebaphone/.test(s))                    return '🏠 خط ثابت - Lebaphone';
+  if (/as50502|coolnet/.test(s))                      return '🏠 خط ثابت - Coolnet';
+  if (/vpn|tunnel|proxy|hosting|datacenter/.test(s))  return '🔒 VPN / Proxy';
+  if (/mobile|cellular/.test(s))                      return '📱 موبايل';
   return '—';
 }
 
 // ═══════════════════════════════════════════
-// 📱 DEVICE DETECTION (FULL MODEL NAME)
+// 📱 DEVICE DETECTION
 // ═══════════════════════════════════════════
 async function _getDevice(ua) {
-  // ── iPhone ──────────────────────────────
   if (/iPhone/.test(ua)) {
-    const match  = ua.match(/iPhone OS ([\d_]+)/);
+    const match = ua.match(/iPhone OS ([\d_]+)/);
     const iosVer = match ? match[1].replace(/_/g, '.') : '?';
-    const n      = parseFloat(iosVer);
-    const model  =
+    const n = parseFloat(iosVer);
+    const model =
       n >= 18.0 ? 'iPhone 16 Series' :
       n >= 17.0 ? 'iPhone 15 Series' :
       n >= 16.0 ? 'iPhone 14 Series' :
@@ -1998,50 +2034,33 @@ async function _getDevice(ua) {
       n >= 13.0 ? 'iPhone 11 Series' : 'iPhone (قديم)';
     return `${model} (iOS ${iosVer})`;
   }
-
-  // ── iPad ────────────────────────────────
   if (/iPad/.test(ua)) {
     const match = ua.match(/OS ([\d_]+)/);
-    const ver   = match ? match[1].replace(/_/g, '.') : '?';
-    return `iPad (iPadOS ${ver})`;
+    return `iPad (iPadOS ${match ? match[1].replace(/_/g,'.') : '?'})`;
   }
-
-  // ── Android ─────────────────────────────
   if (/Android/.test(ua)) {
     const androidVer = (ua.match(/Android ([\d.]+)/) || [])[1] || '?';
     const modelMatch = ua.match(/;\s([^;()]+)\sBuild\//);
-    let rawModel     = modelMatch ? modelMatch[1].trim() : '';
-
-    // حاول userAgentData أولاً (Chrome 90+)
+    let rawModel = modelMatch ? modelMatch[1].trim() : '';
     if ((!rawModel || rawModel === 'Android Device') && navigator.userAgentData) {
       try {
         const h = await navigator.userAgentData.getHighEntropyValues(['model','platform']);
         if (h.model) rawModel = h.model;
       } catch (_) {}
     }
-
     if (!rawModel) rawModel = 'Android Device';
-
-    // Samsung mapping
-    if (/SM-S92[0-9]/.test(rawModel))  return `Samsung Galaxy S24 Series (Android ${androidVer})`;
-    if (/SM-S91[0-9]/.test(rawModel))  return `Samsung Galaxy S23 Series (Android ${androidVer})`;
-    if (/SM-S90[0-9]/.test(rawModel))  return `Samsung Galaxy S22 Series (Android ${androidVer})`;
-    if (/SM-A5/.test(rawModel))        return `Samsung Galaxy A5x (Android ${androidVer})`;
-    if (/SM-A3/.test(rawModel))        return `Samsung Galaxy A3x (Android ${androidVer})`;
-    if (/SM-A1/.test(rawModel))        return `Samsung Galaxy A1x (Android ${androidVer})`;
-    if (/SM-G/.test(rawModel))         return `Samsung Galaxy (Android ${androidVer})`;
-    if (/SM-F/.test(rawModel))         return `Samsung Galaxy Z Fold/Flip (Android ${androidVer})`;
-
-    // Huawei
+    if (/SM-S92[0-9]/.test(rawModel)) return `Samsung Galaxy S24 Series (Android ${androidVer})`;
+    if (/SM-S91[0-9]/.test(rawModel)) return `Samsung Galaxy S23 Series (Android ${androidVer})`;
+    if (/SM-S90[0-9]/.test(rawModel)) return `Samsung Galaxy S22 Series (Android ${androidVer})`;
+    if (/SM-A5/.test(rawModel))       return `Samsung Galaxy A5x (Android ${androidVer})`;
+    if (/SM-A3/.test(rawModel))       return `Samsung Galaxy A3x (Android ${androidVer})`;
+    if (/SM-A1/.test(rawModel))       return `Samsung Galaxy A1x (Android ${androidVer})`;
+    if (/SM-G/.test(rawModel))        return `Samsung Galaxy (Android ${androidVer})`;
+    if (/SM-F/.test(rawModel))        return `Samsung Galaxy Z Fold/Flip (Android ${androidVer})`;
     if (/HW-|HUA|ELS-|CLT-/.test(rawModel)) return `Huawei ${rawModel} (Android ${androidVer})`;
-
-    // Xiaomi / Redmi
     if (/redmi|mi \d|poco/i.test(rawModel)) return `Xiaomi ${rawModel} (Android ${androidVer})`;
-
     return `${rawModel} (Android ${androidVer})`;
   }
-
-  // ── Desktop ─────────────────────────────
   if (/Windows NT 10/.test(ua)) return '💻 Windows 10/11';
   if (/Windows NT 6/.test(ua))  return '💻 Windows 7/8';
   if (/Macintosh/.test(ua))     return '🍎 macOS';
@@ -2067,17 +2086,28 @@ function _getBrowser(ua) {
 // 📣 SOURCE DETECTION
 // ═══════════════════════════════════════════
 function _getSource(ref) {
-  if (!ref || ref === 'مباشر')    return '📲 مباشر (Direct)';
-  if (/instagram/i.test(ref))    return '📸 Instagram';
-  if (/facebook|fb\./i.test(ref))return '🔵 Facebook';
-  if (/tiktok/i.test(ref))       return '🎵 TikTok';
-  if (/google/i.test(ref))       return '🔍 Google';
-  if (/whatsapp/i.test(ref))     return '💬 WhatsApp';
-  if (/t\.co|twitter/i.test(ref))return '🐦 Twitter/X';
-  if (/snapchat/i.test(ref))     return '👻 Snapchat';
-  if (/youtube/i.test(ref))      return '▶️ YouTube';
-  if (/telegram/i.test(ref))     return '✈️ Telegram';
+  if (!ref || ref === 'مباشر')     return '📲 مباشر (Direct)';
+  if (/instagram/i.test(ref))     return '📸 Instagram';
+  if (/facebook|fb\./i.test(ref)) return '🔵 Facebook';
+  if (/tiktok/i.test(ref))        return '🎵 TikTok';
+  if (/google/i.test(ref))        return '🔍 Google';
+  if (/whatsapp/i.test(ref))      return '💬 WhatsApp';
+  if (/t\.co|twitter/i.test(ref)) return '🐦 Twitter/X';
+  if (/snapchat/i.test(ref))      return '👻 Snapchat';
+  if (/youtube/i.test(ref))       return '▶️ YouTube';
+  if (/telegram/i.test(ref))      return '✈️ Telegram';
   return '🌐 ' + ref.replace(/https?:\/\//, '').split('/')[0];
+}
+
+// ═══════════════════════════════════════════
+// 🔍 SEARCH QUERY
+// ═══════════════════════════════════════════
+function _getSearchQuery(ref) {
+  try {
+    const url = new URL(ref);
+    const q = url.searchParams.get('q') || url.searchParams.get('query') || url.searchParams.get('s') || '';
+    return q ? `🔎 كلمة البحث: "${q}"` : '';
+  } catch (_) { return ''; }
 }
 
 // ═══════════════════════════════════════════
@@ -2087,14 +2117,29 @@ function _getNetwork() {
   const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
   if (!c) return '—';
   const type  = c.effectiveType || c.type || '—';
-  const speed = c.downlink  ? ` (${c.downlink} Mbps)` : '';
-  const rtt   = c.rtt       ? ` | RTT: ${c.rtt}ms`   : '';
-  const save  = c.saveData  ? ' 🔴 توفير البيانات'    : '';
+  const speed = c.downlink ? ` (${c.downlink} Mbps)` : '';
+  const rtt   = c.rtt     ? ` | RTT: ${c.rtt}ms`    : '';
+  const save  = c.saveData ? ' 🔴 توفير البيانات'    : '';
   return type + speed + rtt + save;
 }
 
 // ═══════════════════════════════════════════
-// 🔋 BATTERY INFO  ← ميزة جديدة #1
+// 📡 CONNECTION TYPE
+// ═══════════════════════════════════════════
+function _getConnectionType() {
+  const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if (!c) return '—';
+  if (c.type === 'wifi')        return '📶 WiFi';
+  if (c.type === 'cellular')    return '📱 بيانات موبايل';
+  if (c.type === 'ethernet')    return '🔌 كيبل';
+  if (c.effectiveType === '4g') return '📱 4G';
+  if (c.effectiveType === '3g') return '📱 3G';
+  if (c.effectiveType === '2g') return '📱 2G';
+  return c.type || c.effectiveType || '—';
+}
+
+// ═══════════════════════════════════════════
+// 🔋 BATTERY
 // ═══════════════════════════════════════════
 async function _getBattery() {
   try {
@@ -2107,7 +2152,7 @@ async function _getBattery() {
 }
 
 // ═══════════════════════════════════════════
-// 📍 GPS LOCATION  ← ميزة جديدة #2
+// 📍 GPS
 // ═══════════════════════════════════════════
 function _getGPS() {
   return new Promise((resolve) => {
@@ -2121,69 +2166,77 @@ function _getGPS() {
 }
 
 // ═══════════════════════════════════════════
-// 🖥️ HARDWARE INFO  ← ميزة جديدة #3
+// 🖥️ HARDWARE
 // ═══════════════════════════════════════════
 function _getHardware() {
-  const cpu  = navigator.hardwareConcurrency || '—';
-  const ram  = navigator.deviceMemory        || '—';
-  const touch= navigator.maxTouchPoints > 0  ? `نعم (${navigator.maxTouchPoints} نقطة)` : 'لا';
-  return { cpu, ram, touch };
+  return {
+    cpu  : navigator.hardwareConcurrency || '—',
+    ram  : navigator.deviceMemory        || '—',
+    touch: navigator.maxTouchPoints > 0 ? `نعم (${navigator.maxTouchPoints} نقطة)` : 'لا'
+  };
 }
 
 // ═══════════════════════════════════════════
-// 🌙 DARK MODE DETECTION  ← ميزة جديدة #4
+// 🖥️ SCREEN INFO
+// ═══════════════════════════════════════════
+function _getScreenInfo() {
+  const ratio  = window.devicePixelRatio || 1;
+  const color  = screen.colorDepth || '—';
+  const orient = screen.orientation?.type || '—';
+  const retina = ratio >= 2 ? '✨ Retina' : 'عادي';
+  return `DPR: ${ratio} (${retina}) | Color: ${color}bit | ${orient}`;
+}
+
+// ═══════════════════════════════════════════
+// 🌙 DARK MODE
 // ═══════════════════════════════════════════
 function _getDarkMode() {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? '🌙 Dark' : '☀️ Light';
 }
 
 // ═══════════════════════════════════════════
-// 🧠 FINGERPRINT HASH  ← ميزة جديدة #5
-// ═══════════════════════════════════════════
-async function _getFingerprint(ua) {
-  const raw = [
-    ua,
-    navigator.language,
-    screen.width, screen.height, screen.colorDepth,
-    navigator.hardwareConcurrency,
-    navigator.deviceMemory || 0,
-    Intl.DateTimeFormat().resolvedOptions().timeZone,
-    navigator.maxTouchPoints
-  ].join('|');
-  try {
-    const buf  = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(raw));
-    const arr  = Array.from(new Uint8Array(buf));
-    return arr.slice(0, 6).map(b => b.toString(16).padStart(2,'0')).join('').toUpperCase();
-  } catch (_) { return '—'; }
-}
-
-// ═══════════════════════════════════════════
-// ⌨️ KEYBOARD / INPUT  ← ميزة جديدة #6
+// ⌨️ INPUT TYPE
 // ═══════════════════════════════════════════
 function _getInputType() {
   const touch = navigator.maxTouchPoints > 0;
-  const pen   = window.matchMedia('(pointer: fine)').matches;
-  if (touch && pen)  return 'لمس + قلم';
+  const fine  = window.matchMedia('(pointer: fine)').matches;
+  if (touch && fine) return 'لمس + قلم';
   if (touch)         return '👆 لمس';
   return '🖱️ ماوس';
 }
 
 // ═══════════════════════════════════════════
-// 📵 INCOGNITO DETECTION  ← ميزة جديدة #7
+// 🧠 FINGERPRINT
+// ═══════════════════════════════════════════
+async function _getFingerprint(ua) {
+  const raw = [
+    ua, navigator.language,
+    screen.width, screen.height, screen.colorDepth,
+    navigator.hardwareConcurrency, navigator.deviceMemory || 0,
+    Intl.DateTimeFormat().resolvedOptions().timeZone,
+    navigator.maxTouchPoints
+  ].join('|');
+  try {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(raw));
+    return Array.from(new Uint8Array(buf)).slice(0,6).map(b => b.toString(16).padStart(2,'0')).join('').toUpperCase();
+  } catch (_) { return '—'; }
+}
+
+// ═══════════════════════════════════════════
+// 📵 INCOGNITO
 // ═══════════════════════════════════════════
 async function _isIncognito() {
   try {
     await new Promise((res, rej) => {
-      const db = indexedDB.open('test');
-      db.onerror = rej;
-      db.onsuccess = res;
+      const db = indexedDB.open('_test_');
+      db.onerror = rej; db.onsuccess = res;
     });
     return false;
   } catch (_) { return true; }
 }
 
 // ═══════════════════════════════════════════
-// ⏱️ PAGE LOAD TIME  ← ميزة جديدة #8
+// ⚡ PAGE LOAD TIME
 // ═══════════════════════════════════════════
 function _getLoadTime() {
   try {
@@ -2194,17 +2247,26 @@ function _getLoadTime() {
 }
 
 // ═══════════════════════════════════════════
-// 📲 INSTALLED PWA  ← ميزة جديدة #9
+// 📲 PWA
 // ═══════════════════════════════════════════
 function _isPWA() {
-  return (
-    window.matchMedia('(display-mode: standalone)').matches ||
-    window.navigator.standalone === true
-  ) ? '✅ PWA مثبّت' : '🌐 متصفح';
+  return (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true)
+    ? '✅ PWA مثبّت' : '🌐 متصفح';
 }
 
 // ═══════════════════════════════════════════
-// 🧹 CLEAN PHONE  ← إصلاح رقم الهاتف
+// 🤖 BOT DETECTION
+// ═══════════════════════════════════════════
+function _isBot(ua) {
+  if (/bot|crawl|spider|slurp|mediapartners|facebookexternalhit|linkedinbot|twitterbot|telegrambot/i.test(ua))
+    return '🤖 بوت محتمل';
+  if (navigator.webdriver)  return '🤖 Automation';
+  if (!navigator.cookieEnabled) return '⚠️ Cookies مغلقة';
+  return '✅ إنسان';
+}
+
+// ═══════════════════════════════════════════
+// 🧹 CLEAN PHONE
 // ═══════════════════════════════════════════
 function _cleanPhone(raw) {
   if (!raw) return '—';
@@ -2221,10 +2283,9 @@ function _cleanPhone(raw) {
 const _visitData = {
   startTime: Date.now(),
   pages    : [],
-  clicks   : 0,                              // ← ميزة جديدة #10
+  clicks   : 0,
   referrer : document.referrer || 'مباشر'
 };
-
 document.addEventListener('click', () => _visitData.clicks++);
 
 function _trackPage(pageName) {
@@ -2238,10 +2299,9 @@ function _buildPagesLog() {
   const now  = Date.now();
   const last = _visitData.pages[_visitData.pages.length - 1];
   if (last && !last.duration) last.duration = Math.round((now - last.time) / 1000);
-  return _visitData.pages.map((p, i) => {
-    const dur = p.duration ? `${p.duration}ث` : 'جاري...';
-    return `   ${i + 1}. ${p.name} — ${dur}`;
-  }).join('\n');
+  return _visitData.pages.map((p, i) =>
+    `   ${i+1}. ${p.name} — ${p.duration ? p.duration+'ث' : 'جاري...'}`
+  ).join('\n');
 }
 
 // ═══════════════════════════════════════════
@@ -2253,7 +2313,6 @@ async function trackVisit() {
 
   const ua = navigator.userAgent;
 
-  // جمع كل البيانات بالتوازي
   const [device, battery, gps, fingerprint, incognito] = await Promise.all([
     _getDevice(ua),
     _getBattery(),
@@ -2262,22 +2321,26 @@ async function trackVisit() {
     _isIncognito()
   ]);
 
-  const user      = getUserProfile();
-  const source    = _getSource(document.referrer);
-  const browser   = _getBrowser(ua);
-  const lang      = navigator.language || '—';
-  const tz        = Intl.DateTimeFormat().resolvedOptions().timeZone || '—';
-  const screen_res= `${screen.width}x${screen.height}`;
-  const viewport  = `${window.innerWidth}x${window.innerHeight}`;
-  const network   = _getNetwork();
-  const hw        = _getHardware();
-  const darkMode  = _getDarkMode();
-  const inputType = _getInputType();
-  const loadTime  = _getLoadTime();
-  const pwaMode   = _isPWA();
-  const is_mobile = /Mobi|Android/i.test(ua);
-  const cart_count= cCount();
-  const total_pts = getPoints();
+  const user       = getUserProfile();
+  const source     = _getSource(document.referrer);
+  const searchQ    = _getSearchQuery(document.referrer);
+  const browser    = _getBrowser(ua);
+  const lang       = navigator.language || '—';
+  const tz         = Intl.DateTimeFormat().resolvedOptions().timeZone || '—';
+  const screen_res = `${screen.width}x${screen.height}`;
+  const viewport   = `${window.innerWidth}x${window.innerHeight}`;
+  const network    = _getNetwork();
+  const connType   = _getConnectionType();
+  const hw         = _getHardware();
+  const screenInfo = _getScreenInfo();
+  const darkMode   = _getDarkMode();
+  const inputType  = _getInputType();
+  const loadTime   = _getLoadTime();
+  const pwaMode    = _isPWA();
+  const botStatus  = _isBot(ua);
+  const is_mobile  = /Mobi|Android/i.test(ua);
+  const cart_count = cCount();
+  const total_pts  = getPoints();
 
   let geo = '';
   try {
@@ -2292,15 +2355,11 @@ async function trackVisit() {
       geo += `\n🌐 مزود الانترنت: ${ispClean}`;
       geo += `\n📶 نوع الخط: ${lineType}`;
       geo += `\n🔢 ASN: ${g.asn}`;
-    } else {
-      geo = '\n🌍 الموقع: تعذّر الجلب';
-    }
-  } catch (_) {
-    geo = '\n🌍 الموقع: تعذّر الجلب';
-  }
+    } else { geo = '\n🌍 الموقع: تعذّر الجلب'; }
+  } catch (_) { geo = '\n🌍 الموقع: تعذّر الجلب'; }
 
-  const phone   = _cleanPhone(user?.phone);
-  const userLine= (user && user.fname !== 'زائر')
+  const phone    = _cleanPhone(user?.phone);
+  const userLine = (user && user.fname !== 'زائر')
     ? `👤 ${user.fname} ${user.lname}\n📞 ${phone}\n🌍 اللغة: ${user.lang}`
     : `👤 زائر جديد`;
 
@@ -2309,14 +2368,18 @@ async function trackVisit() {
     `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
     `📅 ${nowStr()}\n` +
     `📣 المصدر: ${source}\n` +
+    `${searchQ ? searchQ + '\n' : ''}` +
     `🆔 Fingerprint: ${fingerprint}\n` +
+    `🤖 الكشف: ${botStatus}\n` +
     `${incognito ? '🕵️ وضع التخفي: نعم\n' : ''}` +
     `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
     `📱 الجهاز: ${device}\n` +
     `🖥️ النوع: ${is_mobile ? 'موبايل' : 'ديسكتوب'}\n` +
     `🌐 المتصفح: ${browser}\n` +
     `📐 الشاشة: ${screen_res} | ${viewport}\n` +
+    `🖥️ Screen: ${screenInfo}\n` +
     `🔋 البطارية: ${battery}\n` +
+    `📡 الاتصال: ${connType}\n` +
     `📶 الشبكة: ${network}\n` +
     `🗣️ اللغة: ${lang}\n` +
     `🕐 التوقيت: ${tz}\n` +
@@ -2337,10 +2400,9 @@ async function trackVisit() {
 }
 
 // ═══════════════════════════════════════════
-// 📊 SESSION SUMMARY (عند المغادرة)
+// 📊 SESSION SUMMARY
 // ═══════════════════════════════════════════
 function _sendSessionSummary() {
-  // امنع الإرسال المزدوج
   if (sessionStorage.getItem('summary_sent')) return;
   sessionStorage.setItem('summary_sent', '1');
 
@@ -2348,14 +2410,16 @@ function _sendSessionSummary() {
   const mins     = Math.floor(totalSec / 60);
   const secs     = totalSec % 60;
   const pagesLog = _buildPagesLog();
-  const pageCount= _visitData.pages.length;
 
   const msg =
     `📊 ملخص الجلسة — Dash Lebanon\n` +
     `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
-    `⏱️ المدة: ${mins}د ${secs}ث\n` +
-    `📄 الصفحات: ${pageCount}\n` +
+    `⏱️ المدة الكلية: ${mins}د ${secs}ث\n` +
+    `⏱️ وقت النشاط: ${_getActiveTime()}\n` +
+    `📄 الصفحات: ${_visitData.pages.length}\n` +
     `🖱️ الضغطات: ${_visitData.clicks}\n` +
+    `😤 Rage Clicks: ${_rageData.count > 0 ? `⚠️ ${_rageData.count} مرة` : '0'}\n` +
+    `📜 أقصى Scroll: ${_maxScroll}%\n` +
     `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
     `🗺️ المسار:\n${pagesLog || '   —'}`;
 
