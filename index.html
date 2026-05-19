@@ -1955,57 +1955,248 @@ async function _fetchGeo(){
   return null;
 }
 
-function _inferLineType(isp,asn){
-  const s=(isp+' '+asn).toLowerCase();
-  if(/as42020|touch|mtc/.test(s))return'📱 موبايل - Touch';
-  if(/as9051|alfa|libancell/.test(s))return'📱 موبايل - Alfa';
-  if(/as35819|ogero/.test(s))return'🏠 خط ثابت - Ogero';
-  if(/as199273|sodetel/.test(s))return'🏠 خط ثابت - Sodetel';
-  if(/as39010|idm/.test(s))return'🏠 خط ثابت - IDM';
-  if(/as9069|cyberia/.test(s))return'🏠 خط ثابت - Cyberia';
-  if(/vpn|tunnel|proxy|hosting|datacenter/.test(s))return'🔒 VPN';
-  if(/mobile|cellular/.test(s))return'📱 موبايل';
-  return'—';
+// ═══════════════════════════════════════════
+// 📶 LINE TYPE + ISP DETECTION (ENHANCED)
+// ═══════════════════════════════════════════
+function _inferLineType(isp, asn) {
+  const s = (isp + ' ' + asn).toLowerCase();
+  if (/as42020|touch|mtc/.test(s))   return '📱 موبايل - Touch';
+  if (/as9051|alfa|libancell/.test(s)) return '📱 موبايل - Alfa';
+  if (/as35819|ogero/.test(s))        return '🏠 خط ثابت - Ogero';
+  if (/as199273|sodetel/.test(s))     return '🏠 خط ثابت - Sodetel';
+  if (/as39010|idm/.test(s))          return '🏠 خط ثابت - IDM';
+  if (/as9069|cyberia/.test(s))       return '🏠 خط ثابت - Cyberia';
+  if (/as42961|terranet/.test(s))     return '🏠 خط ثابت - Terranet';
+  if (/as203786|joud/.test(s))        return '🏠 خط ثابت - Joud';
+  if (/as51407|mobi/.test(s))         return '📡 خط ثابت - Mobi';
+  if (/as200207|wise/.test(s))        return '🏠 خط ثابت - Wise';
+  if (/as57704|net\.lb/.test(s))      return '🏠 خط ثابت - Net.lb';
+  if (/as41473|broadband/.test(s))    return '🏠 خط ثابت - Broadband';
+  if (/vpn|tunnel|proxy|hosting|datacenter/.test(s)) return '🔒 VPN / Proxy';
+  if (/mobile|cellular/.test(s))      return '📱 موبايل';
+  return '—';
 }
 
-const _visitData={startTime:Date.now(),pages:[],referrer:document.referrer||'مباشر'};
+// ═══════════════════════════════════════════
+// 📱 DEVICE DETECTION (FULL MODEL NAME)
+// ═══════════════════════════════════════════
+function _getDevice(ua) {
+  // iPhone — full model mapping
+  if (/iPhone/.test(ua)) {
+    const match = ua.match(/iPhone OS ([\d_]+)/);
+    const iosVer = match ? match[1].replace(/_/g, '.') : '?';
+    const iosNum = parseFloat(iosVer);
+    let model = 'iPhone';
+    if (iosNum >= 18.0) model = 'iPhone 16 Series';
+    else if (iosNum >= 17.0) model = 'iPhone 15 Series';
+    else if (iosNum >= 16.0) model = 'iPhone 14 Series';
+    else if (iosNum >= 15.0) model = 'iPhone 13 Series';
+    else if (iosNum >= 14.0) model = 'iPhone 12 Series';
+    else if (iosNum >= 13.0) model = 'iPhone 11 Series';
+    else model = 'iPhone (قديم)';
+    return `${model} (iOS ${iosVer})`;
+  }
 
-function _getDevice(ua){const iphone=ua.match(/iPhone OS ([\d_]+)/);if(iphone)return`iPhone (iOS ${iphone[1].replace(/_/g,'.')})`;const ipad=ua.match(/iPad.*OS ([\d_]+)/);if(ipad)return`iPad (iPadOS ${ipad[1].replace(/_/g,'.')})`;const android=ua.match(/Android ([\d.]+)/);if(android){const model=ua.match(/;\s([^;()]+)\sBuild\//);return`${model?model[1].trim():'Android'} (Android ${android[1]})`}if(/Windows NT 10/.test(ua))return'Windows 10/11';if(/Windows NT 6/.test(ua))return'Windows 7/8';if(/Macintosh/.test(ua))return'macOS';if(/Linux/.test(ua))return'Linux';return'Unknown';}
-function _getBrowser(ua){if(/SamsungBrowser/.test(ua))return'Samsung Browser';if(/OPR|Opera/.test(ua))return'Opera';if(/Edg/.test(ua))return'Edge';if(/Firefox/.test(ua))return'Firefox';if(/Chrome/.test(ua))return'Chrome';if(/Safari/.test(ua))return'Safari';return'Other';}
-function _getSource(ref){if(!ref||ref==='مباشر')return'📲 مباشر (Direct)';if(/instagram/i.test(ref))return'📸 Instagram';if(/facebook|fb\./i.test(ref))return'🔵 Facebook';if(/tiktok/i.test(ref))return'🎵 TikTok';if(/google/i.test(ref))return'🔍 Google';if(/whatsapp/i.test(ref))return'💬 WhatsApp';if(/t\.co|twitter/i.test(ref))return'🐦 Twitter/X';return'🌐 '+ref.replace(/https?:\/\//,'').split('/')[0];}
-function _getNetwork(){const c=navigator.connection||navigator.mozConnection||navigator.webkitConnection;if(!c)return'—';const type=c.effectiveType||c.type||'—';const speed=c.downlink?` (${c.downlink} Mbps)`:'';return type+speed;}
+  // iPad
+  if (/iPad/.test(ua)) {
+    const match = ua.match(/OS ([\d_]+)/);
+    const ver = match ? match[1].replace(/_/g, '.') : '?';
+    return `iPad (iPadOS ${ver})`;
+  }
 
-async function trackVisit(){
-  if(sessionStorage.getItem('visit_tracked'))return;
-  sessionStorage.setItem('visit_tracked','1');
-  const ua=navigator.userAgent;
-  const user=getUserProfile();
-  const source=_getSource(document.referrer);
-  const device=_getDevice(ua);
-  const browser=_getBrowser(ua);
-  const lang=navigator.language||'—';
-  const tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'—';
-  const screen_res=`${screen.width}x${screen.height}`;
-  const viewport=`${window.innerWidth}x${window.innerHeight}`;
-  const network=_getNetwork();
-  const cart_count=cCount();
-  const total_pts=getPoints();
-  const is_mobile=/Mobi|Android/i.test(ua);
-  let geo='';
-  try{
-    const g=await _fetchGeo();
-    if(g){
-      const lineType=_inferLineType(g.isp,g.asn);
-      geo+=`\n🌍 الموقع: ${g.city}, ${g.region}, ${g.country}`;
-      geo+=`\n🔌 IP: ${g.ip}`;
-      geo+=`\n🏢 اسم الانترنت: ${g.isp}`;
-      geo+=`\n📶 نوع الخط: ${lineType}`;
-      geo+=`\n🔢 ASN: ${g.asn}`;
-    }else{geo='\n🌍 الموقع: تعذّر الجلب';}
-  }catch(e){geo='\n🌍 الموقع: تعذّر الجلب';}
-  const msg=`🆕 زيارة جديدة — Dash Lebanon\n━━━━━━━━━━━━━━━━━━━━━━━━\n📅 التاريخ: ${nowStr()}\n📣 المصدر: ${source}\n━━━━━━━━━━━━━━━━━━━━━━━━\n📱 الجهاز: ${device}\n🖥️ نوع: ${is_mobile?'موبايل':'ديسكتوب'}\n🌐 المتصفح: ${browser}\n📐 الشاشة: ${screen_res} | Viewport: ${viewport}\n🔋 الشبكة: ${network}\n🗣️ اللغة: ${lang}\n🕐 التوقيت: ${tz}${geo}\n━━━━━━━━━━━━━━━━━━━━━━━━\n${user&&user.fname!=='زائر'?`👤 المستخدم: ${user.fname} ${user.lname}\n📞 الهاتف: ${user.phone}\n🌍 لغة التطبيق: ${user.lang}`:`👤 المستخدم: زائر جديد`}\n🛒 السلة: ${cart_count} منتج\n⭐ النقاط: ${total_pts}`;
+  // Android — exact model
+  if (/Android/.test(ua)) {
+    const androidVer = (ua.match(/Android ([\d.]+)/) || [])[1] || '?';
+    const modelMatch = ua.match(/;\s([^;()]+)\sBuild\//);
+    const rawModel = modelMatch ? modelMatch[1].trim() : 'Android Device';
+
+    // Samsung
+    if (/SM-S9[0-9]{2}/.test(rawModel)) return `Samsung Galaxy S24 Series (Android ${androidVer})`;
+    if (/SM-S9[0-9]{2}U/.test(rawModel)) return `Samsung Galaxy S23 Series (Android ${androidVer})`;
+    if (/SM-A5/.test(rawModel))  return `Samsung Galaxy A5x (Android ${androidVer})`;
+    if (/SM-A3/.test(rawModel))  return `Samsung Galaxy A3x (Android ${androidVer})`;
+    if (/SM-G/.test(rawModel))   return `Samsung Galaxy (Android ${androidVer})`;
+
+    return `${rawModel} (Android ${androidVer})`;
+  }
+
+  // Desktop
+  if (/Windows NT 10/.test(ua)) return '💻 Windows 10/11';
+  if (/Windows NT 6/.test(ua))  return '💻 Windows 7/8';
+  if (/Macintosh/.test(ua))     return '🍎 macOS';
+  if (/Linux/.test(ua))         return '🐧 Linux';
+  return 'Unknown';
+}
+
+// ═══════════════════════════════════════════
+// 🌐 BROWSER DETECTION
+// ═══════════════════════════════════════════
+function _getBrowser(ua) {
+  if (/SamsungBrowser/.test(ua)) return 'Samsung Browser';
+  if (/OPR|Opera/.test(ua))     return 'Opera';
+  if (/Edg/.test(ua))           return 'Edge';
+  if (/Firefox/.test(ua))       return 'Firefox';
+  if (/Chrome/.test(ua))        return 'Chrome';
+  if (/Safari/.test(ua))        return 'Safari';
+  return 'Other';
+}
+
+// ═══════════════════════════════════════════
+// 📣 SOURCE DETECTION
+// ═══════════════════════════════════════════
+function _getSource(ref) {
+  if (!ref || ref === 'مباشر') return '📲 مباشر (Direct)';
+  if (/instagram/i.test(ref))   return '📸 Instagram';
+  if (/facebook|fb\./i.test(ref)) return '🔵 Facebook';
+  if (/tiktok/i.test(ref))      return '🎵 TikTok';
+  if (/google/i.test(ref))      return '🔍 Google';
+  if (/whatsapp/i.test(ref))    return '💬 WhatsApp';
+  if (/t\.co|twitter/i.test(ref)) return '🐦 Twitter/X';
+  if (/snapchat/i.test(ref))    return '👻 Snapchat';
+  if (/youtube/i.test(ref))     return '▶️ YouTube';
+  return '🌐 ' + ref.replace(/https?:\/\//, '').split('/')[0];
+}
+
+// ═══════════════════════════════════════════
+// 🔋 NETWORK SPEED
+// ═══════════════════════════════════════════
+function _getNetwork() {
+  const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if (!c) return '—';
+  const type = c.effectiveType || c.type || '—';
+  const speed = c.downlink ? ` (${c.downlink} Mbps)` : '';
+  const save = c.saveData ? ' 🔴 توفير البيانات مفعّل' : '';
+  return type + speed + save;
+}
+
+// ═══════════════════════════════════════════
+// 🗺️ SESSION TRACKING
+// ═══════════════════════════════════════════
+const _visitData = {
+  startTime: Date.now(),
+  pages: [],
+  referrer: document.referrer || 'مباشر'
+};
+
+// استدعي هاد في كل صفحة تنتقل إليها
+function _trackPage(pageName) {
+  const now = Date.now();
+  const last = _visitData.pages[_visitData.pages.length - 1];
+  if (last && !last.duration) {
+    last.duration = Math.round((now - last.time) / 1000);
+  }
+  _visitData.pages.push({ name: pageName, time: now });
+}
+
+function _buildPagesLog() {
+  const now = Date.now();
+  const last = _visitData.pages[_visitData.pages.length - 1];
+  if (last && !last.duration) last.duration = Math.round((now - last.time) / 1000);
+
+  return _visitData.pages.map((p, i) => {
+    const dur = p.duration ? `${p.duration}ث` : 'جاري...';
+    return `   ${i + 1}. ${p.name} — ${dur}`;
+  }).join('\n');
+}
+
+// ═══════════════════════════════════════════
+// 🚀 MAIN TRACK VISIT
+// ═══════════════════════════════════════════
+async function trackVisit() {
+  if (sessionStorage.getItem('visit_tracked')) return;
+  sessionStorage.setItem('visit_tracked', '1');
+
+  const ua = navigator.userAgent;
+  const user = getUserProfile();
+  const source = _getSource(document.referrer);
+  const device = _getDevice(ua);
+  const browser = _getBrowser(ua);
+  const lang = navigator.language || '—';
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '—';
+  const screen_res = `${screen.width}x${screen.height}`;
+  const viewport = `${window.innerWidth}x${window.innerHeight}`;
+  const network = _getNetwork();
+  const cart_count = cCount();
+  const total_pts = getPoints();
+  const is_mobile = /Mobi|Android/i.test(ua);
+
+  let geo = '';
+  let ispClean = '—';
+  let lineType = '—';
+
+  try {
+    const g = await _fetchGeo();
+    if (g) {
+      lineType = _inferLineType(g.isp, g.asn);
+
+      // تنظيف اسم الانترنت
+      ispClean = g.isp
+        .replace(/\b(s\.a\.r\.l|sarl|sal|s\.a\.l|llc|ltd|co\.|inc\.?)\b/gi, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      geo += `\n🌍 الموقع: ${g.city}, ${g.region}, ${g.country}`;
+      geo += `\n🔌 IP: ${g.ip}`;
+      geo += `\n🌐 مزود الانترنت: ${ispClean}`;
+      geo += `\n📶 نوع الخط: ${lineType}`;
+      geo += `\n🔢 ASN: ${g.asn}`;
+    } else {
+      geo = '\n🌍 الموقع: تعذّر الجلب';
+    }
+  } catch (e) {
+    geo = '\n🌍 الموقع: تعذّر الجلب';
+  }
+
+  const userLine = (user && user.fname !== 'زائر')
+    ? `👤 ${user.fname} ${user.lname}\n📞 ${user.phone}\n🌍 اللغة: ${user.lang}`
+    : `👤 زائر جديد`;
+
+  const msg =
+    `🆕 زيارة جديدة — Dash Lebanon\n` +
+    `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+    `📅 ${nowStr()}\n` +
+    `📣 المصدر: ${source}\n` +
+    `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+    `📱 الجهاز: ${device}\n` +
+    `🖥️ النوع: ${is_mobile ? 'موبايل' : 'ديسكتوب'}\n` +
+    `🌐 المتصفح: ${browser}\n` +
+    `📐 الشاشة: ${screen_res} | ${viewport}\n` +
+    `🔋 الشبكة: ${network}\n` +
+    `🗣️ اللغة: ${lang}\n` +
+    `🕐 التوقيت: ${tz}` +
+    `${geo}\n` +
+    `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+    `${userLine}\n` +
+    `🛒 السلة: ${cart_count} منتج\n` +
+    `⭐ النقاط: ${total_pts}`;
+
   tgSend(msg);
 }
+
+// ═══════════════════════════════════════════
+// 📊 SESSION SUMMARY (عند المغادرة)
+// ═══════════════════════════════════════════
+function _sendSessionSummary() {
+  const totalSec = Math.round((Date.now() - _visitData.startTime) / 1000);
+  const mins = Math.floor(totalSec / 60);
+  const secs = totalSec % 60;
+  const pagesLog = _buildPagesLog();
+  const pageCount = _visitData.pages.length;
+
+  const msg =
+    `📊 ملخص الجلسة — Dash Lebanon\n` +
+    `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+    `⏱️ المدة: ${mins}د ${secs}ث\n` +
+    `📄 الصفحات: ${pageCount}\n` +
+    `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+    `🗺️ المسار:\n${pagesLog || '   —'}`;
+
+  tgSend(msg);
+}
+
+// إرسال الملخص عند إغلاق/مغادرة الصفحة
+window.addEventListener('pagehide', _sendSessionSummary);
+window.addEventListener('beforeunload', _sendSessionSummary);
 
 window.addEventListener('visibilitychange',function(){
   if(document.visibilityState!=='hidden')return;
