@@ -697,39 +697,545 @@ const CATS=[
 ];
 
 // ── ACCELERATED SERVICES ──
-const ACC_SERVICES=[
-  {id:'a1',name:'شحن فودافون كاش',nameEn:'Vodafone Cash',icon:'📱',desc:'شحن فوري لمحفظة فودافون كاش',descEn:'Instant Vodafone Cash top-up',prices:[5,10,20,50],category:'mobile'},
-  {id:'a2',name:'شحن Alfa',nameEn:'Alfa Top-up',icon:'📶',desc:'شحن خطوط Alfa اللبنانية',descEn:'Alfa Lebanon lines top-up',prices:[5,10,20],category:'mobile'},
-  {id:'a3',name:'شحن Touch',nameEn:'Touch Top-up',icon:'📡',desc:'شحن خطوط Touch اللبنانية',descEn:'Touch Lebanon lines top-up',prices:[5,10,20],category:'mobile'},
-  {id:'a4',name:'Netflix Premium',nameEn:'Netflix Premium',icon:'🎬',desc:'اشتراك نتفليكس شهري',descEn:'Monthly Netflix subscription',prices:[15,20],category:'streaming'},
-  {id:'a5',name:'Spotify Premium',nameEn:'Spotify Premium',icon:'🎵',desc:'اشتراك سبوتيفاي شهري',descEn:'Monthly Spotify subscription',prices:[5,10],category:'streaming'},
-  {id:'a6',name:'PlayStation Store',nameEn:'PlayStation Store',icon:'🎮',desc:'رصيد PlayStation Store',descEn:'PlayStation Store credits',prices:[10,20,50],category:'gaming'},
-  {id:'a7',name:'Steam Wallet',nameEn:'Steam Wallet',icon:'🖥️',desc:'رصيد Steam',descEn:'Steam wallet funds',prices:[10,20,50,100],category:'gaming'},
-  {id:'a8',name:'Google Play',nameEn:'Google Play',icon:'▶️',desc:'رصيد Google Play',descEn:'Google Play credits',prices:[5,10,25],category:'mobile'},
+{
+    id: 'a3_days',
+    name: 'Touch 4.5$ (أيام)',
+    nameEn: 'Touch 4.5$ (Days)',
+    icon: '📆',
+    desc: 'تشريج 4.5$ (شهر أيام)',
+    descEn: '4.5$ Top-up (1 Month Days)',
+    prices: [10],
+    category: 'mobile'
+  }
 ];
 
 // ── DEMO PRODUCTS (subset with color options) ──
-const DEMO=[
-  {id:1,cat:'home',name:'المكنسة اللاسلكية 3 في 1',description:'حل عملي لتنظيف المنزل والسيارة بسهولة 🧹\nمكنسة متعددة الوظائف: شفط غبار، منفاخ هواء، ومضخة تفريغ الهواء\nتصميم لاسلكي يمنحك حرية كاملة 🚗',image:'https://cdn.corenexis.com/files/c/1186979720.jpg',price:7.99,oldPrice:11.99,deliveryPrice:4,colors:null,offer:{qty:2,price:14.99,label:'اشتري 2 بـ 14.99$'}},
-  {id:2,cat:'bathroom',name:'رأس دوش التوربو المتطور',description:'تجربة استحمام مريحة بضغط قوي 🚿',image:'https://cdn.corenexis.com/files/c/7223327720.jpg',price:5.99,oldPrice:9.99,deliveryPrice:4,colors:['#c0c0c0','#f5f5f5','#1a3fa0','#2e7d32'],colorNames:['فضي','أبيض','أزرق','أخضر'],offer:{qty:2,price:9.99,label:'اشتري 2 بـ 9.99$'}},
-  {id:3,cat:'bathroom',name:'وصلة صنبور مرنة 1080 درجة',description:'وصلة ذكية لتسهيل استخدام المغسلة 🚰',image:'https://cdn.corenexis.com/files/c/9947163720.jpg',price:5.99,oldPrice:6.99,deliveryPrice:4,colors:null,offer:{qty:2,price:8.99,label:'اشتري 2 بـ 7.99$'}},
-  {id:4,cat:'kitchen',name:'مطحنة التوابل والقهوة الكهربائية',description:'طحن سريع ودقيق للمطبخ ☕',image:'https://cdn.corenexis.com/files/c/5641244720.jpg',price:8.99,oldPrice:12.99,deliveryPrice:4,colors:['#1a1a1a','#f5f5f5','#ef4444'],colorNames:['أسود','أبيض','أحمر'],offer:{qty:2,price:15.99,label:'اشتري 2 بـ 15.99$'}},
-  {id:5,cat:'home',name:'اقراص تنظيف الغسالة',description:'تنظيف عميق لحوض الغسالة 🧼',image:'https://cdn.corenexis.com/files/c/2817323720.jpg',price:5.99,oldPrice:6.99,deliveryPrice:4,colors:null,offer:{qty:2,price:8.99,label:'اشتري 2 بـ 8.99$'}},
-  {id:6,cat:'home',name:'منظف الزجاج المغناطيسي المزدوج',description:'تنظيف النوافذ بسهولة 🪟',image:'https://cdn.corenexis.com/files/c/1362116720.jpg',price:8.99,oldPrice:9.99,deliveryPrice:4,colors:null,offer:null},
-  {id:8,cat:'car',name:'محول الطاقة الذكي للسيارة 4 في 1',description:'شحن سريع داخل السيارة 🚗',image:'https://cdn.corenexis.com/files/c/1344431720.jpg',price:15.99,oldPrice:25.99,deliveryPrice:4,colors:['#1a1a1a','#c0c0c0'],colorNames:['أسود','فضي'],offer:{qty:2,price:28.99,label:'عرض 2 بـ 28.99$'}},
-  {id:9,cat:'home',name:'DASH Multi-Angle Cutter',description:'أداة قص دقيقة ✂️',image:'https://cdn.corenexis.com/files/c/4679843720.jpg',price:11.99,oldPrice:20.99,deliveryPrice:4,colors:null,offer:{qty:2,price:22.99,label:'عرض 2 بـ 22.99$'}},
-  {id:10,cat:'bathroom',name:'مستشعر السيفون الذكي اللاسلكي',description:'تحكم ذكي 🚽',image:'https://cdn.corenexis.com/files/c/1244941720.jpg',price:9.99,oldPrice:19.99,deliveryPrice:4,colors:null,offer:{qty:2,price:18.99,label:'عرض 2 بـ 18.99$'}},
-  {id:11,cat:'home',name:'مصحح اصابع القدم السيليكوني',description:'راحة يومية 👣',image:'https://cdn.corenexis.com/files/c/6313123720.png',price:4.99,oldPrice:7,deliveryPrice:4,colors:['#f5deb3','#1a1a1a'],colorNames:['بيج','أسود'],offer:{qty:2,price:6.99,label:'عرض قطعتين بـ 6.99$'}},
-  {id:12,cat:'home',name:'5 Layers Pant Hanger',description:'تنظيم عملي 👖',image:'https://cdn.corenexis.com/files/c/5444497720.webp',price:5,oldPrice:10,deliveryPrice:4,colors:['#c0c0c0','#1a1a1a','#f5f5f5'],colorNames:['فضي','أسود','أبيض'],offer:{qty:5,price:20,label:'عرض 5 بـ 20$'}},
-  {id:14,cat:'home',name:'Mini Electric Massager',description:'جهاز مساج صغير وقوي',image:'https://cdn.corenexis.com/files/c/1266373720.webp',price:7,oldPrice:10,deliveryPrice:4,colors:['#f43f5e','#3b82f6','#22c55e'],colorNames:['وردي','أزرق','أخضر'],offer:{qty:2,price:11,label:'اشتري تنين بـ 11$'}},
-  {id:16,cat:'kitchen',name:'قطاعة خضار 3 بـ 1',description:'بتفرم وبتبشر وبتعمل شرائح بطريقة سهلة',image:'https://cdn.corenexis.com/files/c/8787221720.png',price:5,oldPrice:7,deliveryPrice:4,colors:null,offer:{qty:2,price:9,label:'اشتري 2 بـ 9$'}},
-  {id:17,cat:'kitchen',name:'مطحنة قهوة يدوية ستانلس',description:'تصميم أنيق وفخم للمطبخ ✨',image:'https://cdn.corenexis.com/files/c/4653764720.png',price:7,oldPrice:13,deliveryPrice:4,colors:null,offer:{qty:2,price:12,label:'اشتري 2 بـ 12$'}},
-  {id:18,cat:'home',name:'سيشوار + فرشاية شعر كهربائية',description:'✔️ بتمشط وبتجفف الشعر بنفس الوقت\n✔️ عملية وسهلة الاستخدام',image:'https://cdn.corenexis.com/files/c/7182655720.png',price:11,oldPrice:20,deliveryPrice:4,colors:['#f43f5e','#8b5cf6','#f97316'],colorNames:['وردي','بنفسجي','برتقالي'],offer:{qty:2,price:20,label:'اشتري 2 بـ 20$'}},
-  {id:23,cat:'makeup',name:'مرطب الشفاه Jelly Wow المغذي',description:'احصلي على ترطيب عميق وإشراقة طبيعية 😍',image:'https://cdn.corenexis.com/files/c/1266185720.png',price:3,oldPrice:3,deliveryPrice:4,colors:['#f43f5e','#f97316','#a855f7','#ec4899'],colorNames:['أحمر','برتقالي','بنفسجي','وردي'],offer:null},
-  {id:25,cat:'makeup',name:'مجموعة أرواج سداسية الكمال',description:'تألّقي بإطلالة ساحرة مع مجموعة الألوان الأساسية! 😍',image:'https://cdn.corenexis.com/files/c/2613845720.png',price:2,oldPrice:5,deliveryPrice:4,colors:['random'],colorNames:['عشوائي'],offer:null},
-  {id:28,cat:'makeup',name:'مجموعة مناكير جل',description:'تألقي بأظافر مثالية مع مجموعة طلاء الأظافر',image:'https://cdn.corenexis.com/files/c/5642948720.png',price:1.5,oldPrice:3,deliveryPrice:4,colors:['#f5f5f5','#f43f5e','#1a1a1a','#a855f7'],colorNames:['أبيض','وردي','أسود','بنفسجي'],offer:null},
-  {id:31,cat:'home',name:'Doublefaced Adhesive Tape',description:'شريط لاصق ثنائي الوجه عالي الجودة',image:'https://zestlb.com/cdn/shop/files/1_3202d90f-ee00-42b9-868b-834101c0e4e1.webp?v=1732537904&width=713',price:4,oldPrice:5,deliveryPrice:4,colors:null,offer:{qty:2,price:7,label:'اشتري 2 بـ 7$'}},
-  {id:35,cat:'kitchen',name:'Food Processor - فرامة لحمة كهربائية',description:'فرامة كهربائية متعددة الاستخدامات بسعة 2 لتر',image:'https://zestlb.com/cdn/shop/files/2l-electric-meat-grinder-stainless-steel-food-processor-high-power-chopper-for-home-use-883.webp?v=1762240577&width=713',price:15,oldPrice:15.5,deliveryPrice:4,colors:['#f5f5f5','#c0c0c0'],colorNames:['أبيض','فضي'],offer:{qty:2,price:29,label:'اشتري 2 بـ 29$'}},
+const DEMO = [
+  {
+    "id": 1,
+    "cat": "home",
+    "name": "المكنسة اللاسلكية 3 في 1",
+    "description": "حل عملي لتنظيف المنزل والسيارة بسهولة 🧹\n\nمكنسة متعددة الوظائف: شفط غبار، منفاخ هواء، ومضخة تفريغ الهواء  \nتصميم لاسلكي يمنحك حرية كاملة أثناء الاستخدام 🚗\n\n💪 قوية وفعالة  \n🔋 تعمل بدون أسلاك  \n🧼 مناسبة للمنزل والسيارة",
+    "image": "https://cdn.corenexis.com/files/c/1186979720.jpg",
+    "price": 7.99,
+    "oldPrice": 11.99,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 14.99,
+      "label": "اشتري 2 بـ 14.99$"
+    }
+  },
+  {
+    "id": 2,
+    "cat": "bathroom",
+    "name": "رأس دوش التوربو المتطور",
+    "description": "تجربة استحمام مريحة بضغط قوي 🚿",
+    "image": "https://cdn.corenexis.com/files/c/7223327720.jpg",
+    "price": 5.99,
+    "oldPrice": 9.99,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 9.99,
+      "label": "اشتري 2 بـ 9.99$"
+    }
+  },
+  {
+    "id": 3,
+    "cat": "bathroom",
+    "name": "وصلة صنبور مرنة 1080 درجة",
+    "description": "وصلة ذكية لتسهيل استخدام المغسلة 🚰",
+    "image": "https://cdn.corenexis.com/files/c/9947163720.jpg",
+    "price": 5.99,
+    "oldPrice": 6.99,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 8.99,
+      "label": "اشتري 2 بـ 7.99$"
+    }
+  },
+  {
+    "id": 4,
+    "cat": "kitchen",
+    "name": "مطحنة التوابل والقهوة الكهربائية",
+    "description": "طحن سريع ودقيق للمطبخ ☕",
+    "image": "https://cdn.corenexis.com/files/c/5641244720.jpg",
+    "price": 8.99,
+    "oldPrice": 12.99,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 15.99,
+      "label": "اشتري 2 بـ 15.99$"
+    }
+  },
+  {
+    "id": 5,
+    "cat": "home",
+    "name": "اقراص تنظيف الغسالة",
+    "description": "تنظيف عميق لحوض الغسالة 🧼",
+    "image": "https://cdn.corenexis.com/files/c/2817323720.jpg",
+    "price": 5.99,
+    "oldPrice": 6.99,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 8.99,
+      "label": "اشتري 2 بـ 8.99$"
+    }
+  },
+  {
+    "id": 6,
+    "cat": "home",
+    "name": "منظف الزجاج المغناطيسي المزدوج",
+    "description": "تنظيف النوافذ بسهولة 🪟",
+    "image": "https://cdn.corenexis.com/files/c/1362116720.jpg",
+    "price": 8.99,
+    "oldPrice": 9.99,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 0,
+      "price": 0,
+      "label": ""
+    }
+  },
+  {
+    "id": 8,
+    "cat": "car",
+    "name": "محول الطاقة الذكي للسيارة 4 في 1",
+    "description": "شحن سريع داخل السيارة 🚗",
+    "image": "https://cdn.corenexis.com/files/c/1344431720.jpg",
+    "price": 15.99,
+    "oldPrice": 25.99,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 28.99,
+      "label": "عرض 2 بـ 28.99$"
+    }
+  },
+  {
+    "id": 9,
+    "cat": "home",
+    "name": "DASH Multi-Angle Cutter",
+    "description": "أداة قص دقيقة ✂️",
+    "image": "https://cdn.corenexis.com/files/c/4679843720.jpg",
+    "price": 11.99,
+    "oldPrice": 20.99,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 22.99,
+      "label": "عرض 2 بـ 22.99$"
+    }
+  },
+  {
+    "id": 10,
+    "cat": "bathroom",
+    "name": "مستشعر السيفون الذكي اللاسلكي",
+    "description": "تحكم ذكي 🚽",
+    "image": "https://cdn.corenexis.com/files/c/1244941720.jpg",
+    "price": 9.99,
+    "oldPrice": 19.99,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 18.99,
+      "label": "عرض 2 بـ 18.99$"
+    }
+  },
+  {
+    "id": 11,
+    "cat": "home",
+    "name": "مصحح اصابع القدم السيليكوني",
+    "description": "راحة يومية 👣",
+    "image": "https://cdn.corenexis.com/files/c/6313123720.png",
+    "price": 4.99,
+    "oldPrice": 7,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 6.99,
+      "label": "عرض قطعتين بـ 6.99$"
+    }
+  },
+  {
+    "id": 12,
+    "cat": "home",
+    "name": "5 Layers Pant Hanger - تعليقة بناطلين",
+    "description": "تنظيم عملي 👖",
+    "image": "https://cdn.corenexis.com/files/c/5444497720.webp",
+    "price": 5,
+    "oldPrice": 10,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 5,
+      "price": 20,
+      "label": "عرض 5 بـ 20$"
+    }
+  },
+  {
+    "id": 13,
+    "cat": "home",
+    "name": "Stain Removal Wipes - وايبس ازالة البقع",
+    "description": "وايبس ازالة البقع...",
+    "image": "https://cdn.corenexis.com/files/c/8217744720.webp",
+    "price": 4.5,
+    "oldPrice": 8.5,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 7,
+      "label": "اشتري التنين بي 7$"
+    }
+  },
+  {
+    "id": 14,
+    "cat": "home",
+    "name": "Mini Electric Massager - مكنة مساج",
+    "description": "جهاز مساج صغير...",
+    "image": "https://cdn.corenexis.com/files/c/1266373720.webp",
+    "price": 7,
+    "oldPrice": 10,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 11,
+      "label": "اشتري تنين بـ 11$"
+    }
+  },
+  {
+    "id": 15,
+    "cat": "kitchen",
+    "name": "طقم أدوات مطبخ 4 قطع عملي وضروري بكل بيت",
+    "description": "طقم أدوات مطبخ 4 قطع عملي وضروري بكل بيت 🔥\nتصميم ذكي بيوفر وقتك بالمطبخ 👌\nسهل الاستخدام وخفيف على الإيد ✨\nجودة مرتبة وقصّ وتقطيع سريع 💯\n\nبيحتوي على:\nقطاعة مقسمة🍎\nمقشرة عدد 2 🥕\nمبشرة متعددة 🧀\nدفة فرم 🔪\n\nحجم مريح وتخزين سهل 👏",
+    "image": "https://cdn.corenexis.com/files/c/5673419720.png",
+    "price": 5,
+    "oldPrice": 5.99,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 9,
+      "label": ""
+    }
+  },
+  {
+    "id": 16,
+    "cat": "kitchen",
+    "name": "قطاعة خضار 3 بـ 1",
+    "description": "بتفرم وبتبشر وبتعمل شرائح بطريقة سهلة\n\nكاسة دوّارة عملية وسريعة بالاستخدام\n\nمناسبة للخضار والسلطات والتزيين\n\nفيها 3 شفرات متعددة الاستعمال\n\nحجمها صغير وما بتاخد محل بالمطبخ\n\nتنظيفها سهل ومرتبة كتير",
+    "image": "https://cdn.corenexis.com/files/c/8787221720.png",
+    "price": 5,
+    "oldPrice": 7,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 9,
+      "label": ""
+    }
+  },
+  {
+    "id": 17,
+    "cat": "kitchen",
+    "name": "مطحنة قهوة يدوية ستانلس ستيل Silver",
+    "description": "تصميم أنيق وفخم للمطبخ ✨\n\nطحن يدوي يعطيك نكهة قهوة أقوى وأطيب\n\nشفرات داخلية قوية لطحن ناعم ومتوسط\n\nحجم عملي وسهل الحمل لأي مكان\n\nمناسبة للقهوة، الهيل، والبهارات\n\nجودة متينة واستعمال طويل",
+    "image": "https://cdn.corenexis.com/files/c/4653764720.png",
+    "price": 7,
+    "oldPrice": 13,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 12,
+      "label": ""
+    }
+  },
+  {
+    "id": 18,
+    "cat": "home",
+    "name": "سيشوار + فرشاية شعر عالكهربا",
+    "description": "✔️ بتمشّط وبتجفف الشعر بنفس الوقت  \n✔️ عملية وسهلة الاستخدام  \n✔️ بتوفر وقت وجهد",
+    "image": "https://cdn.corenexis.com/files/c/7182655720.png",
+    "price": 11,
+    "oldPrice": 20,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 20,
+      "label": ""
+    }
+  },
+  {
+    "id": 19,
+    "cat": "bathroom",
+    "name": "Bathroom Sink Filter - فلتر مغسلة الحمام",
+    "description": "احمِ مصرف حمامك من الانسدادات المزعجة مع فلتر مغسلة الحمام الموثوق. يقبض بقوة على الشعر والحطام، مما يحافظ على تدفق المياه بسلاسة وكفاءة. توفر هذه الإضافة الأساسية لحمامك صيانة خالية من المتاعب وتحمي استثمارك في السباكة لسنوات قادمة",
+    "image": "https://cdn.corenexis.com/files/c/3373257720.webp",
+    "price": 5.99,
+    "oldPrice": 6.99,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 10,
+      "label": ""
+    }
+  },
+  {
+    "id": 20,
+    "cat": "home",
+    "name": "Screen Repair Tape - تلزيق منخل",
+    "description": "شريط إصلاح المنخل - الحل السريع والفعال لإصلاح النوافذ والأبواب المشبكة. يلتصق بقوة ويدوم طويلاً، مما يحافظ على سلامة منزلك من الحشرات والأتربة. سهل التطبيق والإزالة دون ترك آثار، ومقاوم للعوامل الجوية والرطوبة. اختاري الحماية والراحة معاً، واستمتعي بمنزل نظيف وآمن طوال السنة",
+    "image": "https://cdn.corenexis.com/files/c/5568671720.webp",
+    "price": 4.5,
+    "oldPrice": 5,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 7,
+      "label": ""
+    }
+  },
+  {
+    "id": 21,
+    "cat": "car",
+    "name": "Car Seats Foam Cleaner - فوم تنظيف فرش السيارات",
+    "description": "منظف الرغوة المتخصص لفرش السيارات يزيل الأوساخ والبقع العنيدة بفعالية. صيغة قوية تخترق الألياف العميقة لاستعادة نظافة المقاعد وإشراقتها الأصلية. سهل الاستخدام - رش مباشر على السطح واترك الرغوة تعمل سحرها. آمن على جميع أنواع الأقمشة والجلود. يترك رائحة منعشة وطازجة داخل سيارتك. الحل الأمثل للحفاظ على داخلية سيارتك نظيفة وجميلة",
+    "image": "https://cdn.corenexis.com/files/c/8487331720.webp",
+    "price": 8,
+    "oldPrice": 14,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 15,
+      "label": ""
+    }
+  },
+  {
+    "id": 22,
+    "cat": "makeup",
+    "name": "مجسمات \"كيوت كاراكتر\" اللطيفة – إصدار الألوان المنعشة ✨",
+    "description": "أضف لمسة سحر لغرفتك أو مكتبك مع هالمجسمات المميزة! 😍 مجسمات زينة بألوان \"باستيل\" رائعة وتصميم كيوت كتير، مثالية لتزيين الرفوف أو كهدية مميزة.\n\n✨ ألوان متنوعة تناسب كل الأذواق.\n\n📏 حجم مثالي لأي زاوية بالبيت.\n\n🎁 القطعة اللي بتغير شكل مكتبك.",
+    "image": "https://cdn.corenexis.com/files/c/9316469720.png",
+    "price": 1,
+    "oldPrice": 3,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 0,
+      "price": 0,
+      "label": ""
+    }
+  },
+  {
+    "id": 23,
+    "cat": "makeup",
+    "name": "مرطب الشفاه Jelly Wow المغذي 💄",
+    "description": "احصلي على ترطيب عميق وإشراقة طبيعية مع زيت الشفاه Jelly Wow! 😍 بتركيبة خفيفة بتعطي لمعة جذابة بدون ملمس لزج، وبتحمي شفافك من الجفاف طول اليوم.\n\n✨ ترطيب فائق يدوم طويلاً.\n\n✨ مظهر صحي وناعم بلمسة وحدة.\n\n✨ ألوان هادئة وروايح بتجنن",
+    "image": "https://cdn.corenexis.com/files/c/1266185720.png",
+    "price": 3,
+    "oldPrice": 3,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 0,
+      "price": 0,
+      "label": ""
+    }
+  },
+  {
+    "id": 24,
+    "cat": "makeup",
+    "name": "زيت السعد الأصلي – أصالة الطبيعة ✨",
+    "description": "الحل الطبيعي لبشرة ناعمة كالحرير! 😍 زيت السعد معصور على البارد ليحافظ على كامل فوائده، مثالي لتخفيف نمو الشعر تدريجياً وبطريقة آمنة تماماً.\n\n✅ طبيعي 100% وبدون إضافات.\n\n✅ يساعد في تقليل نمو الشعر الزائد مع الاستخدام.\n\n✅ يغذي البشرة ويمنحها ملمساً ناعماً.",
+    "image": "https://cdn.corenexis.com/files/c/2578869720.png",
+    "price": 5,
+    "oldPrice": 15,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 0,
+      "price": 0,
+      "label": ""
+    }
+  },
+  {
+    "id": 25,
+    "cat": "makeup",
+    "name": "مجموعة أرواج \"سداسية الكمال\" الفاخرة ✨",
+    "description": "تألّقي بإطلالة ساحرة مع مجموعة الألوان الأساسية! 😍 أحمر شفاه بتركيبة غنية وملمس مخملي بيعطيكِ لون ثابت وجذاب من أول مسحة.\n\n✅ تصميم سداسي أنيق وعصري.\n\n✅ ألوان دافئة بتناسب كل المناسبات.\n\n✅ اختيار خبراء التجميل لإطلالة مثالية.",
+    "image": "https://cdn.corenexis.com/files/c/2613845720.png",
+    "price": 2,
+    "oldPrice": 5,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 0,
+      "price": 0,
+      "label": ""
+    }
+  },
+  {
+    "id": 26,
+    "cat": "makeup",
+    "name": "ملمع الشفاه Fruit Gloss بنكهات الفواكه ✨",
+    "description": "امنحي شفاهك لمعاناً طبيعياً ورائحة لا تقاوم! 😍 غلوس مرطب بنكهات الفواكه (عنب، توت، تفاح) بتركيبة خفيفة تعطي لمعة جذابة ومظهراً صحياً طوال اليوم.\n\n✅ نكهات طبيعية منعشة.\n\n✅ يمنع جفاف الشفاه ويمنحها نعومة فائقة.\n\n✅ مثالي للاستخدام اليومي بلمسة شفافة ولامعة",
+    "image": "https://cdn.corenexis.com/files/c/5516584720.png",
+    "price": 1,
+    "oldPrice": 5,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 0,
+      "price": 0,
+      "label": ""
+    }
+  },
+  {
+    "id": 27,
+    "cat": "makeup",
+    "name": "مرطب الشفاه السحري بخلاصة الصبار الطبيعي 🌿",
+    "description": "وداعاً للجفاف مع سحر الصبار! 😍 مرطب شفاه بتركيبة جل الصبار بنسبة 99%، بيعطي ترطيب فائق وحماية تدوم طويلاً، مع لمسة وردية طبيعية بتظهر حسب حرارة جسمك.\n\n✅ طبيعي 100% وخالي من البارابين.\n\n✅ يهدئ ويصلح الشفاه المتشققة فوراً.\n\n✅ يمنح إشراقة وردية صحية وطبيعية.",
+    "image": "https://cdn.corenexis.com/files/c/8666722720.png",
+    "price": 1,
+    "oldPrice": 4,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 0,
+      "price": 0,
+      "label": ""
+    }
+  },
+  {
+    "id": 28,
+    "cat": "makeup",
+    "name": "مجموعة مناكير \"جل\" – الألوان الأساسية ✨",
+    "description": "تألقي بأظافر مثالية مع مجموعة طلاء الأظافر \"جل\" طويلة الأمد! 😍 ألوان راقية، لمعة ثابتة، وتغطية كاملة من أول مسحة لتدوم معكِ حتى 16 يوماً من الجمال.\n\n✅ تركيبة \"جل\" احترافية وسريعة الجفاف.\n\n✅ ألوان أساسية (نود، وردي، أبيض، أسود) تناسب كل إطلالاتك.\n\n✅ فرشاة دقيقة لسهولة الاستخدام المنزلي.",
+    "image": "https://cdn.corenexis.com/files/c/5642948720.png",
+    "price": 1.5,
+    "oldPrice": 3,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 0,
+      "price": 0,
+      "label": ""
+    }
+  },
+  {
+    "id": 29,
+    "cat": "makeup",
+    "name": "مزيل طلاء أظافر السادا – قوة ونعومة ✨",
+    "description": "اكشفي عن جمال أظافرك الحقيقي! 😍 مزيل طلاء أظافر بتركيبة فعالة بتشيل المناكير بسرعة وبسهولة من أول مسحة، مع الحفاظ على رطوبة ونعومة أظافرك ومنع جفافها.\n\n✅ مفعول سريع وقوي على جميع أنواع طلاء الأظافر.\n\n✅ لطيف على الجلد المحيط بالأظافر.\n\n✅ رائحة خفيفة ومنعشة.",
+    "image": "https://cdn.corenexis.com/files/c/3635263720.png",
+    "price": 1,
+    "oldPrice": 1.01,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 0,
+      "price": 0,
+      "label": ""
+    }
+  },
+  {
+    "id": 30,
+    "cat": "makeup",
+    "name": "مجموعة مسك الطهارة – نقاء الطبيعة ✨",
+    "description": "استمتعي بانتعاش يدوم طويلاً مع مجموعة مسك الطهارة الكاملة! 😍 رائحة النظافة الأصلية التي تمنحكِ شعوراً بالثقة والانتعاش طوال اليوم، بتركيبة لطيفة على البشرة ومناسبة للاستخدام اليومي.\n\n✅ عطر فواح وثابت برائحة المسك الأبيض.\n\n✅ تضم لوشن معطر ومسبول للجسم.\n\n",
+    "image": "https://cdn.corenexis.com/files/c/9691486720.png",
+    "price": 1.5,
+    "oldPrice": 3,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 0,
+      "price": 0,
+      "label": ""
+    }
+  },
+  {
+    "id": 31,
+    "cat": "home",
+    "name": "Doublefaced Adhseive Tape - تلزيق دوبل فايس",
+    "description": "شريط لاصق ثنائي الوجه مصنوع من مادة جل نانو عالية الجودة، يجمع بين القوة والأمان. يثبت الأشياء بثبات دون انزلاق، ويمكن إزالته بسهولة دون ترك آثار على الجدران أو الأسطح. قابل للغسل والاستخدام المتكرر، مما يوفر لك حلاً اقتصادياً وعملياً. استخدمه في تطبيقات لا حصر لها حول منزلك أو مكتبك. اختر الشريط اللاصق الموثوق الذي يحافظ على سلامة أسطحك.",
+    "image": "https://zestlb.com/cdn/shop/files/1_3202d90f-ee00-42b9-868b-834101c0e4e1.webp?v=1732537904&width=713",
+    "price": 4,
+    "oldPrice": 5,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 7,
+      "label": ""
+    }
+  },
+  {
+    "id": 32,
+    "cat": "home",
+    "name": "Mop Holder - تعليقة مماسح",
+    "description": "تعليقة مماسح عملية وأنيقة تحافظ على ترتيب مساحتك وتوفر مساحة تخزين ذكية. تصميمها المتين يضمن تثبيتاً آمناً على الجدران، مما يجعل الوصول إلى أدوات التنظيف سهلاً وسريعاً. مثالية للمطابخ والحمامات والمساحات الضيقة، تساعدك على الحفاظ على منزلك منظماً وخالياً من الفوضى. استثمر في حل تنظيم عملي يجمع بين الوظيفة والجمالية.",
+    "image": "https://zestlb.com/cdn/shop/files/S797a0e2f2e7f4a6eae937bd0380d24f1g_1.avif?v=1762524137&width=713",
+    "price": 8,
+    "oldPrice": 10,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 13,
+      "label": ""
+    }
+  },
+  {
+    "id": 33,
+    "cat": "bathroom",
+    "name": "Shower Drainer Mesh - مصافي بالوعة الكيس يحتوى على 10 مصافي",
+    "description": "",
+    "image": "https://zestlb.com/cdn/shop/files/61e15yB19kL._AC.jpg?v=1762521434&width=713",
+    "price": 4,
+    "oldPrice": 5,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 8,
+      "label": "يعني 40 مصفاية بس بي 8$"
+    }
+  },
+  {
+    "id": 34,
+    "cat": "bathroom",
+    "name": "4 Layers Corner Shelf - ستاند زاوية الحمام",
+    "description": "ستاند زاوية حمام بأربع طبقات يستفيد من المساحات الضيقة بذكاء. تصميم عملي يوفر تخزيناً إضافياً للمنتجات والمستلزمات دون احتلال مساحة كبيرة. مصنوع من مواد قوية وآمنة تتحمل الرطوبة والاستخدام اليومي. كل طبقة توفر سعة تخزينية كافية للصابون والشامبو والمناشف والإكسسوارات. حل عملي وأنيق لتنظيم حمامك بكفاءة.",
+    "image": "https://zestlb.com/cdn/shop/files/MW-832_1024x1024_bb2f3410-d9bb-4104-b477-3ea6c39ecb20.jpg?v=1762424251&width=713",
+    "price": 12,
+    "oldPrice": 13,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 23,
+      "label": ""
+    }
+  },
+  {
+    "id": 35,
+    "cat": "kitchen",
+    "name": "Food Processor - فرامة لحمة كهربائية",
+    "description": "فرامة كهربائية متعددة الاستخدامات بسعة 2 لتر مزودة بجرن ستانلس ستيل متين. تفرم اللحوم والخضروات بكفاءة عالية وسرعة فائقة، مما يوفر وقتك في المطبخ. تصميمها القوي يضمن أداءً موثوقاً لسنوات طويلة. الجرن المصنوع من الستانلس ستيل يقاوم الصدأ ويسهل تنظيفه. مناسبة للعائلات والمطاعم الصغيرة. حل عملي وموثوق لتحضير الوجبات بسهولة.",
+    "image": "https://zestlb.com/cdn/shop/files/2l-electric-meat-grinder-stainless-steel-food-processor-high-power-chopper-for-home-use-883.webp?v=1762240577&width=713",
+    "price": 15,
+    "oldPrice": 15.5,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 29,
+      "label": ""
+    }
+  },
+  {
+    "id": 36,
+    "cat": "Home",
+    "name": "🧻 GIC Compressed Wipes – مناديل مضغوطة (8 حبات)",
+    "description": "مناديل مضغوطة صغيرة وعملية، تتمدد فور إضافة الماء لتتحول إلى منديل ناعم وجاهز للاستخدام. مثالية للسفر، السيارة، التخييم، المطاعم والاستخدام اليومي. حجمها الصغير يجعل حملها سهلاً في الجيب أو الحقيبة.",
+    "image": "https://cdn.corenexis.com/files/c/3451767720.png",
+    "price": 2,
+    "oldPrice": 3,
+    "deliveryPrice": 4,
+    "offer": {
+      "qty": 2,
+      "price": 5,
+      "label": "🧻 GIC Compressed Wipes – مناديل مضغوطة (16  حبات)"
+    }
+  }
 ];
 
 const FAKE_COMMENTS=[
