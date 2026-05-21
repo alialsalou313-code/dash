@@ -557,7 +557,7 @@ textarea.fc{resize:vertical;min-height:80px}
     <nav class="desk-nav" id="desk-nav">
       <button onclick="go('home')">الرئيسية</button>
       <button onclick="go('home')">المنتجات</button>
-      <button onclick="go('accelerated')" style="background:rgba(124,58,237,0.2);color:#c4b5fd">التشغيجات</button>
+      <button onclick="go('accelerated')" style="background:rgba(124,58,237,0.2);color:#c4b5fd">Touch mtc alfa day ....</button>
       <button onclick="goOffers()" class="dn-act">العروض</button>
       <button onclick="go('wishlist')">المفضلة</button>
       <button onclick="go('contact')">تواصل</button>
@@ -588,7 +588,7 @@ textarea.fc{resize:vertical;min-height:80px}
   <nav class="mob-nav-links">
     <button onclick="go('home');closeNav()">🏠 الرئيسية</button>
     <button onclick="go('home');closeNav()">🛍️ كل المنتجات</button>
-    <button onclick="go('accelerated');closeNav()">⚡ التشغيجات</button>
+    <button onclick="go('accelerated');closeNav()">⚡ Touch mtc alfa day ....</button>
     <button onclick="goOffers();closeNav()">🔥 العروض الخاصة</button>
     <button onclick="go('wishlist');closeNav()">♥ المفضلة</button>
     <button onclick="go('wallet');closeNav()">💰 محفظتي</button>
@@ -618,7 +618,7 @@ textarea.fc{resize:vertical;min-height:80px}
         <div class="footer-h">روابط سريعة</div>
         <button onclick="go('home')">الرئيسية</button>
         <button onclick="goOffers()">العروض</button>
-        <button onclick="go('accelerated')">التشغيجات</button>
+        <button onclick="go('accelerated')">Touch mtc alfa day ....</button>
         <button onclick="go('wallet')">محفظتي</button>
         <button onclick="go('contact')">تواصل معنا</button>
         <button onclick="go('orders')">طلباتي</button>
@@ -1803,7 +1803,7 @@ function pAccelerated(){
     <button class="back-btn" onclick="goBack()">← رجوع</button>
     <div class="acc-hero">
       <div class="acc-hero-ico">⚡</div>
-      <div class="acc-hero-ttl">التشغيجات</div>
+      <div class="acc-hero-ttl">Touch mtc alfa day ....</div>
       <div class="acc-hero-sub">خدمات رقمية فورية تُنفَّذ تلقائياً<br>يجب الدفع الكامل من المحفظة</div>
       <div style="background:rgba(255,255,255,0.2);border-radius:10px;padding:10px 16px;margin-top:14px;font-size:0.86rem">رصيدك: <strong style="font-size:1.1rem;color:#c4b5fd">$${bal.toFixed(2)}</strong></div>
     </div>
@@ -1834,7 +1834,7 @@ function pAccService(){
   S.accPrice=S.accPrice&&svc.prices.includes(S.accPrice)?S.accPrice:svc.prices[0];
   const canAfford=bal>=S.accPrice;
   return`<div class="main pi">
-    <button class="back-btn" onclick="go('accelerated')">← التشغيجات</button>
+    <button class="back-btn" onclick="go('accelerated')">← Touch mtc alfa day ....</button>
     <div style="background:linear-gradient(135deg,#581c87,#7c3aed);border-radius:var(--r);padding:24px;text-align:center;color:#fff;margin-bottom:18px">
       <div style="font-size:3rem;margin-bottom:8px">${svc.icon}</div>
       <div style="font-size:1.3rem;font-weight:900;font-family:'Tajawal',sans-serif">${S.lang==='en'?svc.nameEn:svc.name}</div>
@@ -1851,7 +1851,7 @@ function pAccService(){
       <div class="srow"><span class="slbl">المبلغ المطلوب</span><span style="color:#9333ea;font-weight:700">$${S.accPrice.toFixed?S.accPrice.toFixed(2):S.accPrice}</span></div>
       <div class="srow"><span class="slbl">بعد التنفيذ</span><span style="font-weight:700;color:${canAfford?'var(--success)':'#dc2626'}">$${canAfford?(bal-S.accPrice).toFixed(2):'—'}</span></div>
     </div>
-    ${!canAfford?`<div class="acc-insufficient"><div class="acc-insufficient-ico">💸</div><div class="acc-insufficient-ttl">ليس لديك رصيد كافي</div><div class="acc-insufficient-sub">رصيدك الحالي $${bal.toFixed(2)}<br>تحتاج $${S.accPrice} لإتمام هذه المعاملة<br><br>لا يوجد دفع عند الاستلام في التشغيجات<br>الرجاء شحن رصيدك أولاً عبر Remit Code</div><br><button class="btn btn-d" style="max-width:220px;margin:0 auto" onclick="go('remit')">🔑 شحن الرصيد</button></div>`:''}
+    ${!canAfford?`<div class="acc-insufficient"><div class="acc-insufficient-ico">💸</div><div class="acc-insufficient-ttl">ليس لديك رصيد كافي</div><div class="acc-insufficient-sub">رصيدك الحالي $${bal.toFixed(2)}<br>تحتاج $${S.accPrice} لإتمام هذه المعاملة<br><br>لا يوجد دفع عند الاستلام في Touch mtc alfa day ....<br>الرجاء شحن رصيدك أولاً عبر Remit Code</div><br><button class="btn btn-d" style="max-width:220px;margin:0 auto" onclick="go('remit')">🔑 شحن الرصيد</button></div>`:''}
     <div class="fg"><label class="fl">رقم الهاتف / المستخدم <span class="req">*</span></label><input id="acc-target" class="fc" type="text" placeholder="أدخل الرقم المراد شحنه..." dir="ltr"></div>
     <div class="fg"><label class="fl">ملاحظات <span class="opt">(اختياري)</span></label><input id="acc-notes" class="fc" type="text"></div>
     <button class="btn btn-pur" id="acc-btn" onclick="doAccOrder('${svc.id}')" ${!canAfford?'disabled style="opacity:0.5;cursor:not-allowed"':''}>⚡ تنفيذ الطلب - $${S.accPrice}</button>
