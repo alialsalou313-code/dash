@@ -363,6 +363,23 @@ footer.site{padding-bottom:calc(20px + var(--fab-clearance))}
 .wa-fab:hover{transform:scale(1.06)}
 .loading-screen{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
 .loading-screen .brand{font-size:1.5rem}
+@media(max-width:640px){
+  .page{padding-left:0;padding-right:0}
+  .container{padding-left:0;padding-right:0}
+
+  /* الهيرو والماركي والكارت الرئيسي بيضلوا full-bleed لكن نرجعلهم padding داخلي حتى النص ما يلزق بالحيط */
+  .hero{border-radius:0;padding-left:20px;padding-right:20px}
+  .marquee{border-radius:0}
+  .compare-wrap{border-radius:0;padding-left:16px;padding-right:16px}
+
+  /* أي عنصر كان بياخد padding من .page لازم ياخده هو بلاش */
+  .cats-row,.search-wrap,.sort-row,.grid,.section-head,
+  .pd-wrap,.card.form-card,.back-link{
+    margin-left:16px;margin-right:16px
+  }
+
+  /* الكروت يلي هي أصلاً grid ما بتحتاج padding إضافي لأنها بين بعضها بالـ gap */
+}
 </style>
 </head>
 <body>
