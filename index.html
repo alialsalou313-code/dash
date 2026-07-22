@@ -31,6 +31,11 @@
   /* two easings: quiet transitions vs. springy, tactile ones */
   --ease:cubic-bezier(.4,0,.2,1);
   --spring:cubic-bezier(.32,1.6,.5,1);
+
+  /* NEW: reserved clearance so the fixed WhatsApp FAB never sits on top
+     of horizontally-scrolling rows or footer links */
+  --fab-size:56px;
+  --fab-clearance: calc(var(--fab-size) + 22px);
 }
 [data-dark="1"]{
   --bg:#0B1220; --surface:#121B2E; --text:#EDF1F8; --muted:#8B94A8;
@@ -125,7 +130,12 @@ header.site{position:sticky;top:0;z-index:200;background:transparent;padding-top
 @media(max-width:480px){.hero{padding:32px 18px;border-radius:var(--r-lg)}}
 
 /* ---- category pills / search ---- */
-.cats-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:16px;scrollbar-width:none}
+.cats-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:16px;scrollbar-width:none;
+  /* FIX: reserve space on the right so the fixed WhatsApp FAB never
+     sits on top of the last pill (Kitchen/Bathroom etc.) */
+  padding-inline-end:var(--fab-clearance);
+  scroll-padding-inline-end:var(--fab-clearance);
+}
 .cats-row::-webkit-scrollbar{display:none}
 .pill{flex-shrink:0;padding:10px 18px;border-radius:var(--r-pill);border:1.5px solid var(--border);background:var(--surface);font-size:.85rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:.25s var(--spring);color:var(--muted)}
 .pill:hover{transform:translateY(-1px)}
@@ -234,6 +244,10 @@ header.site{position:sticky;top:0;z-index:200;background:transparent;padding-top
 .sticky-bar{position:fixed;bottom:12px;left:12px;right:12px;background:var(--glass-bg);backdrop-filter:blur(var(--glass-blur)) saturate(1.5);-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(1.5);border:1px solid var(--glass-brd);border-radius:var(--r-xl);padding:14px 18px calc(14px + env(safe-area-inset-bottom));box-shadow:var(--shadow-lg);z-index:90}
 @media(max-width:480px){.sticky-bar{left:8px;right:8px;bottom:8px;padding:12px 12px calc(12px + env(safe-area-inset-bottom));border-radius:var(--r-lg)}}
 .sticky-bar-in{max-width:1180px;margin:0 auto;display:flex;gap:10px}
+/* FIX: when the sticky action bar is present (cart/checkout pages) the
+   FAB should not float on top of its buttons */
+.sticky-bar ~ .wa-fab,
+body:has(.sticky-bar) .wa-fab{bottom:calc(90px + 76px + env(safe-area-inset-bottom))}
 
 /* ---- forms ---- */
 .fgroup{margin-bottom:14px}
@@ -315,6 +329,13 @@ footer.site{background:var(--surface);border-top:1px solid var(--border);margin-
 .footer-bottom{border-top:1px solid var(--border);padding-top:18px;text-align:center;color:var(--muted);font-size:.76rem}
 .soc-row{display:flex;gap:8px;margin-top:10px}
 .soc-row a{width:36px;height:36px;border-radius:50%;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.85rem}
+/* FIX: the "Contact" column (WhatsApp / email / contact form links) sat
+   directly under the fixed wa-fab bubble, so the fab visually covered
+   the footer's own "WhatsApp" link and the "Dash Lebanon" brand block
+   above it never had enough bottom clearance. Reserve space so nothing
+   in the footer sits underneath the fab. */
+footer.site{padding-bottom:calc(24px + var(--fab-clearance))}
+.footer-col:last-of-type{padding-inline-end:var(--fab-clearance)}
 
 /* ---- toast / modal ---- */
 #toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(12px);background:var(--text);color:var(--bg);padding:13px 24px;border-radius:var(--r-pill);font-size:.85rem;font-weight:600;z-index:999;opacity:0;transition:.3s var(--spring);pointer-events:none;white-space:nowrap;box-shadow:var(--shadow-lg)}
@@ -328,7 +349,7 @@ footer.site{background:var(--surface);border-top:1px solid var(--border);margin-
 .spin{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;display:inline-block}
 .spin-dark{border-color:rgba(0,0,0,.15);border-top-color:var(--primary)}
 @keyframes sp{to{transform:rotate(360deg)}}
-.wa-fab{position:fixed;bottom:calc(90px + env(safe-area-inset-bottom));right:18px;z-index:80;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 28px rgba(37,211,102,.45);color:#fff;font-size:1.5rem;transition:.25s var(--spring)}
+.wa-fab{position:fixed;bottom:calc(90px + env(safe-area-inset-bottom));right:18px;z-index:80;width:var(--fab-size);height:var(--fab-size);background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 28px rgba(37,211,102,.45);color:#fff;font-size:1.5rem;transition:.25s var(--spring)}
 .wa-fab:hover{transform:scale(1.08) translateY(-2px)}
 .loading-screen{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
 .loading-screen .brand{font-size:1.6rem}
