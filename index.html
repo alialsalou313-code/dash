@@ -66,7 +66,7 @@ img{max-width:100%;display:block}
 /* ---- header : floating "dynamic island" glass bar ---- */
 header.site{position:sticky;top:0;z-index:200;background:transparent;padding-top:env(safe-area-inset-top)}
 .hbar{display:flex;align-items:center;gap:18px;padding:12px 20px;max-width:1180px;margin:10px auto 0;background:var(--glass-bg);backdrop-filter:blur(var(--glass-blur)) saturate(1.5);-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(1.5);border:1px solid var(--glass-brd);border-radius:var(--r-pill);box-shadow:var(--shadow);transition:box-shadow .3s var(--ease)}
-@media(max-width:480px){.hbar{padding:10px 14px;border-radius:24px;margin:8px auto 0}}
+@media(max-width:480px){.hbar{padding:10px 12px;border-radius:24px;margin:8px auto 0;gap:8px}}
 .brand{font-family:var(--font-d);font-weight:800;font-size:1.35rem;letter-spacing:-.5px;display:flex;align-items:center;gap:6px;cursor:pointer;flex-shrink:0}
 .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(245,166,35,.18)}
 .nav-links{display:none;gap:4px;margin-inline-start:8px}
@@ -245,9 +245,15 @@ header.site{position:sticky;top:0;z-index:200;background:transparent;padding-top
 @media(max-width:480px){.sticky-bar{left:8px;right:8px;bottom:8px;padding:12px 12px calc(12px + env(safe-area-inset-bottom));border-radius:var(--r-lg)}}
 .sticky-bar-in{max-width:1180px;margin:0 auto;display:flex;gap:10px}
 /* FIX: when the sticky action bar is present (cart/checkout pages) the
-   FAB should not float on top of its buttons */
-.sticky-bar ~ .wa-fab,
-body:has(.sticky-bar) .wa-fab{bottom:calc(90px + 76px + env(safe-area-inset-bottom))}
+   FAB should not float on top of its Checkout/Place order button.
+   NOTE: ".sticky-bar ~ .wa-fab" never actually matched — .sticky-bar is
+   rendered deep inside #app while .wa-fab is a sibling of #app, so they
+   never share a parent. That silently left the FAB sitting on top of the
+   Checkout / Place order button on any browser without :has() support.
+   The router now toggles body.has-sticky-bar directly (see script), which
+   works everywhere; :has() is kept only as a harmless extra. */
+body:has(.sticky-bar) .wa-fab,
+body.has-sticky-bar .wa-fab{bottom:calc(90px + 76px + env(safe-area-inset-bottom))}
 
 /* ---- forms ---- */
 .fgroup{margin-bottom:14px}
@@ -658,6 +664,7 @@ function showFooterCart(hide){document.getElementById('site-footer').classList.t
 function render(){
   const noFooter=['cart','checkout'];
   showFooterCart(noFooter.includes(S.page));
+  document.body.classList.toggle('has-sticky-bar',noFooter.includes(S.page));
   switch(S.page){
     case'home':app().innerHTML=pHome();bindHome();break;
     case'product':pProduct();break;
