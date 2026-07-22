@@ -135,7 +135,6 @@ header.site{position:sticky;top:0;z-index:200;background:rgba(247,248,251,.85);b
 .wish-btn{position:absolute;bottom:10px;right:10px;width:34px;height:34px;border-radius:50%;border:none;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;box-shadow:0 4px 12px rgba(0,0,0,.15);transition:.2s}
 .wish-btn:hover{transform:scale(1.08)}
 .wish-btn.active{color:#E0433E}
-.pd-actions .wish-btn{position:relative;bottom:auto;right:auto;width:48px;height:48px}
 .pcard-body{padding:12px 13px 14px;display:flex;flex-direction:column;flex:1}
 @media(min-width:600px){.pcard-body{padding:14px 15px 16px}}
 .pcard-name{font-size:.85rem;font-weight:700;line-height:1.4;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.35em;letter-spacing:-.1px}
@@ -387,12 +386,21 @@ const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 /* =========================================================
    GLOBAL STATE
 ========================================================= */
+function loadCart(){
+  try{
+    const cart=JSON.parse(localStorage.getItem('dl_cart')||'[]');
+    return Array.isArray(cart)?cart:[];
+  }catch(error){
+    localStorage.removeItem('dl_cart');
+    return [];
+  }
+}
 const S={
   page:'home',data:null,history:[],
   dark:localStorage.getItem('dl_dark')==='1',
   settings:null,categories:[],products:[],
   session:null,profile:null,
-  cart:JSON.parse(localStorage.getItem('dl_cart')||'[]'),
+  cart:loadCart(),
   wishlist:[],           // product ids
   cat:'all',search:'',offersOnly:false,sort:'def',
   dqty:1,buyMode:'normal',
@@ -687,7 +695,7 @@ function renderProductPage(p){
         </div>
         <div class="pd-actions">
           <button class="btn btn-primary" onclick="addToCart('${p.id}')">Add to cart</button>
-          <button class="icon-btn btn-icon-only wish-btn ${wished?'active':''}" data-pid="${p.id}" onclick="toggleWish('${p.id}',event);this.classList.toggle('active')">${wished?'♥':'♡'}</button>
+          <button class="icon-btn btn-icon-only wish-btn ${wished?'active':''}" data-pid="${p.id}" onclick="toggleWish('${p.id}',event);this.classList.toggle('active')" style="height:48px">${wished?'♥':'♡'}</button>
         </div>
       </div>
     </div>
@@ -752,7 +760,7 @@ function addToCart(pid){
     const ex=S.cart.find(i=>i._uid===uid);
     if(ex)ex.qty+=S.dqty;else S.cart.push({_uid:uid,product_id:p.id,name:p.name,image:coverImg(p),price:p.price,qty:S.dqty,delivery_price:p.delivery_price,is_bundle:false,bundle_label:''});
   }
-  saveCart();updateCartBadge();toast('Added to cart');
+  clearCoupon();saveCart();updateCartBadge();toast('Added to cart');
 }
 
 /* =========================================================
@@ -836,8 +844,8 @@ function pCart(){
   </div>
   <div class="sticky-bar"><div class="sticky-bar-in"><button class="btn btn-primary" onclick="nav('checkout')">Checkout — ${fmt(cartTotal())}</button></div></div>`;
 }
-function cartQty(uid,q){if(q<1){cartRemove(uid);return}const i=S.cart.find(x=>x._uid===uid);if(i)i.qty=q;saveCart();render();updateCartBadge()}
-function cartRemove(uid){S.cart=S.cart.filter(x=>x._uid!==uid);saveCart();render();updateCartBadge()}
+function cartQty(uid,q){if(q<1){cartRemove(uid);return}const i=S.cart.find(x=>x._uid===uid);if(i){i.qty=q;clearCoupon()}saveCart();render();updateCartBadge()}
+function cartRemove(uid){S.cart=S.cart.filter(x=>x._uid!==uid);clearCoupon();saveCart();render();updateCartBadge()}
 
 /* =========================================================
    CHECKOUT
@@ -873,6 +881,7 @@ function pCheckout(){
   <div class="sticky-bar"><div class="sticky-bar-in"><button class="btn btn-primary" id="place-order-btn" onclick="placeOrder()">Place order — ${fmt(cartTotal())}</button></div></div>`;
 }
 S.appliedDiscount=0;S.appliedCoupon=null;
+function clearCoupon(){S.appliedDiscount=0;S.appliedCoupon=null}
 async function applyCoupon(){
   const code=document.getElementById('co-coupon').value.trim().toUpperCase();
   const msg=document.getElementById('coupon-msg');
@@ -908,7 +917,13 @@ async function placeOrder(){
   const{data:order,error}=await sb.from('orders').insert(orderRow).select().single();
   if(error){btn.disabled=false;btn.textContent='Place order';toast('Could not place order — please try again');return}
   const items=S.cart.map(i=>({order_id:order.id,product_id:i.product_id,product_name:i.name,unit_price:i.price,quantity:i.qty,is_bundle:i.is_bundle,bundle_label:i.bundle_label}));
-  await sb.from('order_items').insert(items);
+  const{error:itemsError}=await sb.from('order_items').insert(items);
+  if(itemsError){
+    await sb.from('orders').delete().eq('id',order.id);
+    btn.disabled=false;btn.textContent='Place order';
+    toast('Could not save the order items — please try again');
+    return;
+  }
   if(S.session){
     await sb.rpc('credit_points',{p_user:S.session.user.id,p_points:earn,p_note:'Order '+orderNumber});
     if(S.profile)S.profile.loyalty_points=(S.profile.loyalty_points||0)+earn;
@@ -954,8 +969,9 @@ async function pOrders(){
   </div>`;
 }
 async function pOrderDetail(){
+  if(!S.session){app().innerHTML=authRequiredHTML('view an order');return}
   app().innerHTML=`<div class="page"><div class="spin spin-dark" style="margin:60px auto;display:block"></div></div>`;
-  const{data:o}=await sb.from('orders').select('*, order_items(*)').eq('id',S.data).maybeSingle();
+  const{data:o}=await sb.from('orders').select('*, order_items(*)').eq('id',S.data).eq('user_id',S.session.user.id).maybeSingle();
   if(!o){nav('orders');return}
   const steps=['pending','confirmed','processing','shipping','delivered'];
   const cur=steps.indexOf(o.status);
@@ -984,12 +1000,14 @@ async function pOrderDetail(){
   </div>`;
 }
 async function cancelOrder(id,num,createdAt){
+  if(!S.session){toast('Please log in first');return}
   const hoursSince=(Date.now()-new Date(createdAt).getTime())/3600000;
   const late=hoursSince>(S.settings.free_cancel_hours||24);
-  const reason=prompt(late?`This order is past the free-cancellation window (${S.settings.free_cancel_hours}h). A $${S.settings.cancel_fee} fee may apply — our team will follow up. Add a reason (optional):`:'Add a cancellation reason (optional):')||'';
+  const reason=prompt(late?`This order is past the free-cancellation window (${S.settings.free_cancel_hours}h). A $${S.settings.cancel_fee} fee may apply — our team will follow up. Add a reason (optional):`:'Add a cancellation reason (optional):');
   if(reason===null)return;
-  await sb.from('orders').update({status:'cancelled',cancel_reason:reason}).eq('id',id);
-  const{data:o}=await sb.from('orders').select('points_earned,user_id').eq('id',id).maybeSingle();
+  const{data:updatedOrder,error:updateError}=await sb.from('orders').update({status:'cancelled',cancel_reason:reason}).eq('id',id).eq('user_id',S.session.user.id).select('id').maybeSingle();
+  if(updateError||!updatedOrder){toast('Could not cancel the order');return}
+  const{data:o}=await sb.from('orders').select('points_earned,user_id').eq('id',id).eq('user_id',S.session.user.id).maybeSingle();
   if(o&&o.user_id&&o.points_earned){
     await sb.rpc('credit_points',{p_user:o.user_id,p_points:-o.points_earned,p_note:'Order cancelled: '+num});
   }
