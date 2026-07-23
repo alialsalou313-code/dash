@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" id="html-root">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0027)https://dashlb1.vercel.app/ -->
+<html lang="en" dir="ltr" id="html-root" data-dark="1"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Dash Lebanon — Everyday finds, delivered</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>Dash Lebanon — Everyday products, delivered fast.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./Dash Lebanon — Everyday products, delivered fast._files/css2" rel="stylesheet">
+<script src="./Dash Lebanon — Everyday products, delivered fast._files/supabase-js@2"></script>
 <style>
 :root{
   /* ===== SAME PALETTE — unchanged ===== */
@@ -384,9 +384,9 @@ footer.site{padding-bottom:calc(20px + var(--fab-clearance))}
 </head>
 <body>
 
-<div id="loading-screen" class="loading-screen"><div class="brand"><span class="dot"></span> Dash <span style="color:var(--accent)">Lebanon</span></div><div class="spin spin-dark" style="width:22px;height:22px"></div></div>
+<div id="loading-screen" class="loading-screen" style="display: none;"><div class="brand"><span class="dot"></span> Dash <span style="color:var(--accent)">Lebanon</span></div><div class="spin spin-dark" style="width:22px;height:22px"></div></div>
 
-<div id="announce"></div>
+<div id="announce" class="hide"></div>
 
 <header class="site">
   <div class="hbar">
@@ -395,15 +395,15 @@ footer.site{padding-bottom:calc(20px + var(--fab-clearance))}
     </div>
     <div class="brand" onclick="resetHome()"><span class="dot"></span> Dash <span style="color:var(--accent)">Lebanon</span></div>
     <nav class="nav-links">
-      <button onclick="resetHome()" data-nav="home">Home</button>
-      <button onclick="viewAllCategory('offers')" data-nav="offers">Offers</button>
-      <button onclick="nav('wishlist')" data-nav="wishlist">Wishlist</button>
-      <button onclick="nav('orders')" data-nav="orders">Orders</button>
-      <button onclick="nav('contact')" data-nav="contact">Contact</button>
+      <button onclick="resetHome()" data-nav="home" class="on">Home</button>
+      <button onclick="viewAllCategory(&#39;offers&#39;)" data-nav="offers">Offers</button>
+      <button onclick="nav(&#39;wishlist&#39;)" data-nav="wishlist">Wishlist</button>
+      <button onclick="nav(&#39;orders&#39;)" data-nav="orders">Orders</button>
+      <button onclick="nav(&#39;contact&#39;)" data-nav="contact">Contact</button>
     </nav>
     <div class="hbar-side right">
       <button class="icon-btn" onclick="openSearch()" title="Search">🔍</button>
-      <button class="icon-btn" onclick="nav('cart')" title="Cart">🛒<span class="badge hide" id="cart-badge">0</span></button>
+      <button class="icon-btn" onclick="nav(&#39;cart&#39;)" title="Cart">🛒<span class="badge hide" id="cart-badge">0</span></button>
     </div>
   </div>
 </header>
@@ -414,47 +414,157 @@ footer.site{padding-bottom:calc(20px + var(--fab-clearance))}
   <div class="drawer-hr"></div>
   <nav>
     <button onclick="resetHome();closeDrawer()">Home page</button>
-    <button onclick="viewAllCategory('all');closeDrawer()">All products</button>
-    <button onclick="viewAllCategory('offers');closeDrawer()">Offers</button>
-    <button onclick="nav('wishlist');closeDrawer()">Wishlist</button>
-    <button onclick="nav('orders');closeDrawer()">My orders</button>
-    <button onclick="nav('points');closeDrawer()">My points</button>
-    <button onclick="nav('account');closeDrawer()">Account</button>
-    <button onclick="nav('contact');closeDrawer()">Contact us</button>
+    <button onclick="viewAllCategory(&#39;all&#39;);closeDrawer()">All products</button>
+    <button onclick="viewAllCategory(&#39;offers&#39;);closeDrawer()">Offers</button>
+    <button onclick="nav(&#39;wishlist&#39;);closeDrawer()">Wishlist</button>
+    <button onclick="nav(&#39;orders&#39;);closeDrawer()">My orders</button>
+    <button onclick="nav(&#39;points&#39;);closeDrawer()">My points</button>
+    <button onclick="nav(&#39;account&#39;);closeDrawer()">Account</button>
+    <button onclick="nav(&#39;contact&#39;);closeDrawer()">Contact us</button>
   </nav>
   <div class="drawer-hr"></div>
   <nav>
-    <button onclick="toggleDark()" id="drawer-dm-btn">🌙 Dark mode</button>
+    <button onclick="toggleDark()" id="drawer-dm-btn">☀️ Light mode</button>
   </nav>
-  <div class="drawer-soc" id="drawer-soc"></div>
-  <div class="drawer-foot"><a class="btn btn-primary" style="background:#25D366" href="#" id="drawer-wa" target="_blank">Chat on WhatsApp</a></div>
+  <div class="drawer-soc" id="drawer-soc"><a href="https://www.instagram.com/dash.lb.2026/?__pwa=1#" target="_blank">IG</a><a href="https://www.tiktok.com/@dash.lebanon.123?_r=1&amp;_t=ZS-98EPzUK0FIy" target="_blank">TT</a></div>
+  <div class="drawer-foot"><a class="btn btn-primary" style="background:#25D366" href="https://wa.me/96181877323" id="drawer-wa" target="_blank">Chat on WhatsApp</a></div>
 </div>
 
-<div id="app"></div>
+<div id="app"><div class="page">
+    <div class="hero"><div class="hero-in">
+      <div class="hero-eyebrow">Cash on delivery · anywhere in Lebanon</div>
+      <h1>Everyday products, <span class="hl">delivered</span> fast.</h1>
+      <p>Quality home, kitchen &amp; beauty finds — cash on delivery, anywhere in Lebanon.</p>
+      <div class="hero-cta"><button class="btn btn-accent" onclick="viewAllCategory(&#39;offers&#39;)">See offers</button><button class="btn btn-ghost" style="background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.35)" onclick="viewAllCategory(&#39;all&#39;)">Shop all</button></div>
+    </div></div>
+    <div class="marquee"><div class="marquee-track">Shop now <b>↓</b>Shop now <b>↓</b>Shop now <b>↓</b>Shop now <b>↓</b>Shop now <b>↓</b>Shop now <b>↓</b>Shop now <b>↓</b>Shop now <b>↓</b>Shop now <b>↓</b>Shop now <b>↓</b>Shop now <b>↓</b>Shop now <b>↓</b>Shop now <b>↓</b>Shop now <b>↓</b>Shop now <b>↓</b>Shop now <b>↓</b></div></div>
+    <div class="cat-section">
+    <div class="cat-section-title">Bathroom</div>
+    <div class="carousel-wrap">
+      <div class="carousel-track" id="car-73a3f0a8-9599-4d2b-8989-5dd39957c791"><div class="pcard" onclick="nav(&#39;product&#39;,&#39;94e53f7f-7d16-4bdd-946a-e309c56f6020&#39;)">
+    <div class="pcard-img">
+      <div class="chip-corner">SAVE 40%</div>
+      <div class="chip-corner bundle">Bundle</div>
+      <img src="./Dash Lebanon — Everyday products, delivered fast._files/715doeAR7pL._AC_SL1500.jpg" loading="lazy" alt="High Pressure Shower Head - مسكة الدوش عالي الضغط" onerror="this.src=&#39;https://placehold.co/400x400/e7ebf3/98a2b8?text=No+Image&#39;">
+      <button class="wish-btn " data-pid="94e53f7f-7d16-4bdd-946a-e309c56f6020" onclick="toggleWish(&#39;94e53f7f-7d16-4bdd-946a-e309c56f6020&#39;,event)">♡</button>
+    </div>
+    <div class="pcard-body">
+      <div class="pcard-name">High Pressure Shower Head - مسكة الدوش عالي الضغط</div>
+      <div class="pcard-price-row">
+        <div class="pcard-price">From $5.99</div>
+        <div class="pcard-old">$9.99</div>
+      </div>
+      <button class="pcard-cta" onclick="event.stopPropagation();nav(&#39;product&#39;,&#39;94e53f7f-7d16-4bdd-946a-e309c56f6020&#39;)">Choose options</button>
+      <div class="pcard-foot"><span>New</span><span>+42pts</span></div>
+    </div>
+  </div></div>
+    </div>
+    <div class="carousel-nav">
+      <button class="car-arrow" onclick="scrollRow(&#39;car-73a3f0a8-9599-4d2b-8989-5dd39957c791&#39;,-1)" aria-label="Previous">‹</button>
+      <button class="car-arrow" onclick="scrollRow(&#39;car-73a3f0a8-9599-4d2b-8989-5dd39957c791&#39;,1)" aria-label="Next">›</button>
+    </div>
+    <div class="view-all-row"><button class="btn btn-ghost btn-pill btn-sm" onclick="viewAllCategory(&#39;bathroom&#39;)">View all</button></div>
+  </div><div class="cat-section">
+    <div class="cat-section-title">Kitchen</div>
+    <div class="carousel-wrap">
+      <div class="carousel-track" id="car-07604de9-c79f-4d16-a90c-df6ff3024bf3"><div class="pcard" onclick="nav(&#39;product&#39;,&#39;2881b4bb-454f-4f4e-8b84-c6c46f66e094&#39;)">
+    <div class="pcard-img">
+      <div class="chip-corner">SAVE 31%</div>
+      <div class="chip-corner bundle">Bundle</div>
+      <img src="./Dash Lebanon — Everyday products, delivered fast._files/d2265ca6da8820d9f6faf7620e7a16bb_1ddce049-4acc-4aab-82f3-25825b571a61.webp" loading="lazy" alt="Coffee Grinder - مطحنة بن وبهارات" onerror="this.src=&#39;https://placehold.co/400x400/e7ebf3/98a2b8?text=No+Image&#39;">
+      <button class="wish-btn " data-pid="2881b4bb-454f-4f4e-8b84-c6c46f66e094" onclick="toggleWish(&#39;2881b4bb-454f-4f4e-8b84-c6c46f66e094&#39;,event)">♡</button>
+    </div>
+    <div class="pcard-body">
+      <div class="pcard-name">Coffee Grinder - مطحنة بن وبهارات</div>
+      <div class="pcard-price-row">
+        <div class="pcard-price">From $8.99</div>
+        <div class="pcard-old">$12.99</div>
+      </div>
+      <button class="pcard-cta" onclick="event.stopPropagation();nav(&#39;product&#39;,&#39;2881b4bb-454f-4f4e-8b84-c6c46f66e094&#39;)">Choose options</button>
+      <div class="pcard-foot"><span>New</span><span>+63pts</span></div>
+    </div>
+  </div></div>
+    </div>
+    <div class="carousel-nav">
+      <button class="car-arrow" onclick="scrollRow(&#39;car-07604de9-c79f-4d16-a90c-df6ff3024bf3&#39;,-1)" aria-label="Previous">‹</button>
+      <button class="car-arrow" onclick="scrollRow(&#39;car-07604de9-c79f-4d16-a90c-df6ff3024bf3&#39;,1)" aria-label="Next">›</button>
+    </div>
+    <div class="view-all-row"><button class="btn btn-ghost btn-pill btn-sm" onclick="viewAllCategory(&#39;kitchen&#39;)">View all</button></div>
+  </div><div class="cat-section">
+    <div class="cat-section-title">Car</div>
+    <div class="carousel-wrap">
+      <div class="carousel-track" id="car-8da9e835-492a-468b-ad14-db4dbc59ef41"><div class="pcard" onclick="nav(&#39;product&#39;,&#39;1dcfb80f-e7e7-4145-bf58-1fc12dddac32&#39;)">
+    <div class="pcard-img">
+      <div class="chip-corner">SAVE 33%</div>
+      <div class="chip-corner bundle">Bundle</div>
+      <img src="./Dash Lebanon — Everyday products, delivered fast._files/q_50eea643-5a20-41fe-b2c2-69212ed65f79.webp" loading="lazy" alt="acuum Car Cleaner - هوفر تنظيف السيارة" onerror="this.src=&#39;https://placehold.co/400x400/e7ebf3/98a2b8?text=No+Image&#39;">
+      <button class="wish-btn " data-pid="1dcfb80f-e7e7-4145-bf58-1fc12dddac32" onclick="toggleWish(&#39;1dcfb80f-e7e7-4145-bf58-1fc12dddac32&#39;,event)">♡</button>
+    </div>
+    <div class="pcard-body">
+      <div class="pcard-name">acuum Car Cleaner - هوفر تنظيف السيارة</div>
+      <div class="pcard-price-row">
+        <div class="pcard-price">From $8.00</div>
+        <div class="pcard-old">$12.00</div>
+      </div>
+      <button class="pcard-cta" onclick="event.stopPropagation();nav(&#39;product&#39;,&#39;1dcfb80f-e7e7-4145-bf58-1fc12dddac32&#39;)">Choose options</button>
+      <div class="pcard-foot"><span>New</span><span>+56pts</span></div>
+    </div>
+  </div><div class="pcard" onclick="nav(&#39;product&#39;,&#39;5db8fb23-6e56-4b02-82f1-b99e0841c5db&#39;)">
+    <div class="pcard-img">
+      <div class="chip-corner">SAVE 38%</div>
+      <div class="chip-corner bundle">Bundle</div>
+      <img src="./Dash Lebanon — Everyday products, delivered fast._files/car-foam-cleaner-spray.jpg" loading="lazy" alt="Car Seats Foam Cleaner - فوم تنظيف فرش السيارات" onerror="this.src=&#39;https://placehold.co/400x400/e7ebf3/98a2b8?text=No+Image&#39;">
+      <button class="wish-btn " data-pid="5db8fb23-6e56-4b02-82f1-b99e0841c5db" onclick="toggleWish(&#39;5db8fb23-6e56-4b02-82f1-b99e0841c5db&#39;,event)">♡</button>
+    </div>
+    <div class="pcard-body">
+      <div class="pcard-name">Car Seats Foam Cleaner - فوم تنظيف فرش السيارات</div>
+      <div class="pcard-price-row">
+        <div class="pcard-price">From $8.00</div>
+        <div class="pcard-old">$13.00</div>
+      </div>
+      <button class="pcard-cta" onclick="event.stopPropagation();nav(&#39;product&#39;,&#39;5db8fb23-6e56-4b02-82f1-b99e0841c5db&#39;)">Choose options</button>
+      <div class="pcard-foot"><span><span class="stars">★</span> 5</span><span>+56pts</span></div>
+    </div>
+  </div></div>
+    </div>
+    <div class="carousel-nav">
+      <button class="car-arrow" onclick="scrollRow(&#39;car-8da9e835-492a-468b-ad14-db4dbc59ef41&#39;,-1)" aria-label="Previous">‹</button>
+      <button class="car-arrow" onclick="scrollRow(&#39;car-8da9e835-492a-468b-ad14-db4dbc59ef41&#39;,1)" aria-label="Next">›</button>
+    </div>
+    <div class="view-all-row"><button class="btn btn-ghost btn-pill btn-sm" onclick="viewAllCategory(&#39;car&#39;)">View all</button></div>
+  </div>
+    <div class="card compare-wrap">
+    <div class="compare-title">Why Dash Lebanon?</div>
+    <table class="compare-table">
+      <tbody><tr><th></th><th>Dash Lebanon</th><th>Some Stores</th><th>Others</th></tr>
+      <tr><td>Fast delivery, all over Lebanon</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">✕</td></tr><tr><td>Cash on delivery</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">✕</td></tr><tr><td>WhatsApp support</td><td class="yes">✓</td><td class="no">✕</td><td class="no">✕</td></tr><tr><td>Loyalty points on every order</td><td class="yes">✓</td><td class="no">✕</td><td class="no">✕</td></tr><tr><td>Easy order cancellation</td><td class="yes">✓</td><td class="no">✕</td><td class="no">✕</td></tr>
+    </tbody></table>
+  </div>
+  </div></div>
 
 <footer class="site" id="site-footer">
   <div class="footer-in">
     <div class="footer-top">
-      <div><div class="footer-brand">Dash <span style="color:var(--accent)">Lebanon</span></div><div class="footer-tag" id="footer-tag">Everyday products, delivered fast — cash on delivery, anywhere in Lebanon.</div>
-        <div class="soc-row" id="footer-soc"></div>
+      <div><div class="footer-brand">Dash <span style="color:var(--accent)">Lebanon</span></div><div class="footer-tag" id="footer-tag">Quality home, kitchen &amp; beauty finds — cash on delivery, anywhere in Lebanon.</div>
+        <div class="soc-row" id="footer-soc"><a href="https://www.instagram.com/dash.lb.2026/?__pwa=1#" target="_blank">IG</a><a href="https://www.tiktok.com/@dash.lebanon.123?_r=1&amp;_t=ZS-98EPzUK0FIy" target="_blank">TT</a></div>
       </div>
       <div class="footer-col"><div class="footer-h">Shop</div>
         <button onclick="resetHome()">Home</button>
-        <button onclick="viewAllCategory('offers')">Offers</button>
-        <button onclick="nav('wishlist')">Wishlist</button>
-        <button onclick="nav('orders')">My Orders</button>
+        <button onclick="viewAllCategory(&#39;offers&#39;)">Offers</button>
+        <button onclick="nav(&#39;wishlist&#39;)">Wishlist</button>
+        <button onclick="nav(&#39;orders&#39;)">My Orders</button>
       </div>
       <div class="footer-col"><div class="footer-h">Contact</div>
-        <a id="footer-wa" target="_blank">WhatsApp</a>
-        <a id="footer-email">Email</a>
-        <button onclick="nav('contact')">Contact form</button>
+        <a id="footer-wa" target="_blank" href="https://wa.me/96181877323">WhatsApp</a>
+        <a id="footer-email" href="mailto:dash.lebanon.123@gmail.com">dash.lebanon.123@gmail.com</a>
+        <button onclick="nav(&#39;contact&#39;)">Contact form</button>
       </div>
     </div>
-    <div class="footer-bottom">© <span id="footer-year"></span> Dash Lebanon. All rights reserved.</div>
+    <div class="footer-bottom">© <span id="footer-year">2026</span> Dash Lebanon. All rights reserved.</div>
   </div>
 </footer>
 
-<a class="wa-fab" id="wa-fab" target="_blank">💬</a>
+<a class="wa-fab" id="wa-fab" target="_blank" href="https://wa.me/96181877323">💬</a>
 <div id="toast"></div>
 <div id="modal-root"></div>
 
@@ -516,7 +626,9 @@ async function boot(){
     updateChromeAuth();
   });
   document.getElementById('loading-screen').style.display='none';
-  render();updateCartBadge();updateChromeAuth();
+  const initial=parseHash();
+  S.page=initial.page;S.data=initial.data;
+  render();syncUrl(S.page,S.data,false);updateCartBadge();updateChromeAuth();
 }
 async function loadProfileAndWishlist(){
   const uid=S.session.user.id;
@@ -556,14 +668,53 @@ function applyDark(){document.documentElement.setAttribute('data-dark',S.dark?'1
 function toggleDark(){S.dark=!S.dark;localStorage.setItem('dl_dark',S.dark?'1':'0');applyDark()}
 
 /* =========================================================
-   ROUTER
+   ROUTER  (hash-based, single-file SPA routing)
 ========================================================= */
-function nav(page,data=null,push=true){
+// pages that live directly under a plain "#page" hash (no extra id/slug segment)
+const SIMPLE_HASH_PAGES=['home','cart','checkout','success','orders','wishlist','points','account','contact'];
+
+function productSlug(p){return String(p&&p.name||'').trim().replace(/\s+/g,'-');}
+function findProductBySlug(slug){
+  let dec;try{dec=decodeURIComponent(slug||'')}catch(e){dec=slug||''}
+  return S.products.find(p=>productSlug(p)===dec) || S.products.find(p=>p.id===slug);
+}
+// builds the "#..." string that should be shown in the address bar for a given page/data
+function hashFor(page,data){
+  switch(page){
+    case'product':{const p=S.products.find(x=>x.id===data);return p?('#product/'+encodeURIComponent(productSlug(p))):'#home';}
+    case'order-detail':return data?('#order/'+encodeURIComponent(data)):'#orders';
+    default:return SIMPLE_HASH_PAGES.includes(page)?('#'+page):'#home';
+  }
+}
+// reads the current location.hash and figures out which page/data it points to
+function parseHash(){
+  const raw=(location.hash||'').replace(/^#\/?/,'');
+  if(!raw)return{page:'home',data:null};
+  const parts=raw.split('/');
+  const seg=parts[0];
+  if(seg==='product'){
+    const p=findProductBySlug(parts.slice(1).join('/'));
+    return{page:'product',data:p?p.id:null};
+  }
+  if(seg==='order'){
+    return{page:'order-detail',data:parts[1]?decodeURIComponent(parts[1]):null};
+  }
+  if(SIMPLE_HASH_PAGES.includes(seg))return{page:seg,data:null};
+  return{page:'home',data:null};
+}
+function syncUrl(page,data,push){
+  const h=hashFor(page,data);
+  const state={page,data};
+  if(push&&location.hash!==h)history.pushState(state,'',h);
+  else history.replaceState(state,'',h);
+}
+function nav(page,data=null,push=true,fromPop=false){
   if(push&&S.page!==page){S.history.push({page:S.page,data:S.data});if(S.history.length>25)S.history.shift()}
   S.page=page;S.data=data;
   if(page==='home'&&data&&data.offers){S.offersOnly=true;S.cat='offers';S.forceGrid=true}
   if(page!=='product'){S.dqty=1;S.buyMode='normal'}
   render();window.scrollTo(0,0);updateChromeAuth();closeDrawer();
+  if(!fromPop)syncUrl(page,data,push);
 }
 function resetHome(){S.forceGrid=false;S.cat='all';S.search='';S.offersOnly=false;nav('home');closeDrawer()}
 function viewAllCategory(slug){S.cat=slug;S.offersOnly=(slug==='offers');S.forceGrid=true;S.search='';nav('home');}
@@ -571,6 +722,11 @@ function openSearch(){viewAllCategory('all');setTimeout(()=>{const f=document.ge
 function goBack(){if(S.history.length){const p=S.history.pop();nav(p.page,p.data,false)}else nav('home',null,false)}
 function openDrawer(){document.getElementById('drawer').classList.add('open');document.getElementById('drawer-ov').classList.add('open')}
 function closeDrawer(){document.getElementById('drawer').classList.remove('open');document.getElementById('drawer-ov').classList.remove('open')}
+// browser Back / Forward buttons
+window.addEventListener('popstate',(e)=>{
+  const target=(e.state&&e.state.page)?e.state:parseHash();
+  nav(target.page,target.data,false,true);
+});
 
 const app=()=>document.getElementById('app');
 function showFooterCart(hide){document.getElementById('site-footer').classList.toggle('hide',hide)}
@@ -1352,5 +1508,6 @@ render=function(){_origRender();if(S.page==='account'&&!S.session)renderAuthBody
 
 boot();
 </script>
-</body>
-</html>
+
+
+</body></html>
