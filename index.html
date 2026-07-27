@@ -1,220 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>We've Moved — DashLB</title>
-<style>
-  :root {
-    --accent: #7dd3fc;
-    --accent-2: #a78bfa;
-    --card-bg: rgba(255, 255, 255, 0.06);
-    --card-border: rgba(255, 255, 255, 0.14);
-    --text-primary: #f5f7fa;
-    --text-secondary: rgba(245, 247, 250, 0.7);
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>We've Moved! | DashLB</title>
+  <style>
+    /* Reset & Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
 
-  * { box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(-45deg, #0f172a, #1e1b4b, #311042, #0f172a);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: #f8fafc;
+      overflow-x: hidden;
+      padding: 1.5rem;
+    }
 
-  html, body {
-    height: 100%;
-    margin: 0;
-  }
+    /* Animated Background */
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: var(--text-primary);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    overflow: hidden;
-    position: relative;
-    background: #0b0d14;
-  }
+    /* Glassmorphism Card */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      
+      /* Fade-in Animation */
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
 
-  /* Animated dark gradient background */
-  .bg {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    background: linear-gradient(120deg, #0b0d14, #14121f, #0d1622, #120e1c);
-    background-size: 300% 300%;
-    animation: gradientShift 16s ease infinite;
-  }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-  @keyframes gradientShift {
-    0%   { background-position: 0% 50%; }
-    50%  { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
+    /* Typography & Elements */
+    .icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+      animation: pulse 2s infinite ease-in-out;
+    }
 
-  /* Subtle ambient glow orbs */
-  .glow {
-    position: fixed;
-    border-radius: 50%;
-    filter: blur(90px);
-    opacity: 0.35;
-    z-index: -1;
-    pointer-events: none;
-  }
-  .glow.one {
-    width: 380px;
-    height: 380px;
-    background: var(--accent-2);
-    top: -100px;
-    left: -100px;
-  }
-  .glow.two {
-    width: 420px;
-    height: 420px;
-    background: var(--accent);
-    bottom: -120px;
-    right: -100px;
-  }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
 
-  .card {
-    position: relative;
-    width: 100%;
-    max-width: 440px;
-    padding: 48px 36px 36px;
-    text-align: center;
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 24px;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.45),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    opacity: 0;
-    transform: translateY(16px);
-    animation: fadeIn 0.9s ease forwards;
-    animation-delay: 0.1s;
-  }
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
 
-  @keyframes fadeIn {
-    to {
-      opacity: 1;
+    p.message {
+      color: #94a3b8;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 1.75rem;
+    }
+
+    /* Action Button */
+    .btn {
+      display: inline-block;
+      width: 100%;
+      padding: 1rem 1.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #ffffff;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border: none;
+      border-radius: 12px;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    }
+
+    .btn:active {
       transform: translateY(0);
     }
-  }
 
-  .icon {
-    font-size: 56px;
-    line-height: 1;
-    margin-bottom: 18px;
-    display: inline-block;
-    animation: float 3.2s ease-in-out infinite;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-  }
-
-  h1 {
-    font-size: 26px;
-    font-weight: 700;
-    margin: 0 0 14px;
-    letter-spacing: -0.01em;
-  }
-
-  p.message {
-    font-size: 15.5px;
-    line-height: 1.6;
-    color: var(--text-secondary);
-    margin: 0 0 28px;
-  }
-
-  .btn {
-    display: inline-block;
-    width: 100%;
-    padding: 14px 20px;
-    font-size: 15.5px;
-    font-weight: 600;
-    color: #0b0d14;
-    text-decoration: none;
-    border-radius: 14px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    box-shadow: 0 6px 20px rgba(125, 211, 252, 0.25);
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
-  }
-
-  .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 26px rgba(167, 139, 250, 0.35);
-  }
-
-  .btn:active {
-    transform: translateY(0);
-  }
-
-  .countdown {
-    margin-top: 20px;
-    font-size: 13px;
-    color: var(--text-secondary);
-    letter-spacing: 0.02em;
-  }
-
-  .countdown span {
-    color: var(--text-primary);
-    font-weight: 600;
-  }
-
-  footer {
-    margin-top: 26px;
-    font-size: 12.5px;
-    color: rgba(245, 247, 250, 0.45);
-  }
-
-  @media (max-width: 480px) {
-    .card {
-      padding: 40px 24px 28px;
-      border-radius: 20px;
+    /* Countdown & Footer */
+    .countdown {
+      margin-top: 1.25rem;
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      font-weight: 500;
     }
-    h1 { font-size: 22px; }
-  }
 
-  @media (prefers-reduced-motion: reduce) {
-    .bg, .icon, .card { animation: none; }
-  }
-</style>
+    footer {
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: #64748b;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 1.25rem;
+    }
+
+    footer span {
+      color: #ef4444;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 480px) {
+      .glass-card {
+        padding: 2.25rem 1.5rem;
+      }
+      h1 {
+        font-size: 1.65rem;
+      }
+      p.message {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <div class="bg"></div>
-  <div class="glow one"></div>
-  <div class="glow two"></div>
-
-  <div class="card">
-    <div class="icon">🎉</div>
+  <div class="glass-card">
+    <div class="icon">🚀</div>
     <h1>We've Moved!</h1>
     <p class="message">
       We now have a new official website and domain.<br>
       Please update your bookmarks and continue using our new website.
     </p>
-    <a class="btn" href="https://www.dashlb.shop">Visit DashLB.shop</a>
-    <div class="countdown">Redirecting in <span id="count">8</span>...</div>
-  </div>
+    
+    <a href="https://www.dashlb.shop" class="btn">Visit DashLB.shop</a>
+    
+    <div class="countdown" id="timer">Redirecting in 8...</div>
 
-  <footer>Thank you for supporting DashLB ❤️</footer>
+    <footer>
+      Thank you for supporting DashLB <span>❤️</span>
+    </footer>
+  </div>
 
   <script>
     (function () {
-      var seconds = 8;
-      var el = document.getElementById('count');
-      var destination = 'https://www.dashlb.shop';
+      const targetUrl = "https://www.dashlb.shop";
+      let secondsLeft = 8;
+      const timerElement = document.getElementById("timer");
 
-      var timer = setInterval(function () {
-        seconds -= 1;
-        if (seconds <= 0) {
-          clearInterval(timer);
-          el.textContent = '0';
-          window.location.href = destination;
+      const interval = setInterval(() => {
+        secondsLeft--;
+        if (secondsLeft > 0) {
+          timerElement.textContent = `Redirecting in ${secondsLeft}...`;
         } else {
-          el.textContent = seconds;
+          timerElement.textContent = "Redirecting now...";
+          clearInterval(interval);
+          window.location.href = targetUrl;
         }
       }, 1000);
     })();
