@@ -78,7 +78,9 @@ label{display:block;font-size:13px;color:var(--ink-soft);margin:12px 0 5px;font-
 .topbar .logo img{width:100%;height:100%;object-fit:cover;}
 .topbar .title{font-weight:800;font-size:17px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .topbar .back{background:rgba(255,255,255,.16);border:none;color:#fff;width:36px;height:36px;border-radius:10px;font-size:18px;display:flex;align-items:center;justify-content:center;}
-.topbar .icon-btn{background:rgba(255,255,255,.16);border:none;color:#fff;width:36px;height:36px;border-radius:10px;font-size:16px;display:flex;align-items:center;justify-content:center;}
+.topbar .icon-btn{background:rgba(255,255,255,.16);border:none;color:#fff;width:36px;height:36px;border-radius:10px;font-size:16px;display:flex;align-items:center;justify-content:center;position:relative;}
+.notif-badge{position:absolute;top:-4px;right:-4px;background:var(--danger);color:#fff;font-size:10px;font-weight:800;min-width:16px;height:16px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 3px;line-height:1;box-shadow:0 0 0 2px var(--primary);}
+.notif-item.unread{border-right:4px solid var(--accent);}
 
 main{flex:1;padding:14px 14px 10px;}
 h2.section-title{font-size:15px;margin:18px 2px 10px;color:var(--ink-soft);font-weight:800;letter-spacing:.3px;}
@@ -329,6 +331,83 @@ function rpc(fnName, params){
   });
 }
 
+/* ========================= الإشعارات (Notifications) ========================= */
+var Notif = {
+  items: [],        // {id,title,body,type,createdAt,read}
+  unreadCount: 0,
+  soundInterval: null,
+  soundStopTimeout: null,
+  loaded: false
+};
+
+function notifBeepTone(){
+  var ctx = getAudioCtx();
+  if(!ctx) return;
+  try{
+    if(ctx.state === "suspended") ctx.resume();
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+    osc.type = "square";
+    osc.frequency.value = 1900;
+    gain.gain.value = 0.32;
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start();
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.15);
+    osc.stop(ctx.currentTime + 0.17);
+  }catch(e){}
+}
+function startNotifSound(){
+  stopNotifSound();
+  notifBeepTone();
+  Notif.soundInterval = setInterval(notifBeepTone, 550);
+  Notif.soundStopTimeout = setTimeout(stopNotifSound, 10000); // أقصى مدة 10 ثوانٍ
+}
+function stopNotifSound(){
+  if(Notif.soundInterval){ clearInterval(Notif.soundInterval); Notif.soundInterval = null; }
+  if(Notif.soundStopTimeout){ clearTimeout(Notif.soundStopTimeout); Notif.soundStopTimeout = null; }
+}
+function updateNotifBadge(){
+  var el = document.getElementById("notif-badge");
+  if(!el) return;
+  if(Notif.unreadCount > 0){ el.style.display = "flex"; el.textContent = Notif.unreadCount > 99 ? "99+" : String(Notif.unreadCount); }
+  else{ el.style.display = "none"; el.textContent = ""; }
+}
+function refreshNotifications(){
+  if(!sb || !Auth.token) return Promise.resolve();
+  return rpc("mm_list_notifications", {p_session_token:Auth.token}).then(function(res){
+    if(!res || !res.ok) return;
+    Notif.items = (res.notifications||[]).map(function(n){
+      return {
+        id:n.id, title:n.title, body:n.body, type:n.type,
+        createdAt:n.created_at||n.createdAt, read:!!(n.is_read!==undefined?n.is_read:n.read)
+      };
+    });
+    Notif.unreadCount = Notif.items.filter(function(n){ return !n.read; }).length;
+    Notif.loaded = true;
+    Notif.items.forEach(function(n){ Auth.seenNotifIds[n.id] = true; });
+    updateNotifBadge();
+  }).catch(function(){});
+}
+function showNotifToast(n, extraCount){
+  var msg = n.title + (n.body ? (" — "+n.body) : "") + (extraCount>1 ? (" (+"+(extraCount-1)+")") : "");
+  toast(msg, n.type==="danger"?"err":"info", 6000, function(){
+    stopNotifSound();
+    navigate("notifications");
+  });
+}
+function markNotifRead(id){
+  var item = Notif.items.find(function(n){ return n.id===id; });
+  if(!item || item.read) return;
+  item.read = true;
+  Notif.unreadCount = Math.max(0, Notif.unreadCount-1);
+  updateNotifBadge();
+  stopNotifSound();
+  rpc("mm_mark_notification_read", {p_session_token:Auth.token, p_notification_id:id}).catch(function(){});
+  if(Router.current==="notifications" && typeof ScreenRenderers!=="undefined" && ScreenRenderers.notifications){
+    ScreenRenderers.notifications(document.getElementById("app"));
+  }
+}
+
 var remoteSaveTimer = null, remoteSaveBusy = false, remoteSavePending = false;
 function queueRemoteSave(){
   if(!sb || !Auth.token) return;
@@ -375,6 +454,8 @@ function applyRemoteState(res){
 }
 function forceLogout(message){
   stopPolling();
+  stopNotifSound();
+  Notif.items = []; Notif.unreadCount = 0; Notif.loaded = false;
   Auth.setToken(null);
   Auth.user = null;
   var tb = document.getElementById("topbar"); if(tb) tb.style.display = "none";
@@ -395,12 +476,17 @@ function pollOnce(){
   if(!sb || !Auth.token) return;
   rpc("mm_poll", {p_session_token:Auth.token}).then(function(res){
     if(!res || !res.ok){ forceLogout(res && res.message); return; }
-    (res.notifications||[]).forEach(function(n){
-      if(Auth.seenNotifIds[n.id]) return;
+    var newOnes = (res.notifications||[]).filter(function(n){ return !Auth.seenNotifIds[n.id]; });
+    newOnes.forEach(function(n){
       Auth.seenNotifIds[n.id] = true;
-      toast(n.title+(n.body?(" — "+n.body):""), n.type==="danger"?"err":"info", 5000);
-      rpc("mm_mark_notification_read", {p_session_token:Auth.token, p_notification_id:n.id}).catch(function(){});
+      Notif.items.unshift({id:n.id, title:n.title, body:n.body, type:n.type, createdAt:n.created_at||n.createdAt||nowISO(), read:false});
+      Notif.unreadCount++;
     });
+    if(newOnes.length>0){
+      updateNotifBadge();
+      startNotifSound(); // صوت تنبيه متكرر لمدة أقصاها 10 ثوانٍ، يتوقف فورًا عند فتح الإشعار
+      showNotifToast(newOnes[newOnes.length-1], newOnes.length);
+    }
     if(res.expired){
       forceLogout("انتهت صلاحية اشتراكك. الرجاء التواصل مع الإدارة للتجديد.");
       return;
@@ -437,6 +523,11 @@ function startOfDay(offsetDays){
   d.setDate(d.getDate()+(offsetDays||0));
   d.setHours(0,0,0,0);
   return d;
+}
+function dateInputValue(d){
+  var x=new Date(d); if(isNaN(x.getTime())) x=new Date();
+  x.setMinutes(x.getMinutes()-x.getTimezoneOffset());
+  return x.toISOString().slice(0,16);
 }
 function num(v){ var n=parseFloat(v); return isNaN(n)?0:n; }
 function round2(n){ return Math.round((n+Number.EPSILON)*100)/100; }
@@ -535,11 +626,12 @@ function successChime(){ beep(1200,90,"sine"); setTimeout(function(){beep(1700,1
 function errorBuzz(){ beep(220,180,"sawtooth"); }
 
 /* ========================= التنبيهات Toast ========================= */
-function toast(msg, kind, ms){
+function toast(msg, kind, ms, onClick){
   var host = document.getElementById("toast-host");
   var el = document.createElement("div");
   el.className = "toast "+(kind==="err"?"err":kind==="ok"?"ok":"info");
   el.textContent = msg;
+  if(onClick){ el.style.cursor = "pointer"; el.addEventListener("click", onClick); }
   host.appendChild(el);
   setTimeout(function(){
     el.style.transition="opacity .25s"; el.style.opacity="0";
@@ -783,20 +875,28 @@ function renderTopbar(){
     sell:"بيع", buy:"شراء", products:"المنتجات", addProduct: editingProductId?"تعديل منتج":"إضافة منتج",
     inventory:"المخزون", lowstock:"مخزون منخفض", debts:"الديون", profits:"الأرباح",
     salesLog:"سجل المبيعات", purchasesLog:"سجل المشتريات", settings:"الإعدادات", exchangeRates:"أسعار الصرف",
-    admin:"لوحة الإدارة", adminUsers:"المستخدمون", adminBroadcast:"إرسال إشعار", adminCredentials:"بيانات المدير", changePassword:"تغيير كلمة المرور"
+    admin:"لوحة الإدارة", adminUsers:"المستخدمون", adminBroadcast:"إرسال إشعار", adminCredentials:"بيانات المدير", changePassword:"تغيير كلمة المرور",
+    notifications:"🔔 الإشعارات"
   };
   var isHome = Router.current==="home";
   var logoHtml = s.logo ? '<img src="'+s.logo+'">' : '🏪';
+  var bellHtml = '<button class="icon-btn" data-nav="notifications" aria-label="الإشعارات">🔔'+
+    '<span id="notif-badge" class="notif-badge" style="display:'+(Notif.unreadCount>0?"flex":"none")+';">'+(Notif.unreadCount>99?"99+":Notif.unreadCount)+'</span>'+
+    '</button>';
   var html = "";
   if(isHome){
     html += '<div class="logo">'+logoHtml+'</div>';
     html += '<div class="title">'+escapeHtml(titles.home)+'</div>';
+    html += bellHtml;
     html += '<button class="icon-btn" data-nav="settings" aria-label="الإعدادات">⚙️</button>';
   }else{
     html += '<button class="back" data-nav="home">→</button>';
     html += '<div class="title">'+escapeHtml(titles[Router.current]||"")+'</div>';
     if(Router.current==="sell" || Router.current==="addProduct" || Router.current==="buy"){
       html += '<button class="icon-btn" id="torch-btn" title="الفلاش">🔦</button>';
+    }
+    if(Router.current!=="notifications"){
+      html += bellHtml;
     }else{
       html += '<span style="width:36px"></span>';
     }
@@ -1409,11 +1509,31 @@ function showInvoice(saleId){
   body += '<button class="btn btn-ghost" id="inv-share">مشاركة</button>';
   body += '</div>';
   body += '<button class="btn btn-primary" id="inv-whatsapp" style="margin-top:10px;">📲 إرسال عبر واتساب</button>';
+  body += '<div class="btn-row" style="margin-top:10px;">';
+  body += '<button class="btn btn-outline" id="inv-edit">✏️ تعديل العملية</button>';
+  body += '<button class="btn btn-danger" id="inv-delete">🗑️ حذف العملية</button>';
+  body += '</div>';
   body += '<button class="btn btn-outline" id="inv-close" style="margin-top:10px;">إغلاق</button>';
 
   openModal("", body, {noClose:true, onClose:function(){ resumeSellScannerIfNeeded(); }});
 
   document.getElementById("inv-close").addEventListener("click", function(){ closeModal(); resumeSellScannerIfNeeded(); });
+  document.getElementById("inv-edit").addEventListener("click", function(){
+    closeModal();
+    openEditSaleModal(sale.id);
+  });
+  document.getElementById("inv-delete").addEventListener("click", function(){
+    var confirmHtml = '<p>هل أنت متأكد أنك تريد حذف عملية البيع رقم '+sale.invoiceNo+'؟<br>سيتم إرجاع الكميات المباعة إلى المخزون'+(sale.paymentMethod==="debt"?" وحذف سجل الدين المرتبط بها":"")+'. لا يمكن التراجع عن هذا الإجراء.</p>'+
+      '<div class="btn-row" style="margin-top:14px;"><button class="btn btn-outline" id="cancel-del-sale">إلغاء</button><button class="btn btn-danger" id="confirm-del-sale">تأكيد الحذف</button></div>';
+    var inner = document.getElementById("modal-body-inner");
+    if(inner) inner.innerHTML = confirmHtml;
+    document.getElementById("cancel-del-sale").addEventListener("click", function(){ closeModal(); resumeSellScannerIfNeeded(); });
+    document.getElementById("confirm-del-sale").addEventListener("click", function(){
+      deleteSale(sale.id);
+      closeModal();
+      navigate("salesLog");
+    });
+  });
   document.getElementById("inv-copy").addEventListener("click", function(){
     var txt = invoiceText(sale);
     if(navigator.clipboard && navigator.clipboard.writeText){
@@ -1432,6 +1552,151 @@ function showInvoice(saleId){
   });
   document.getElementById("inv-whatsapp").addEventListener("click", function(){
     openWhatsAppFlow(sale);
+  });
+}
+
+/* ========================= حذف/تعديل عملية بيع ========================= */
+function deleteSale(saleId){
+  var sale = DB.data.sales.find(function(s){ return s.id===saleId; });
+  if(!sale) return;
+  // إرجاع الكميات المباعة إلى المخزون
+  sale.items.forEach(function(it){
+    var p = findProductById(it.productId);
+    if(p){ p.qty = round2((p.qty||0) + (it.qty||0)); }
+  });
+  // حذف سجل الدين المرتبط بهذه العملية إن وجد
+  if(sale.paymentMethod==="debt"){
+    DB.data.debts = DB.data.debts.filter(function(d){ return d.saleId!==sale.id; });
+  }
+  DB.data.sales = DB.data.sales.filter(function(s){ return s.id!==saleId; });
+  DB.save();
+  toast("تم حذف عملية البيع وإرجاع الكميات إلى المخزون", "ok");
+}
+
+function openEditSaleModal(saleId){
+  var sale = DB.data.sales.find(function(s){ return s.id===saleId; });
+  if(!sale){ toast("تعذر العثور على عملية البيع", "err"); return; }
+  var workItems = sale.items.map(function(it){ return Object.assign({}, it); });
+
+  function itemsHtml(){
+    if(workItems.length===0){
+      return '<div class="empty-state"><div class="ic">🧾</div>لا توجد منتجات — احذف العملية بالكامل بدلاً من ذلك</div>';
+    }
+    return workItems.map(function(it, idx){
+      return '<div class="cart-item">'+
+        '<div class="li-main"><div class="li-title">'+escapeHtml(it.name)+'</div>'+
+          '<div style="display:flex;gap:8px;margin-top:6px;">'+
+            '<div class="field" style="flex:1;margin:0;"><label style="margin:0 0 4px;">الكمية'+(it.unit==="kg"?" (كغ)":"")+'</label><input type="number" step="0.01" class="edit-qty" data-idx="'+idx+'" value="'+it.qty+'"></div>'+
+            '<div class="field" style="flex:1;margin:0;"><label style="margin:0 0 4px;">سعر الوحدة</label><input type="number" step="0.01" class="edit-price" data-idx="'+idx+'" value="'+it.unitPrice+'"></div>'+
+          '</div>'+
+        '</div>'+
+        '<button class="scan-round" style="position:static;width:34px;height:34px;background:var(--danger-soft);color:var(--danger);" data-remove-line="'+idx+'">✕</button>'+
+        '</div>';
+    }).join("");
+  }
+
+  var extraHtml = "";
+  if(sale.paymentMethod==="debt"){
+    extraHtml = '<div class="field"><label>اسم الزبون</label><input id="es-customer" type="text" value="'+escapeHtml(sale.customerName||"")+'"></div>'+
+      '<div class="field"><label>المبلغ المدفوع</label><input id="es-paid" type="number" step="0.01" value="'+(sale.paidAmount||0)+'"></div>';
+  }
+
+  var html = '<div class="field"><label>تاريخ ووقت العملية</label><input id="es-date" type="datetime-local" value="'+dateInputValue(new Date(sale.date))+'"></div>'+
+    '<div id="es-items">'+itemsHtml()+'</div>'+
+    extraHtml+
+    '<div class="invoice-total"><span>الإجمالي الجديد</span><span id="es-total-preview" style="direction:ltr;">'+fmtMoney(sale.total, sale.paymentCurrency)+'</span></div>'+
+    '<button class="btn btn-primary" id="es-save" style="margin-top:12px;">حفظ التعديلات</button>';
+
+  openModal("تعديل عملية البيع "+sale.invoiceNo, html);
+
+  function updateTotalPreview(){
+    var total = workItems.reduce(function(acc,it){ return acc + round2(it.qty*it.unitPrice); },0);
+    var el = document.getElementById("es-total-preview");
+    if(el) el.textContent = fmtMoney(total, sale.paymentCurrency);
+  }
+
+  function bindRowEvents(){
+    document.querySelectorAll(".edit-qty").forEach(function(inp){
+      inp.addEventListener("input", function(){ workItems[parseInt(inp.getAttribute("data-idx"),10)].qty = num(inp.value); updateTotalPreview(); });
+    });
+    document.querySelectorAll(".edit-price").forEach(function(inp){
+      inp.addEventListener("input", function(){ workItems[parseInt(inp.getAttribute("data-idx"),10)].unitPrice = num(inp.value); updateTotalPreview(); });
+    });
+    document.querySelectorAll("[data-remove-line]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        workItems.splice(parseInt(btn.getAttribute("data-remove-line"),10),1);
+        var itemsHost = document.getElementById("es-items");
+        if(itemsHost) itemsHost.innerHTML = itemsHtml();
+        bindRowEvents();
+        updateTotalPreview();
+      });
+    });
+  }
+  bindRowEvents();
+
+  document.getElementById("es-save").addEventListener("click", function(){
+    if(workItems.length===0){ toast("لا يمكن حفظ عملية بيع بدون منتجات — استخدم زر حذف العملية بدلاً من ذلك", "err"); return; }
+    for(var i=0;i<workItems.length;i++){
+      if(!(workItems[i].qty>0)){ toast("الكمية يجب أن تكون أكبر من صفر لكل منتج", "err"); return; }
+      if(!(workItems[i].unitPrice>=0)){ toast("سعر الوحدة غير صحيح", "err"); return; }
+    }
+
+    // إرجاع الكميات القديمة مؤقتًا للتحقق من توفر الكميات الجديدة
+    sale.items.forEach(function(it){
+      var p = findProductById(it.productId);
+      if(p) p.qty = round2((p.qty||0) + (it.qty||0));
+    });
+    for(var j=0;j<workItems.length;j++){
+      var p2 = findProductById(workItems[j].productId);
+      if(p2 && workItems[j].qty > p2.qty){
+        // تراجع عن الإرجاع المؤقت لأن العملية ستُلغى
+        sale.items.forEach(function(it){
+          var pr = findProductById(it.productId);
+          if(pr) pr.qty = round2((pr.qty||0) - (it.qty||0));
+        });
+        toast("الكمية المتوفرة من \""+p2.name+"\" هي "+p2.qty+" فقط", "err");
+        return;
+      }
+    }
+    workItems.forEach(function(it){
+      var p3 = findProductById(it.productId);
+      if(p3) p3.qty = round2((p3.qty||0) - it.qty);
+      it.total = round2(it.qty*it.unitPrice);
+    });
+
+    var dateInput = document.getElementById("es-date").value;
+    var newDate = dateInput ? new Date(dateInput).toISOString() : sale.date;
+    var totalInPay = round2(workItems.reduce(function(acc,it){ return acc + it.total; },0));
+    var totalBase = workItems.reduce(function(acc,it){ return acc + toBase(it.total, it.currency); },0);
+    var profitBase = workItems.reduce(function(acc,it){ return acc + toBase((it.unitPrice-(it.buyPrice||0))*it.qty, it.currency); },0);
+
+    sale.items = workItems;
+    sale.date = newDate;
+    sale.total = totalInPay;
+    sale.totalInBase = totalBase;
+    sale.profitInBase = profitBase;
+
+    if(sale.paymentMethod==="debt"){
+      var custEl = document.getElementById("es-customer");
+      var paidEl = document.getElementById("es-paid");
+      if(custEl) sale.customerName = custEl.value.trim();
+      var newPaid = paidEl ? num(paidEl.value) : (sale.paidAmount||0);
+      sale.paidAmount = round2(newPaid);
+      var debt = DB.data.debts.find(function(d){ return d.saleId===sale.id; });
+      var remaining = round2(sale.total - sale.paidAmount);
+      if(debt){
+        debt.customerName = sale.customerName;
+        debt.amount = sale.total;
+        debt.paidAmount = sale.paidAmount;
+        debt.remaining = remaining;
+        debt.status = remaining<=0 ? "paid" : (sale.paidAmount>0 ? "partial" : "unpaid");
+      }
+    }
+
+    DB.save();
+    closeModal();
+    toast("تم حفظ التعديلات على عملية البيع", "ok");
+    navigate("salesLog");
   });
 }
 
@@ -1700,19 +1965,42 @@ ScreenRenderers.salesLog = function(app){
 
 /* ========================= سجل المشتريات ========================= */
 ScreenRenderers.purchasesLog = function(app){
-  var html = '<div id="purchases-list"></div>';
-  var list = DB.data.purchases.slice().sort(function(a,b){ return (b.date||"").localeCompare(a.date||""); });
-  if(list.length===0){
-    html = '<div class="empty-state"><div class="ic">🚚</div>لا توجد عمليات شراء مسجلة</div>';
-  }else{
-    html = '<div id="purchases-list">'+list.map(function(p){
-      return '<div class="list-item"><div class="li-main"><div class="li-title">'+escapeHtml(p.name)+'</div>'+
-        '<div class="li-sub">'+fmtDate(p.date)+(p.supplier?" · المورد: "+escapeHtml(p.supplier):"")+'</div></div>'+
-        '<div style="text-align:left;"><div class="li-amt">'+p.qty+'</div><div class="small-muted">'+fmtMoney(p.buyPrice,p.currency)+' / وحدة</div></div>'+
-        '</div>';
-    }).join("")+'</div>';
+  function draw(){
+    var list = DB.data.purchases.slice().sort(function(a,b){ return (b.date||"").localeCompare(a.date||""); });
+    var inner;
+    if(list.length===0){
+      inner = '<div class="empty-state"><div class="ic">🚚</div>لا توجد عمليات شراء مسجلة</div>';
+    }else{
+      inner = list.map(function(p){
+        return '<div class="list-item">'+
+          '<div class="li-main"><div class="li-title">'+escapeHtml(p.name)+'</div>'+
+          '<div class="li-sub">'+fmtDate(p.date)+(p.supplier?" · المورد: "+escapeHtml(p.supplier):"")+'</div></div>'+
+          '<div style="text-align:left;"><div class="li-amt">'+p.qty+'</div><div class="small-muted">'+fmtMoney(p.buyPrice,p.currency)+' / وحدة</div></div>'+
+          '<button class="scan-round" style="position:static;width:32px;height:32px;background:var(--danger-soft);color:var(--danger);margin-right:2px;" data-del-purchase="'+p.id+'">🗑️</button>'+
+          '</div>';
+      }).join("");
+    }
+    app.innerHTML = '<div id="purchases-list">'+inner+'</div>';
+    app.querySelectorAll("[data-del-purchase]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var id = btn.getAttribute("data-del-purchase");
+        var purchase = DB.data.purchases.find(function(x){ return x.id===id; });
+        if(!purchase) return;
+        openModal("تأكيد الحذف", '<p>هل تريد حذف عملية شراء "'+escapeHtml(purchase.name)+'"؟<br>سيتم خصم الكمية ('+purchase.qty+') من المخزون إن كانت متوفرة. لا يمكن التراجع عن هذا الإجراء.</p>'+
+          '<div class="btn-row" style="margin-top:14px;"><button class="btn btn-outline" data-close-modal>إلغاء</button><button class="btn btn-danger" id="confirm-del-purchase">تأكيد الحذف</button></div>');
+        document.getElementById("confirm-del-purchase").addEventListener("click", function(){
+          var product = findProductById(purchase.productId);
+          if(product){ product.qty = round2(Math.max(0, (product.qty||0) - (purchase.qty||0))); }
+          DB.data.purchases = DB.data.purchases.filter(function(x){ return x.id!==id; });
+          DB.save();
+          closeModal();
+          toast("تم حذف عملية الشراء", "ok");
+          draw();
+        });
+      });
+    });
   }
-  app.innerHTML = html;
+  draw();
 };
 
 /* ========================= الإعدادات ========================= */
@@ -2262,6 +2550,39 @@ ScreenRenderers.changePassword = function(app){
   });
 };
 
+/* ========================= قسم الإشعارات ========================= */
+ScreenRenderers.notifications = function(app){
+  stopNotifSound(); // فتح قسم الإشعارات يوقف صوت التنبيه فورًا
+  app.innerHTML = '<div id="notif-list"><div class="empty-state"><div class="ic">⏳</div>جارٍ تحميل الإشعارات...</div></div>';
+
+  function draw(){
+    var host = document.getElementById("notif-list");
+    if(!host) return;
+    if(Notif.items.length===0){
+      host.innerHTML = '<div class="empty-state"><div class="ic">🔔</div>لا توجد إشعارات بعد</div>';
+      return;
+    }
+    var list = Notif.items.slice().sort(function(a,b){ return (b.createdAt||"").localeCompare(a.createdAt||""); });
+    host.innerHTML = list.map(function(n){
+      return '<div class="list-item notif-item '+(n.read?"":"unread")+'" data-nid="'+n.id+'" style="align-items:flex-start;cursor:pointer;">'+
+        '<div class="avatar-circle" style="background:'+(n.type==="danger"?"var(--danger-soft)":"var(--primary-soft)")+';color:'+(n.type==="danger"?"var(--danger)":"var(--primary-dark)")+';">🔔</div>'+
+        '<div class="li-main">'+
+          '<div class="li-title">'+escapeHtml(n.title)+'</div>'+
+          (n.body ? '<div class="li-sub" style="white-space:pre-wrap;">'+escapeHtml(n.body)+'</div>' : "")+
+          '<div class="li-sub">'+fmtDate(n.createdAt)+'</div>'+
+        '</div>'+
+        (n.read ? '<span class="badge ok">مقروء</span>' : '<span class="badge warn">غير مقروء</span>')+
+        '</div>';
+    }).join("");
+    host.querySelectorAll("[data-nid]").forEach(function(el){
+      el.addEventListener("click", function(){ markNotifRead(el.getAttribute("data-nid")); });
+    });
+  }
+
+  draw();
+  refreshNotifications().then(draw);
+};
+
 /* ========================= تسجيل الدخول / الشروط / بدء الجلسة ========================= */
 function renderLoginScreen(message){
   var app = document.getElementById("app");
@@ -2345,6 +2666,7 @@ function startApp(){
   var tb = document.getElementById("topbar"); if(tb) tb.style.display = "";
   var bn = document.getElementById("bottom-nav"); if(bn) bn.style.display = "";
   navigate("home");
+  refreshNotifications();
   startPolling();
 }
 
